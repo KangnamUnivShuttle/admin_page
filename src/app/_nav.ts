@@ -12,6 +12,25 @@ export const navItems: INavData[] = [
   },
   {
     title: true,
+    name: 'Runtime'
+  },
+  {
+    name: 'Block',
+    url: '/runtime/block',
+    icon: 'icon-speech'
+  },
+  {
+    name: 'Runtime Flow',
+    url: '/runtime/runtime-flow',
+    icon: 'icon-layers'
+  },
+  {
+    name: 'Plugin',
+    url: '/runtime/plugin',
+    icon: 'icon-grid'
+  },
+  {
+    title: true,
     name: 'Theme'
   },
   {
