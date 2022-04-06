@@ -27,7 +27,7 @@ export const navItems: INavData[] = [
   {
     name: 'Plugin',
     url: '/runtime/plugin',
-    icon: 'icon-grid'
+    icon: 'icon-grid' 
   },
   {
     title: true,
