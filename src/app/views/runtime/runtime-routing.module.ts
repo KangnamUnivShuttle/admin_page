@@ -16,17 +16,29 @@ const routes: Routes = [
   // }
   {
     path: 'block',
-    component: BlockComponent,
     data: {
       tittle: 'Block'
-    }
-  },
-  {
-    path: 'runtime-flow',
-    component: RuntimeFlowComponent,
-    data: {
-      title: 'Runtime Flow'
-    }
+    },
+    children: [
+      {
+        path: '',
+        redirectTo: 'list'
+      },
+      {
+        path: 'list',
+        component: BlockComponent,
+        data: {
+          title: 'Block'
+        }
+      },
+      {
+        path: 'flow/:blockID',
+        component: RuntimeFlowComponent,
+        data: {
+          title: 'Runtime Flow'
+        }
+      }
+    ]
   },
   {
     path: 'plugin',

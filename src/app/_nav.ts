@@ -16,14 +16,15 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Block',
-    url: '/runtime/block',
+    url: '/runtime/block/list',
     icon: 'icon-speech'
   },
-  {
-    name: 'Runtime Flow',
-    url: '/runtime/runtime-flow',
-    icon: 'icon-layers'
-  },
+  // {
+  //   name: 'Runtime Flow',
+  //   url: '/runtime/block/flow/',
+  //   icon: 'icon-layers',
+  //   attributes: { disabled: true },
+  // },
   {
     name: 'Plugin',
     url: '/runtime/plugin',
