@@ -26,7 +26,7 @@ export class ApiInterceptor implements HttpInterceptor {
             if (event instanceof HttpResponse) {
               ok = 'succeeded'
               this.httpService.isAuthorized.next(true)
-              console.log('resres', event.headers.get('Set-Cookie'))
+              // console.log('resres', event.headers.get('Set-Cookie'), event.headers.get('ETag'), event.headers.get('Content-Length'), event.headers.get('Server'))
               
             }
           },
