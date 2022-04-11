@@ -15,6 +15,7 @@ export class ApiInterceptor implements HttpInterceptor {
     let ok: string;
 
     const request = req.clone({withCredentials: true,})
+    // request.headers.set('cookie', '')
 
     // extend server response observable with logging
     return next.handle(request)
