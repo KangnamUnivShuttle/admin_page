@@ -22,7 +22,14 @@ export class ApiInterceptor implements HttpInterceptor {
       .pipe(
         tap({
           // Succeeds when there is a response; ignore other events
-          next: (event) => (ok = event instanceof HttpResponse ? 'succeeded' : '', this.httpService.isAuthorized.next(true)),
+          next: (event) => {
+            if (event instanceof HttpResponse) {
+              ok = 'succeeded'
+              this.httpService.isAuthorized.next(true)
+              console.log('resres', event.headers.get('Set-Cookie'))
+              
+            }
+          },
           // Operation failed; error is an HttpErrorResponse
           // error: (error) => (ok = 'failed')
         }),
