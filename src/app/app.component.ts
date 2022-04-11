@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { IconSetService } from '@coreui/icons-angular';
 import { freeSet } from '@coreui/icons';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { HttpService } from './services/http.services';
 
 @Component({
   // tslint:disable-next-line
@@ -10,13 +12,23 @@ import { freeSet } from '@coreui/icons';
   template: '<router-outlet></router-outlet>',
   providers: [IconSetService],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
+
+  logginSubscription: Subscription;
+
   constructor(
     private router: Router,
-    public iconSet: IconSetService
+    public iconSet: IconSetService,
+    private httpSerivce: HttpService
   ) {
     // iconSet singleton
     iconSet.icons = { ...freeSet };
+  }
+
+  ngOnDestroy(): void {
+    if(this.logginSubscription && !this.logginSubscription.closed) {
+      this.logginSubscription.unsubscribe()
+    }
   }
 
   ngOnInit() {
@@ -26,5 +38,12 @@ export class AppComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
+
+    this.logginSubscription = this.httpSerivce.isAuthorized.subscribe((status) => {
+      if (!status) {
+        console.warn(`[AppComponent] [ngOnInit-IsAuthorized] status is false`)
+        this.router.navigate(['/login'])
+      }
+    })
   }
 }
