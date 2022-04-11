@@ -2,8 +2,7 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpParamsOptions } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 // import 'rxjs/add/operator/map'
-import 'rxjs/Rx';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError, map, retry } from 'rxjs/operators';
 import { BasicResponseModel } from '../models/basicResponse.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -43,11 +42,12 @@ export class HttpService {
         return this.http.get<BasicResponseModel>(`${environment.host}${url}`, {
             params: httpParams
         })
-            .map(res => {
-                const result = <BasicResponseModel><unknown>res;
-                return result
-            })
             .pipe(
+                map(res => {
+                    const result = <BasicResponseModel><unknown>res;
+                    console.log('res', res)
+                    return result
+                }),
                 catchError((err) => this.handleError(err))
             );
     }
@@ -56,12 +56,12 @@ export class HttpService {
         return this.http.post<BasicResponseModel>(`${environment.host}${url}`, data, {
             ...options,
         })
-            .map(res => {
-                const result = <BasicResponseModel><unknown>res;
-                console.log('res', res)
-                return result
-            })
             .pipe(
+                map(res => {
+                    const result = <BasicResponseModel><unknown>res;
+                    console.log('res', res)
+                    return result
+                }),
                 catchError((err) => this.handleError(err))
             );
     }
@@ -70,11 +70,12 @@ export class HttpService {
         return this.http.put<BasicResponseModel>(`${environment.host}${url}`, data, {
             ...options,
         })
-            .map(res => {
-                const result = <BasicResponseModel><unknown>res;
-                return result
-            })
             .pipe(
+                map(res => {
+                    const result = <BasicResponseModel><unknown>res;
+                    console.log('res', res)
+                    return result
+                }),
                 catchError((err) => this.handleError(err))
             );
     }
@@ -83,11 +84,12 @@ export class HttpService {
         return this.http.delete<BasicResponseModel>(`${environment.host}${url}`, {
             ...options,
         })
-            .map(res => {
-                const result = <BasicResponseModel><unknown>res;
-                return result
-            })
             .pipe(
+                map(res => {
+                    const result = <BasicResponseModel><unknown>res;
+                    console.log('res', res)
+                    return result
+                }),
                 catchError((err) => this.handleError(err))
             );
     }
