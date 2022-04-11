@@ -16,12 +16,9 @@ export class BlockComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const params = new HttpParams()
-        params.set('page', '1')
-        params.set('limit', '10')
-
-        this.httpService.reqGet(`${environment.host}runtimeBlock`, {
-            params
+        this.httpService.reqGet(`runtimeBlock`, {
+            page: 1,
+            limit: 10
         })
         .subscribe(data => {
             console.log(data)

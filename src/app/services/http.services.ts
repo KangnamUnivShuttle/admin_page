@@ -1,9 +1,12 @@
 import { Inject, Injectable, NgZone } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpParamsOptions } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
+// import 'rxjs/add/operator/map'
+import 'rxjs/Rx';
 import { catchError, retry } from 'rxjs/operators';
 import { BasicResponseModel } from '../models/basicResponse.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -32,29 +35,58 @@ export class HttpService {
             'Something bad happened; please try again later.');
     }
 
-    public reqGet(url: string, options: any) {
-        return this.http.get<BasicResponseModel>(url, options)
+    public reqGet(url: string, params: {[key: string]: any}) {
+        let httpParams = new HttpParams();
+        Object.keys(params).forEach(key => {
+            httpParams.set(key, params[key])
+        })
+        return this.http.get<BasicResponseModel>(`${environment.host}${url}`, {
+            params: httpParams
+        })
+            .map(res => {
+                const result = <BasicResponseModel><unknown>res;
+                return result
+            })
             .pipe(
                 catchError((err) => this.handleError(err))
             );
     }
 
     public reqPost(url: string, data: any, options: any) {
-        return this.http.post<BasicResponseModel>(url, data, options)
+        return this.http.post<BasicResponseModel>(`${environment.host}${url}`, data, {
+            ...options,
+        })
+            .map(res => {
+                const result = <BasicResponseModel><unknown>res;
+                console.log('res', res)
+                return result
+            })
             .pipe(
                 catchError((err) => this.handleError(err))
             );
     }
 
     public reqPut(url: string, data: any, options: any) {
-        return this.http.put<BasicResponseModel>(url, data, options)
+        return this.http.put<BasicResponseModel>(`${environment.host}${url}`, data, {
+            ...options,
+        })
+            .map(res => {
+                const result = <BasicResponseModel><unknown>res;
+                return result
+            })
             .pipe(
                 catchError((err) => this.handleError(err))
             );
     }
 
     public reqDelete(url: string, options: any) {
-        return this.http.delete<BasicResponseModel>(url, options)
+        return this.http.delete<BasicResponseModel>(`${environment.host}${url}`, {
+            ...options,
+        })
+            .map(res => {
+                const result = <BasicResponseModel><unknown>res;
+                return result
+            })
             .pipe(
                 catchError((err) => this.handleError(err))
             );

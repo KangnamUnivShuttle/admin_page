@@ -14,8 +14,10 @@ export class ApiInterceptor implements HttpInterceptor {
     const started = Date.now();
     let ok: string;
 
+    const request = req.clone({withCredentials: true,})
+
     // extend server response observable with logging
-    return next.handle(req)
+    return next.handle(request)
       .pipe(
         tap({
           // Succeeds when there is a response; ignore other events

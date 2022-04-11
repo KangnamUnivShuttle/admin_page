@@ -44,6 +44,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { ApiInterceptor } from './interceptor/api.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -61,7 +62,10 @@ import { ApiInterceptor } from './interceptor/api.interceptor';
     ChartsModule,
     IconModule,
     IconSetModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    BrowserModule /* or CommonModule */, 
+    FormsModule, 
+    ReactiveFormsModule
   ],
   declarations: [
     AppComponent,
