@@ -6,57 +6,22 @@
                     Form
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row" *ngFor="let image of imageList">
                         <div class="col-12">
-                            <div class="card">
-                            <div class="card-header">
-                                <!-- <button type="button" class="btn btn-sm btn-danger">Remove</button> -->
-                                <div class="card-header-actions" style="height: 21px;" >
-                                <!-- <label class="switch switch-sm switch-label switch-info" >
-                                    <input type="checkbox" class="switch-input" checked>
-                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                                </label> -->
+                            <div class="card" draggable="true" (dragstart)="onDragStart($event)">
+                                <div class="card-header">
+                                    {{image.title}}
+                                    <!-- <button type="button" class="btn btn-sm btn-danger">Remove</button> -->
+                                    <div class="card-header-actions" style="height: 21px;" >
+                                    <!-- <label class="switch switch-sm switch-label switch-info" >
+                                        <input type="checkbox" class="switch-input" checked>
+                                        <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                    </label> -->
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                            <div class="card-header">
-                                <!-- <button type="button" class="btn btn-sm btn-danger">Remove</button> -->
-                                <div class="card-header-actions" style="height: 21px;" >
-                                <!-- <label class="switch switch-sm switch-label switch-info" >
-                                    <input type="checkbox" class="switch-input" checked>
-                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                                </label> -->
+                                <div class="card-body">
+                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                            <div class="card-header">
-                                <!-- <button type="button" class="btn btn-sm btn-danger">Remove</button> -->
-                                <div class="card-header-actions" style="height: 21px;" >
-                                <!-- <label class="switch switch-sm switch-label switch-info" >
-                                    <input type="checkbox" class="switch-input" checked>
-                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                                </label> -->
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                            </div>
                             </div>
                         </div>
                     </div>
@@ -107,104 +72,52 @@
                                         text-align: center;
                                         vertical-align: middle;
                                         line-height: 40px;
-                                        font-weight: bold;">
+                                        font-weight: bold;"
+                                        data-drop-target="true"
+                                        (drop)="onDrop($event)"
+                                        (dragover)="onDragOver($event)" >
                                             Drag here.
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card">
-                                        <div class="card-header">
-                                            <button type="button" class="btn btn-sm btn-danger">Remove</button>
-                                            <div class="card-header-actions" style="height: 21px;" >
-                                            <label class="switch switch-sm switch-label switch-info" >
-                                                <input type="checkbox" class="switch-input" checked>
-                                                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                                            </label>
+                                <ng-container *ngFor="let runtime of runtimeList">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card"
+                                            draggable="true">
+                                            <div class="card-header">
+                                                <button type="button" class="btn btn-sm btn-danger">Remove</button>
+                                                {{runtime.title}}
+                                                <div class="card-header-actions" style="height: 21px;" >
+                                                <label class="switch switch-sm switch-label switch-info" >
+                                                    <input type="checkbox" class="switch-input" checked>
+                                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                                </label>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                            </div>
                                             </div>
                                         </div>
-                                        <div class="card-body">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                                        </div>
-                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div style="height: 50px;
-                                        border: dotted 4px #2f353a;
-                                        margin-bottom: 15px;
-                                        text-align: center;
-                                        vertical-align: middle;
-                                        line-height: 40px;
-                                        font-weight: bold;">
-                                            Drag here.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card">
-                                        <div class="card-header">
-                                            <button type="button" class="btn btn-sm btn-danger">Remove</button>
-                                            <div class="card-header-actions" style="height: 21px;" >
-                                            <label class="switch switch-sm switch-label switch-info" >
-                                                <input type="checkbox" class="switch-input" checked>
-                                                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                                            </label>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div style="height: 50px;
+                                            border: dotted 4px #2f353a;
+                                            margin-bottom: 15px;
+                                            text-align: center;
+                                            vertical-align: middle;
+                                            line-height: 40px;
+                                            font-weight: bold;"
+                                            data-drop-target="true"
+                                            (drop)="onDrop($event)"
+                                            (dragover)="onDragOver($event)" >
+                                                Drag here.
                                             </div>
                                         </div>
-                                        <div class="card-body">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                                        </div>
-                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div style="height: 50px;
-                                        border: dotted 4px #2f353a;
-                                        margin-bottom: 15px;
-                                        text-align: center;
-                                        vertical-align: middle;
-                                        line-height: 40px;
-                                        font-weight: bold;">
-                                            Drag here.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="card">
-                                        <div class="card-header">
-                                            <button type="button" class="btn btn-sm btn-danger">Remove</button>
-                                            <div class="card-header-actions" style="height: 21px;" >
-                                            <label class="switch switch-sm switch-label switch-info" >
-                                                <input type="checkbox" class="switch-input" checked>
-                                                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-                                            </label>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div style="height: 50px;
-                                        border: dotted 4px #2f353a;
-                                        margin-bottom: 15px;
-                                        text-align: center;
-                                        vertical-align: middle;
-                                        line-height: 40px;
-                                        font-weight: bold;">
-                                            Drag here.
-                                        </div>
-                                    </div>
-                                </div>
+                                </ng-container>
                                 <div style="height: 200px;"></div>
                             </div>
                         </div>

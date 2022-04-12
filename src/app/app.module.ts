@@ -45,6 +45,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { ApiInterceptor } from './interceptor/api.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     BrowserModule /* or CommonModule */, 
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
   declarations: [
     AppComponent,

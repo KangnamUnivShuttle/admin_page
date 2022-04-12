@@ -7,12 +7,14 @@ import { BlockComponent } from './block.component';
 import { RuntimeFlowComponent } from './runtime-flow.component';
 import { PluginComponent } from './plugin.component';
 import { RuntimeRoutingModule } from './runtime-routing.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
     RuntimeRoutingModule,
     ChartsModule,
-    BsDropdownModule
+    BsDropdownModule,
+    CommonModule
   ],
   declarations: [BlockComponent, RuntimeFlowComponent, PluginComponent] //[ WidgetsComponent ]
 })
