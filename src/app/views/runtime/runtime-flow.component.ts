@@ -31,7 +31,8 @@ export class RuntimeFlowComponent implements OnInit {
     Promise.all([
       this.loadBlockData(this.blockID),
       this.loadBlockLinkData(this.blockID),
-      this.loadRuntimeData(this.blockID)
+      this.loadRuntimeData(this.blockID),
+      this.loadImageList('')
     ])
     .then(res => {
       this.currentBlock = res[0].data[0];
@@ -53,7 +54,7 @@ export class RuntimeFlowComponent implements OnInit {
   }
 
   loadImageList(search: string) {
-
+    return this.httpService.reqGet('plugin', {}).toPromise()
   }
 
   onImageDragStart(event, image) {
