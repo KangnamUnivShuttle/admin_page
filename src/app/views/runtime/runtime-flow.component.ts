@@ -1,39 +1,60 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import { ActivatedRoute } from '@angular/router';
+import { HttpService } from '../../services/http.services';
+import { BasicResponseModel } from '../../models/basicResponse.model';
 
 @Component({
   templateUrl: 'runtime-flow.component.html'
 })
-export class RuntimeFlowComponent {
+export class RuntimeFlowComponent implements OnInit {
 
-  imageList = [{
-    title: 'asdf #1',
-    imageID: 1,
-  },
-  {
-    title: 'asdf #2',
-    imageID: 2
-  },
-  {
-    title: 'asdf #3',
-    imageID: 3,
-  }];
-  runtimeList = [{
-    title: 'runtime #1',
-    blockRuntimeID: 1
-  },
-  {
-    title: 'runtime #2',
-    blockRuntimeID: 2
-  },
-  {
-    title: 'runtime #3',
-    blockRuntimeID: 3
-  }];
+  imageList = [];
+  runtimeList = [];
+  blockLinkedList = [];
 
   focusedRuntimeIdx: number = -1;
   focusedImage: any = null
+
+  blockID: string;
+
+  currentBlock = null;
+
+
+  constructor(private route: ActivatedRoute,
+              private httpService: HttpService) {
+    this.blockID = this.route.snapshot.params['blockID'] || 'intro';
+  }
+
+  ngOnInit(): void {
+    Promise.all([
+      this.loadBlockData(this.blockID),
+      this.loadBlockLinkData(this.blockID),
+      this.loadRuntimeData(this.blockID)
+    ])
+    .then(res => {
+      this.currentBlock = res[0].data[0];
+      this.blockLinkedList = res[1].data;
+      this.runtimeList = res[2].data;
+    })
+  }
+
+  loadBlockData(id: string) {
+    return this.httpService.reqGet('runtimeBlock', {'blockID': id}).toPromise()
+  }
+
+  loadBlockLinkData(id: string) {
+    return this.httpService.reqGet('runtimeLink', {'blockID': id}).toPromise()
+  }
+
+  loadRuntimeData(id: string) {
+    return this.httpService.reqGet('runtime', {'blockID': id}).toPromise()
+  }
+
+  loadImageList(search: string) {
+
+  }
 
   onImageDragStart(event, image) {
     console.log('id', event, image)

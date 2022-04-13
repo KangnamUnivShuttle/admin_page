@@ -35,12 +35,12 @@ export class HttpService {
     }
 
     public reqGet(url: string, params: {[key: string]: any}) {
-        let httpParams = new HttpParams();
-        Object.keys(params).forEach(key => {
-            httpParams.set(key, params[key])
-        })
+        // let httpParams = new HttpParams();
+        // Object.keys(params).forEach(key => {
+        //     httpParams.set(key, params[key])
+        // })
         return this.http.get<BasicResponseModel>(`${environment.host}${url}`, {
-            params: httpParams
+            params: params
         })
             .pipe(
                 map(res => {
