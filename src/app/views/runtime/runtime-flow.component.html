@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="row" *ngFor="let image of imageList">
                         <div class="col-12">
-                            <div class="card" draggable="true" (dragstart)="onDragStart($event)">
+                            <div class="card" draggable="true" (dragstart)="onImageDragStart($event, image)" data-type="image">
                                 <div class="card-header">
                                     {{image.title}}
                                     <!-- <button type="button" class="btn btn-sm btn-danger">Remove</button> -->
@@ -48,16 +48,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
-                            <div class="card text-white bg-danger text-center">
-                                <div class="card-body">
-                                    <blockquote class="card-bodyquote">
-                                        <footer>
-                                            <cite title="Source Title">Start</cite>
-                                        </footer>
-                                    </blockquote>
-                                </div>
-                            </div>
+                        <div class="col">
+                            <hr>
+                        </div>
+                        <div class="col-1" style="    font-weight: bold;
+                        margin-bottom: 15px;">START</div>
+                        <div class="col">
+                            <hr>
                         </div>
                     </div>
 
@@ -74,17 +71,17 @@
                                         line-height: 40px;
                                         font-weight: bold;"
                                         data-drop-target="true"
-                                        (drop)="onDrop($event)"
+                                        (drop)="onImageOrRuntimeDropped($event, 0)"
                                         (dragover)="onDragOver($event)" >
                                             Drag here.
                                         </div>
                                     </div>
                                 </div>
-                                <ng-container *ngFor="let runtime of runtimeList">
+                                <ng-container *ngFor="let runtime of runtimeList; let i = index">
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="card"
-                                            draggable="true">
+                                            draggable="true" data-type="runtime"  (dragstart)="onRuntimeDragStart($event, runtime, i)">
                                             <div class="card-header">
                                                 <button type="button" class="btn btn-sm btn-danger">Remove</button>
                                                 {{runtime.title}}
@@ -111,7 +108,7 @@
                                             line-height: 40px;
                                             font-weight: bold;"
                                             data-drop-target="true"
-                                            (drop)="onDrop($event)"
+                                            (drop)="onImageOrRuntimeDropped($event, i + 1)"
                                             (dragover)="onDragOver($event)" >
                                                 Drag here.
                                             </div>
@@ -122,18 +119,15 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="row">
-                        <div class="col-12">
-                            <div class="card text-white bg-success text-center">
-                                <div class="card-body">
-                                    <blockquote class="card-bodyquote">
-                                        <footer>
-                                            <cite title="Source Title">Done</cite>
-                                        </footer>
-                                    </blockquote>
-                                </div>
-                            </div>
+                        <div class="col">
+                            <hr>
+                        </div>
+                        <div class="col-1" style="    font-weight: bold;
+                        margin-bottom: 15px;">END</div>
+                        <div class="col">
+                            <hr>
                         </div>
                     </div>
 
