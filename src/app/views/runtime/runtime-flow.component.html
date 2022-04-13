@@ -10,13 +10,15 @@
                         <div class="row" style="margin-bottom: 15px;">
                             <div class="col-4">blockId</div>
                             <div class="col-8">
-                                <input type="text" name="blockId" class="form-control" placeholder="" [(ngModel)]="currentBlock.blockId" readonly disabled>
+                                <input type="text" name="blockId" class="form-control" placeholder=""
+                                    [(ngModel)]="currentBlock.blockId" readonly disabled>
                             </div>
                         </div>
                         <div class="row" style="margin-bottom: 15px;">
                             <div class="col-4">name</div>
                             <div class="col-8">
-                                <input type="text" name="name" class="form-control" placeholder="" [(ngModel)]="currentBlock.name" readonly disabled>
+                                <input type="text" name="name" class="form-control" placeholder=""
+                                    [(ngModel)]="currentBlock.name" readonly disabled>
                             </div>
                         </div>
                         <div class="row">
@@ -25,7 +27,7 @@
                                 <label class="switch switch-3d switch-primary">
                                     <input type="checkbox" class="switch-input" checked readonly disabled>
                                     <span class="switch-slider"></span>
-                                    </label>
+                                </label>
                             </div>
                         </div>
                     </ng-container>
@@ -48,21 +50,25 @@
                             <div class="col">
                                 <div class="input-group">
                                     <span class="input-group-prepend">
-                                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>
+                                            Search</button>
                                     </span>
-                                    <input type="text" id="input1-group2" name="input1-group2" class="form-control" placeholder="이미지 이름 검색" formControlName="searchImageName" [(ngModel)]="searchImageName">
+                                    <input type="text" id="input1-group2" name="input1-group2" class="form-control"
+                                        placeholder="이미지 이름 검색" formControlName="searchImageName"
+                                        [(ngModel)]="searchImageName">
                                 </div>
                             </div>
                         </div>
                     </form>
                     <div class="row" *ngFor="let image of imageList">
                         <div class="col-12">
-                            <div class="card" draggable="true" (dragstart)="onImageDragStart($event, image)" data-type="image">
+                            <div class="card" draggable="true" (dragstart)="onImageDragStart($event, image)"
+                                data-type="image">
                                 <div class="card-header">
-                                   #{{image.imageId}}-{{image.name}}
+                                    #{{image.imageId}}-{{image.name}}
                                     <!-- <button type="button" class="btn btn-sm btn-danger">Remove</button> -->
-                                    <div class="card-header-actions" style="height: 21px;" >
-                                    <!-- <label class="switch switch-sm switch-label switch-info" >
+                                    <div class="card-header-actions" style="height: 21px;">
+                                        <!-- <label class="switch switch-sm switch-label switch-info" >
                                         <input type="checkbox" class="switch-input" checked>
                                         <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
                                     </label> -->
@@ -119,7 +125,8 @@
 
                     <div class="row">
                         <div class="col-12">
-                            <div style="min-height: 250px;background-color: #c8ced3;padding: 15px;margin-bottom:15px;border-radius: 5px;">
+                            <div
+                                style="min-height: 250px;background-color: #c8ced3;padding: 15px;margin-bottom:15px;border-radius: 5px;">
                                 <div class="row">
                                     <div class="col">
                                         <div style="height: 50px;
@@ -128,10 +135,8 @@
                                         text-align: center;
                                         vertical-align: middle;
                                         line-height: 40px;
-                                        font-weight: bold;"
-                                        data-drop-target="true"
-                                        (drop)="onImageOrRuntimeDropped($event, 0)"
-                                        (dragover)="onDragOver($event)" >
+                                        font-weight: bold;" data-drop-target="true"
+                                            (drop)="onImageOrRuntimeDropped($event, 0)" (dragover)="onDragOver($event)">
                                             Drag here.
                                         </div>
                                     </div>
@@ -139,13 +144,14 @@
                                 <ng-container *ngFor="let runtime of runtimeList; let i = index">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="card"
-                                            draggable="true" data-type="runtime"  (dragstart)="onRuntimeDragStart($event, runtime, i)">
+                                            <div class="card" draggable="true" data-type="runtime"
+                                                (dragstart)="onRuntimeDragStart($event, runtime, i)">
                                                 <div class="card-header">
                                                     <!-- <button type="button" class="btn btn-sm btn-danger">Remove</button> -->
-                                                    이미지 이름: <ng-container *ngIf="runtime.imageId">{{runtime.image.name}}</ng-container> 런타임 코드#{{runtime.blockRuntimeId}}
-                                                    <div class="card-header-actions" style="height: 21px;" >
-                                                    <!-- <label class="switch switch-sm switch-label switch-info" >
+                                                    이미지 이름: <ng-container *ngIf="runtime.imageId">{{runtime.image.name}}
+                                                    </ng-container> 런타임 코드#{{runtime.blockRuntimeId}}
+                                                    <div class="card-header-actions" style="height: 21px;">
+                                                        <!-- <label class="switch switch-sm switch-label switch-info" >
                                                         <input type="checkbox" class="switch-input" checked>
                                                         <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
                                                     </label> -->
@@ -161,21 +167,24 @@
                                                     <div class="row" style="margin-bottom: 5px;">
                                                         <div class="col-6">Internal URL</div>
                                                         <div class="col-6">
-                                                            <input type="text" class="form-control" id="name" placeholder="Enter your name"
-                                                            [(ngModel)]="runtime.containerUrl" disabled readonly>
+                                                            <input type="text" class="form-control" id="name"
+                                                                placeholder="Enter your name"
+                                                                [(ngModel)]="runtime.containerUrl" disabled readonly>
                                                         </div>
                                                     </div>
                                                     <div class="row" style="margin-bottom: 5px;">
                                                         <div class="col-6">Internal PORT</div>
                                                         <div class="col-6">
-                                                            <input type="number" class="form-control" id="name" placeholder="Enter your name"
-                                                            [(ngModel)]="runtime.containerPort" disabled readonly>
+                                                            <input type="number" class="form-control" id="name"
+                                                                placeholder="Enter your name"
+                                                                [(ngModel)]="runtime.containerPort" disabled readonly>
                                                         </div>
                                                     </div>
                                                     <div class="row" style="margin-bottom: 5px;">
                                                         <div class="col-6">State</div>
                                                         <div class="col-6">
-                                                            <select class="form-control" id="ccmonth" ([ngModel])="runtime.containerState">
+                                                            <select class="form-control" id="ccmonth"
+                                                                ([ngModel])="runtime.containerState">
                                                                 <option ngValue="start">start</option>
                                                                 <option ngValue="stop">stop</option>
                                                                 <option ngValue="down">down</option>
@@ -187,10 +196,11 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
-                                                            <textarea id="textarea-input" name="textarea-input" rows="4" class="form-control" placeholder="Content.." 
-                                                            [readonly]="runtime.registerDatetime != null"
-                                                            [disabled]="runtime.registerDatetime != null"
-                                                            [(ngModel)]="runtime.containerEnv"></textarea>
+                                                            <textarea id="textarea-input" name="textarea-input" rows="4"
+                                                                class="form-control" placeholder="Content.."
+                                                                [readonly]="runtime.registerDatetime != null"
+                                                                [disabled]="runtime.registerDatetime != null"
+                                                                [(ngModel)]="runtime.containerEnv"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -210,10 +220,9 @@
                                             text-align: center;
                                             vertical-align: middle;
                                             line-height: 40px;
-                                            font-weight: bold;"
-                                            data-drop-target="true"
-                                            (drop)="onImageOrRuntimeDropped($event, i + 1)"
-                                            (dragover)="onDragOver($event)" >
+                                            font-weight: bold;" data-drop-target="true"
+                                                (drop)="onImageOrRuntimeDropped($event, i + 1)"
+                                                (dragover)="onDragOver($event)">
                                                 Drag here.
                                             </div>
                                         </div>
@@ -222,7 +231,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col">
                             <hr>
@@ -249,8 +258,7 @@
                                     max-width: 120px;
                                     overflow: hidden;
                                     white-space: nowrap;
-                                    text-overflow: ellipsis;" 
-                                    (click)="onBtnQuickAdd()">
+                                    text-overflow: ellipsis;" (click)="onBtnQuickAdd()">
                                     <i class="fa fa-plus"></i> 퀵 버튼 추가</span>
                                 <ng-container *ngFor="let link of blockLinkedList; let i = index">
                                     <span style="min-height: 40px;
@@ -265,10 +273,10 @@
                                     overflow: hidden;
                                     white-space: nowrap;
                                     text-overflow: ellipsis;" draggable="true"
-                                    (dragstart)="onDragStartQuickBtn($event, i)"
-                                    (drop)="onDragDropQuickBtn($event, i)"
-                                    (dragover)="onDragOver($event)"
-                                    > <i class="fa fa-edit" style="font-weight: bold;"></i> {{link.label}}</span>
+                                        (dragstart)="onDragStartQuickBtn($event, i)"
+                                        (drop)="onDragDropQuickBtn($event, i)" (dragover)="onDragOver($event)"
+                                        (click)="onBtnQuickClicked(link, i)"> <i class="fa fa-edit"
+                                            style="font-weight: bold;"></i> {{link.label}}</span>
                                 </ng-container>
                             </div>
                         </div>
@@ -277,4 +285,114 @@
             </div>
         </div>
     </div>
+</div>
+
+<div bsModal #quickModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form class="modal-content" [formGroup]="quickForm">
+            <div class="modal-header">
+                <h4 class="modal-title">퀵 버튼 편집</h4>
+                <button type="button" class="close" (click)="quickModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label" for="select2">Action</label>
+                    <div class="col-md-9">
+                    <select id="select2" name="select2" class="form-control form-control-lg" formControlName="action">
+                        <option value="message">message</option>
+                        <option value="webLink">webLink</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <label class="col-md-3 col-form-label" for="disabled-input">label</label>
+                    <div class="col-md-9">
+                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="label">
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <label class="col-md-3 col-form-label" for="disabled-input">message</label>
+                    <div class="col-md-9">
+                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="messageText">
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <label class="col-md-3 col-form-label" for="disabled-input">web link</label>
+                    <div class="col-md-9">
+                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="webLinkUrl">
+                    </div>
+                </div>
+
+
+                <div class="row" style="margin-bottom: 15px;">
+                    <label class="col-md-3 col-form-label" for="disabled-input">next block</label>
+                    <div class="col-md-9">
+                        <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" disabled readonly formControlName="nextBlockName">
+                        <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" disabled readonly formControlName="nextBlockId">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-prepend">
+                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i>
+                            Search</button>
+                    </span>
+                    <input type="text" id="input1-group2" name="input1-group2" class="form-control"
+                        placeholder="블록 이름 검색" [ngModelOptions]="{standalone: true}">
+                </div>
+
+                <div class="row" style="max-height: 200px;overflow-y: auto; padding-top: 15px;">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                      asdf
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                      asdf
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                      asdf
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                      asdf
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="quickModal.hide()">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </form><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>

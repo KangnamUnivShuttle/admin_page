@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '../../services/http.services';
 import { BasicResponseModel } from '../../models/basicResponse.model';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   templateUrl: 'runtime-flow.component.html'
 })
 export class RuntimeFlowComponent implements OnInit {
+  
+  @ViewChild('quickModal') public quickModal: ModalDirective;
 
   imageList = [];
   runtimeList = [];
@@ -18,6 +21,29 @@ export class RuntimeFlowComponent implements OnInit {
   focusedRuntimeIdx: number = -1;
   focusedImage: any = null
   focusedQuickIdx: number = -1
+
+  editingQuick = {
+    action: null,
+    blockId: null,
+    blockLinkId: null,
+    enabled: null,
+    label: null,
+    messageText: null,
+    nextBlockId: null,
+    orderNum: null,
+    registerDatetime: null,
+    updateDatetime: null,
+    webLinkUrl: null,
+    nextBlockName: null
+  }
+  quickForm = this.formBuilder.group({
+    action: new FormControl(this.editingQuick.action, []),
+    label: new FormControl(this.editingQuick.label, []),
+    messageText: new FormControl(this.editingQuick.messageText, []),
+    nextBlockId: new FormControl(this.editingQuick.nextBlockId, []),
+    webLinkUrl: new FormControl(this.editingQuick.webLinkUrl, []),
+    nextBlockName: new FormControl(this.editingQuick.nextBlockName, [])
+  })
 
   blockID: string;
 
@@ -96,6 +122,10 @@ export class RuntimeFlowComponent implements OnInit {
       messageText: '메시지 내용 입력',
       nextBlockId: this.blockLinkedList.length <= 0 ? 1 : Math.max(...this.blockLinkedList.map(i => i.orderNum)) + 1
     })
+  }
+
+  onBtnQuickClicked(quick, quickIdx) {
+    this.quickModal.show();
   }
 
   onDragStartQuickBtn(event, quickIdx) {

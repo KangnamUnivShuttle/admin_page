@@ -10,6 +10,8 @@ import { RuntimeRoutingModule } from './runtime-routing.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { BrowserModule } from '@angular/platform-browser';
     CommonModule,
     FormsModule,
     // BrowserModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AlertModule.forRoot(),
+    ModalModule.forRoot()
   ],
   declarations: [BlockComponent, RuntimeFlowComponent, PluginComponent] //[ WidgetsComponent ]
 })
