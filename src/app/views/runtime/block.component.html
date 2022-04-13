@@ -5,8 +5,38 @@
                 <div class="card-header">
                     Form
                 </div>
-                <div class="card-body">
-                    
+                <form class="card-body">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label for="name">BlockID</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Enabled</div>
+                        <div class="col">
+                            <label class="switch switch-3d switch-primary">
+                                <input type="checkbox" class="switch-input" checked>
+                                <span class="switch-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-sm btn-warning">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                    <button type="button" class="btn btn-sm btn-primary">Submit</button>
                 </div>
             </div>
         </div>
@@ -16,7 +46,83 @@
                     List
                 </div>
                 <div class="card-body">
-                    
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>BlockID</th>
+                                <th>Name</th>
+                                <th>RegisterTime / UpdateTime</th>
+                                <th>Enabled</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let block of blockList">
+                                <td>{{block.blockId}}</td>
+                                <td>{{block.name}}</td>
+                                <td>{{block.registerDatetime}} / {{block.updateDatetime}}</td>
+                                <td>
+                                    <ng-container *ngIf="block.enabled">
+                                        <span class="badge badge-success">Active</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="!block.enabled">
+                                        <span class="badge badge-secondary">Inactive</span>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td>Vishnu Serghei</td>
+                                <td>2012/01/01</td>
+                                <td>Member</td>
+                                <td>
+                                    <span class="badge badge-success">Active</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Zbyněk Phoibos</td>
+                                <td>2012/02/01</td>
+                                <td>Staff</td>
+                                <td>
+                                    <span class="badge badge-danger">Banned</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Einar Randall</td>
+                                <td>2012/02/01</td>
+                                <td>Admin</td>
+                                <td>
+                                    <span class="badge badge-secondary">Inactive</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Félix Troels</td>
+                                <td>2012/03/01</td>
+                                <td>Member</td>
+                                <td>
+                                    <span class="badge badge-warning">Pending</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Aulus Agmundr</td>
+                                <td>2012/01/21</td>
+                                <td>Staff</td>
+                                <td>
+                                    <span class="badge badge-success">Active</span>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
