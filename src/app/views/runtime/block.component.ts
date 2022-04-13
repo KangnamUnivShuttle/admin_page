@@ -7,6 +7,7 @@ import { HttpParams } from '@angular/common/http';
 import { BasicResponseModel } from '../../models/basicResponse.model';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: 'block.component.html'
@@ -16,9 +17,23 @@ export class BlockComponent implements OnInit, OnDestroy {
     blockList = []
     blockSubscription: Subscription;
     
-    focusedBlock = null;
+    focusedBlock = {
+        blockId: null,
+        name: null,
+        enabled: null,
+        deleteable: null
+    };
+    
+    blockId: string = null;
+    name: string = null;
+
+    mainForm = this.formBuilder.group({
+      blockId: new FormControl(this.focusedBlock.blockId, [Validators.required]),
+      name: new FormControl(this.focusedBlock.name, [Validators.required])
+    })
 
     constructor(private httpService: HttpService,
+        private formBuilder: FormBuilder,
         private router: Router) {
         
     }
@@ -41,7 +56,17 @@ export class BlockComponent implements OnInit, OnDestroy {
     }
 
     onRowClicked(block) {
+        if(this.focusedBlock && this.focusedBlock.blockId === block.blockId) {
+            this.focusedBlock = {
+                blockId: null,
+                name: null,
+                enabled: null,
+                deleteable: null
+            }
+        } else {
         this.focusedBlock = block
+
+        }
     }
 
     onBtnEditRuntimeClicked() {

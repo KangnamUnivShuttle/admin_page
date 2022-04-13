@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '../../services/http.services';
 import { BasicResponseModel } from '../../models/basicResponse.model';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -28,6 +28,7 @@ export class RuntimeFlowComponent implements OnInit {
   })
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private formBuilder: FormBuilder,
               private httpService: HttpService) {
     this.blockID = this.route.snapshot.params['blockID'] || 'intro';
@@ -69,6 +70,10 @@ export class RuntimeFlowComponent implements OnInit {
 
   loadImageList(search: string) {
     return this.httpService.reqGet('plugin', {'name': search}).toPromise()
+  }
+
+  onBtnCancelClicked() {
+    this.router.navigate(['/runtime/block/list'])
   }
 
   onImageDragStart(event, image) {
