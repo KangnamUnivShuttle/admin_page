@@ -5,17 +5,34 @@
                 <div class="card-header">
                     Form
                 </div>
-                <div class="card-body">
+                <form class="card-body">
                     
+                </form>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-sm btn-warning">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                    <button type="button" class="btn btn-sm btn-primary">Submit</button>
                 </div>
             </div>
         </div>
         <div class="col-4">
             <div class="card">
                 <div class="card-header">
-                    Form
+                    Search
                 </div>
                 <div class="card-body">
+                    <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()">
+                        <div class="row">
+                            <div class="col">
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                                    </span>
+                                    <input type="text" id="input1-group2" name="input1-group2" class="form-control" placeholder="이미지 이름 검색" formControlName="searchImageName" [(ngModel)]="searchImageName">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="row" *ngFor="let image of imageList">
                         <div class="col-12">
                             <div class="card" draggable="true" (dragstart)="onImageDragStart($event, image)" data-type="image">
@@ -99,7 +116,7 @@
                                             draggable="true" data-type="runtime"  (dragstart)="onRuntimeDragStart($event, runtime, i)">
                                                 <div class="card-header">
                                                     <!-- <button type="button" class="btn btn-sm btn-danger">Remove</button> -->
-                                                    #{{runtime.blockRuntimeId}}
+                                                    이미지 이름: <ng-container *ngIf="runtime.imageId">{{runtime.image.name}}</ng-container> 런타임 코드#{{runtime.blockRuntimeId}}
                                                     <div class="card-header-actions" style="height: 21px;" >
                                                     <!-- <label class="switch switch-sm switch-label switch-info" >
                                                         <input type="checkbox" class="switch-input" checked>
@@ -108,6 +125,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
+                                                    <div class="row" style="margin-bottom: 5px;">
+                                                        <div class="col-6">Image Source</div>
+                                                        <div class="col-6" *ngIf="runtime.imageId">
+                                                            {{runtime.image.githubUrl}}
+                                                        </div>
+                                                    </div>
                                                     <div class="row" style="margin-bottom: 5px;">
                                                         <div class="col-6">Internal URL</div>
                                                         <div class="col-6">

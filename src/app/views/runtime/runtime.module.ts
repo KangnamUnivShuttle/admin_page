@@ -8,7 +8,8 @@ import { RuntimeFlowComponent } from './runtime-flow.component';
 import { PluginComponent } from './plugin.component';
 import { RuntimeRoutingModule } from './runtime-routing.module';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
@@ -16,7 +17,9 @@ import { FormsModule } from '@angular/forms';
     ChartsModule,
     BsDropdownModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    // BrowserModule,
+    ReactiveFormsModule
   ],
   declarations: [BlockComponent, RuntimeFlowComponent, PluginComponent] //[ WidgetsComponent ]
 })

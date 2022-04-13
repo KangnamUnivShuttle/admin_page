@@ -4,6 +4,7 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../../services/http.services';
 import { BasicResponseModel } from '../../models/basicResponse.model';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: 'runtime-flow.component.html'
@@ -21,8 +22,13 @@ export class RuntimeFlowComponent implements OnInit {
 
   currentBlock = null;
 
+  searchImageName = '';
+  searchForm = this.formBuilder.group({
+    searchImageName: new FormControl(this.searchImageName, [Validators.required]),
+  })
 
   constructor(private route: ActivatedRoute,
+              private formBuilder: FormBuilder,
               private httpService: HttpService) {
     this.blockID = this.route.snapshot.params['blockID'] || 'intro';
   }
@@ -41,6 +47,13 @@ export class RuntimeFlowComponent implements OnInit {
     })
   }
 
+  onSearchSubmit() {
+    this.loadImageList(this.searchImageName)
+    .then(res => {
+      console.log('res', res)
+    })
+  }
+
   loadBlockData(id: string) {
     return this.httpService.reqGet('runtimeBlock', {'blockID': id}).toPromise()
   }
@@ -54,7 +67,7 @@ export class RuntimeFlowComponent implements OnInit {
   }
 
   loadImageList(search: string) {
-    return this.httpService.reqGet('plugin', {}).toPromise()
+    return this.httpService.reqGet('plugin', {'name': search}).toPromise()
   }
 
   onImageDragStart(event, image) {
