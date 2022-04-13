@@ -6,7 +6,29 @@
                     Form
                 </div>
                 <div class="card-body">
-                    
+                    <ng-container *ngIf="currentBlock">
+                        <div class="row" style="margin-bottom: 15px;">
+                            <div class="col-4">blockId</div>
+                            <div class="col-8">
+                                <input type="text" name="blockId" class="form-control" placeholder="" [(ngModel)]="currentBlock.blockId" readonly disabled>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 15px;">
+                            <div class="col-4">name</div>
+                            <div class="col-8">
+                                <input type="text" name="name" class="form-control" placeholder="" [(ngModel)]="currentBlock.name" readonly disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">enabled</div>
+                            <div class="col-8">
+                                <label class="switch switch-3d switch-primary">
+                                    <input type="checkbox" class="switch-input" checked readonly disabled>
+                                    <span class="switch-slider"></span>
+                                    </label>
+                            </div>
+                        </div>
+                    </ng-container>
                 </div>
                 <div class="card-footer">
                     <button type="button" class="btn btn-sm btn-warning">Cancel</button>
@@ -165,7 +187,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
-                                                            <textarea id="textarea-input" name="textarea-input" rows="4" class="form-control" placeholder="Content.."></textarea>
+                                                            <textarea id="textarea-input" name="textarea-input" rows="4" class="form-control" placeholder="Content.." readonly disabled></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
