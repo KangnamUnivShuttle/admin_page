@@ -187,7 +187,10 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
-                                                            <textarea id="textarea-input" name="textarea-input" rows="4" class="form-control" placeholder="Content.." readonly disabled></textarea>
+                                                            <textarea id="textarea-input" name="textarea-input" rows="4" class="form-control" placeholder="Content.." 
+                                                            [readonly]="runtime.registerDatetime != null"
+                                                            [disabled]="runtime.registerDatetime != null"
+                                                            [(ngModel)]="runtime.containerEnv"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -235,7 +238,21 @@
                     <div class="row">
                         <div class="col-12 text-left">
                             <div>
-                                <ng-container *ngFor="let link of blockLinkedList">
+                                <span style="min-height: 40px;
+                                    display: inline-block;
+                                    background-color: #ffe100;
+                                    padding: 15px;
+                                    margin-bottom: 15px;
+                                    border-radius: 8px;
+                                    font-weight: bold;
+                                    line-break: auto;
+                                    max-width: 120px;
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    text-overflow: ellipsis;" 
+                                    (click)="onBtnQuickAdd()">
+                                    <i class="fa fa-plus"></i> 퀵 버튼 추가</span>
+                                <ng-container *ngFor="let link of blockLinkedList; let i = index">
                                     <span style="min-height: 40px;
                                     display: inline-block;
                                     background-color: #ffe100;
@@ -247,7 +264,11 @@
                                     max-width: 120px;
                                     overflow: hidden;
                                     white-space: nowrap;
-                                    text-overflow: ellipsis;">{{link.label}}</span>
+                                    text-overflow: ellipsis;" draggable="true"
+                                    (dragstart)="onDragStartQuickBtn($event, i)"
+                                    (drop)="onDragDropQuickBtn($event, i)"
+                                    (dragover)="onDragOver($event)"
+                                    > <i class="fa fa-edit" style="font-weight: bold;"></i> {{link.label}}</span>
                                 </ng-container>
                             </div>
                         </div>

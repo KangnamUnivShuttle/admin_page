@@ -17,6 +17,7 @@ export class RuntimeFlowComponent implements OnInit {
 
   focusedRuntimeIdx: number = -1;
   focusedImage: any = null
+  focusedQuickIdx: number = -1
 
   blockID: string;
 
@@ -85,6 +86,28 @@ export class RuntimeFlowComponent implements OnInit {
     console.log('rd', event, blockRuntime, fromIdx)
 
     this.focusedRuntimeIdx = fromIdx;
+  }
+
+  onBtnQuickAdd() {
+    this.blockLinkedList.push({
+      label: '라벨 내용 입력',
+      action: 'message',
+      blockId: this.blockID,
+      messageText: '메시지 내용 입력',
+      nextBlockId: this.blockLinkedList.length <= 0 ? 1 : Math.max(...this.blockLinkedList.map(i => i.orderNum)) + 1
+    })
+  }
+
+  onDragStartQuickBtn(event, quickIdx) {
+    this.focusedQuickIdx = quickIdx
+  }
+
+  onDragDropQuickBtn(event, quickIdx) {
+    if (this.focusedQuickIdx >= 0) {
+      const tmp = this.blockLinkedList.splice(this.focusedQuickIdx, 1)[0]
+      this.blockLinkedList.splice(quickIdx, 0, tmp)
+      this.focusedQuickIdx = -1
+    }
   }
 
   onDragStart(event) {
