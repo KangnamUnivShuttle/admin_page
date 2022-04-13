@@ -50,7 +50,8 @@ export class RuntimeFlowComponent implements OnInit {
   onSearchSubmit() {
     this.loadImageList(this.searchImageName)
     .then(res => {
-      console.log('res', res)
+      // console.log('res', res)
+      this.imageList = res.data
     })
   }
 

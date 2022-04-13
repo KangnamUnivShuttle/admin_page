@@ -1,19 +1,19 @@
 <div class="animated fadeIn">
     <div class="row">
         <div class="col-4">
-            <div class="card">
+            <form class="card">
                 <div class="card-header">
                     Form
                 </div>
-                <form class="card-body">
+                <div class="card-body">
                     
-                </form>
+                </div>
                 <div class="card-footer">
                     <button type="button" class="btn btn-sm btn-warning">Cancel</button>
                     <button type="button" class="btn btn-sm btn-danger">Delete</button>
                     <button type="button" class="btn btn-sm btn-primary">Submit</button>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="col-4">
             <div class="card">
@@ -21,7 +21,7 @@
                     Search
                 </div>
                 <div class="card-body">
-                    <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()">
+                    <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()" style="margin-bottom: 15px;">
                         <div class="row">
                             <div class="col">
                                 <div class="input-group">
@@ -37,7 +37,7 @@
                         <div class="col-12">
                             <div class="card" draggable="true" (dragstart)="onImageDragStart($event, image)" data-type="image">
                                 <div class="card-header">
-                                    {{image.title}}
+                                   #{{image.imageId}}-{{image.name}}
                                     <!-- <button type="button" class="btn btn-sm btn-danger">Remove</button> -->
                                     <div class="card-header-actions" style="height: 21px;" >
                                     <!-- <label class="switch switch-sm switch-label switch-info" >
@@ -47,7 +47,12 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <div class="col-6">Image Source</div>
+                                        <div class="col-6">
+                                            {{image.githubUrl}}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
