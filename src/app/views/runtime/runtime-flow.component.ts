@@ -22,6 +22,8 @@ export class RuntimeFlowComponent implements OnInit {
   focusedImage: any = null
   focusedQuickIdx: number = -1
 
+  searchedBlockList = []
+  searchBlockName: string = ''
   editingQuick = {
     action: null,
     blockId: null,
@@ -75,6 +77,19 @@ export class RuntimeFlowComponent implements OnInit {
     })
   }
 
+  onBtnSearchBlockClicked() {
+    this.httpService.reqGet('runtimeBlock', {'name': this.searchBlockName}).toPromise()
+    .then(res => {
+      this.searchedBlockList = res.data
+      console.log('searchedBlockList', this.searchedBlockList)
+    })
+  }
+
+  onBtnQuickModalSubmit() {
+    console.log(this.editingQuick, this.blockLinkedList)
+    this.quickModal.hide()
+  }
+
   onSearchSubmit() {
     this.loadImageList(this.searchImageName)
     .then(res => {
@@ -126,6 +141,8 @@ export class RuntimeFlowComponent implements OnInit {
 
   onBtnQuickClicked(quick, quickIdx) {
     this.quickModal.show();
+    this.editingQuick = quick
+    // console.log(this.editingQuick)
   }
 
   onDragStartQuickBtn(event, quickIdx) {

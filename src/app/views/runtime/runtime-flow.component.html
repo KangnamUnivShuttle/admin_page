@@ -302,7 +302,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label" for="select2">Action</label>
                     <div class="col-md-9">
-                    <select id="select2" name="select2" class="form-control form-control-lg" formControlName="action">
+                    <select id="select2" name="select2" class="form-control form-control-lg" formControlName="action" [(ngModel)]="editingQuick.action">
                         <option value="message">message</option>
                         <option value="webLink">webLink</option>
                     </select>
@@ -311,19 +311,22 @@
                 <div class="row" style="margin-bottom: 15px;">
                     <label class="col-md-3 col-form-label" for="disabled-input">label</label>
                     <div class="col-md-9">
-                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="label">
+                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="label"
+                      [(ngModel)]="editingQuick.label">
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 15px;">
                     <label class="col-md-3 col-form-label" for="disabled-input">message</label>
                     <div class="col-md-9">
-                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="messageText">
+                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="messageText"
+                      [(ngModel)]="editingQuick.messageText">
                     </div>
                 </div>
                 <div class="row" style="margin-bottom: 15px;">
                     <label class="col-md-3 col-form-label" for="disabled-input">web link</label>
                     <div class="col-md-9">
-                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="webLinkUrl">
+                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="webLinkUrl"
+                      [(ngModel)]="editingQuick.webLinkUrl">
                     </div>
                 </div>
 
@@ -331,67 +334,47 @@
                 <div class="row" style="margin-bottom: 15px;">
                     <label class="col-md-3 col-form-label" for="disabled-input">next block</label>
                     <div class="col-md-9">
-                        <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" disabled readonly formControlName="nextBlockName">
-                        <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" disabled readonly formControlName="nextBlockId">
+                        <div class="input-group">
+                            <span class="input-group-prepend">
+                                <button type="button" class="btn btn-primary" (click)="editingQuick.nextBlockId = null;"><i class="fa fa-cross"></i>
+                                    reset</button>
+                            </span>
+                            <!-- <input type="text" id="input1-group2" name="input1-group2" class="form-control"
+                               [(ngModel)]="editingQuick.nextBlockName" disabled readonly formControlName="nextBlockName"> -->
+                               <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" disabled readonly formControlName="nextBlockId"
+                               [(ngModel)]="editingQuick.nextBlockId">
+                        </div>
                     </div>
                 </div>
 
                 <div class="input-group">
                     <span class="input-group-prepend">
-                        <button type="button" class="btn btn-primary"><i class="fa fa-search"></i>
+                        <button type="button" class="btn btn-primary" (click)="onBtnSearchBlockClicked()"><i class="fa fa-search"></i>
                             Search</button>
                     </span>
                     <input type="text" id="input1-group2" name="input1-group2" class="form-control"
-                        placeholder="블록 이름 검색" [ngModelOptions]="{standalone: true}">
+                        placeholder="블록 이름 검색" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchBlockName">
                 </div>
 
                 <div class="row" style="max-height: 200px;overflow-y: auto; padding-top: 15px;">
                     <div class="col">
-                        <div class="row">
+                        <div class="row" *ngFor="let block of searchedBlockList"
+                        (click)="editingQuick.nextBlockId = block.blockId;">
                             <div class="col">
-                                <div class="card">
+                                <div class="card" [ngStyle]="editingQuick && block.blockId == editingQuick.nextBlockId && { 'background-color': '#acb4bc' }">
                                     <div class="card-body">
-                                      asdf
+                                      {{block.name}} #{{block.blockId}}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body">
-                                      asdf
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body">
-                                      asdf
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-body">
-                                      asdf
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" (click)="quickModal.hide()">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" (click)="onBtnQuickModalSubmit()">Save changes</button>
             </div>
         </form><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
