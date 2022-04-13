@@ -1,11 +1,11 @@
 <div class="animated fadeIn">
     <div class="row">
         <div class="col-4">
-            <div class="card">
+            <form class="card">
                 <div class="card-header">
                     Form
                 </div>
-                <form class="card-body">
+                <div class="card-body">
 
                     <div class="row">
                         <div class="col-sm-12">
@@ -32,13 +32,18 @@
                             </label>
                         </div>
                     </div>
-                </form>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-sm btn-primary" (click)="onBtnEditRuntimeClicked()">Edit Runtime</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <button type="button" class="btn btn-sm btn-warning">Cancel</button>
                     <button type="button" class="btn btn-sm btn-danger">Delete</button>
                     <button type="button" class="btn btn-sm btn-primary">Submit</button>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="col-8">
             <div class="card">
@@ -56,19 +61,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let block of blockList">
-                                <td>{{block.blockId}}</td>
-                                <td>{{block.name}}</td>
-                                <td>{{block.registerDatetime}} / {{block.updateDatetime}}</td>
-                                <td>
-                                    <ng-container *ngIf="block.enabled">
-                                        <span class="badge badge-success">Active</span>
-                                    </ng-container>
-                                    <ng-container *ngIf="!block.enabled">
-                                        <span class="badge badge-secondary">Inactive</span>
-                                    </ng-container>
-                                </td>
-                            </tr>
+                            <ng-container *ngFor="let block of blockList">
+                                <tr (click)="onRowClicked(block)">
+                                    <td>{{block.blockId}}</td>
+                                    <td>{{block.name}}</td>
+                                    <td>{{block.registerDatetime}} / {{block.updateDatetime}}</td>
+                                    <td>
+                                        <ng-container *ngIf="block.enabled">
+                                            <span class="badge badge-success">Active</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="!block.enabled">
+                                            <span class="badge badge-secondary">Inactive</span>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </ng-container>
                             <!-- <tr>
                                 <td>Vishnu Serghei</td>
                                 <td>2012/01/01</td>
