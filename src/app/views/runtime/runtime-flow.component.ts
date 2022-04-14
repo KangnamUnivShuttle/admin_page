@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { HttpService } from '../../services/http.services';
 import { BasicResponseModel } from '../../models/basicResponse.model';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
+import { BlockImageModel, BlockLinkModel, BlockModel, BlockRuntimeModel } from './block.model';
 
 @Component({
   templateUrl: 'runtime-flow.component.html'
@@ -14,15 +15,15 @@ export class RuntimeFlowComponent implements OnInit {
   
   @ViewChild('quickModal') public quickModal: ModalDirective;
 
-  imageList = [];
-  runtimeList = [];
-  blockLinkedList = [];
+  imageList: BlockImageModel[] = [];
+  runtimeList: BlockRuntimeModel[] = [];
+  blockLinkedList: BlockLinkModel[] = [];
 
   focusedRuntimeIdx: number = -1;
-  focusedImage: any = null
+  focusedImage: BlockImageModel = null
   focusedQuickIdx: number = -1
 
-  searchedBlockList = []
+  searchedBlockList: BlockModel[] = []
   searchBlockName: string = ''
   editingQuick = {
     action: null,
@@ -49,7 +50,7 @@ export class RuntimeFlowComponent implements OnInit {
 
   blockID: string;
 
-  currentBlock = null;
+  currentBlock: BlockModel = null;
 
   searchImageName = '';
   searchForm = this.formBuilder.group({
@@ -59,6 +60,7 @@ export class RuntimeFlowComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder,
+              private cdr: ChangeDetectorRef,
               private httpService: HttpService) {
     this.blockID = this.route.snapshot.params['blockID'] || 'intro';
   }
@@ -140,7 +142,13 @@ export class RuntimeFlowComponent implements OnInit {
       action: 'message',
       blockId: this.blockID,
       messageText: '메시지 내용 입력',
-      nextBlockId: this.blockLinkedList.length <= 0 ? 1 : Math.max(...this.blockLinkedList.map(i => i.orderNum)) + 1
+      orderNum: this.blockLinkedList.length <= 0 ? 1 : Math.max(...this.blockLinkedList.map(i => i.orderNum)) + 1,
+      blockLinkId: 0,
+      nextBlockId: '',
+      webLinkUrl: '',
+      enabled: 1,
+      registerDatetime: undefined,
+      updateDatetime: undefined
     })
   }
 
@@ -191,13 +199,13 @@ export class RuntimeFlowComponent implements OnInit {
         imageId: this.focusedImage.imageId,
         orderNum: idx,
         image: this.focusedImage
-      });
+      } as BlockRuntimeModel);
       console.log(this.runtimeList)
       this.focusedImage = null
     }
   }
 
-  onRuntimeStateChange(runtime) {
+  onRuntimeStateChange(runtime, idx) {
     // console.log('asdf', runtime)
     if (runtime.containerState !== runtime.containerStateOrigin && runtime.blockRuntimeId > 0 && confirm('상태 변경 하시겠습니까?')) {
       runtime.containerStateOrigin = runtime.containerState
@@ -222,6 +230,12 @@ export class RuntimeFlowComponent implements OnInit {
           }
         });
       })
+    } else {
+      console.warn('asdf', runtime.containerState, runtime.containerStateOrigin)
+      this.runtimeList[idx].containerState = this.runtimeList[idx].containerStateOrigin
+      // runtime.containerState = runtime.containerStateOrigin
+      console.warn('run', runtime, this.runtimeList)
+      this.cdr.detectChanges();
     }
   }
 
@@ -246,14 +260,14 @@ export class RuntimeFlowComponent implements OnInit {
   }
 
   async onSubmit() {
-    this.runtimeList = this.runtimeList.map((runtime, idx) => {
+    const runtimeSubmitList = this.runtimeList.map((runtime, idx) => {
       return {
         ...runtime,
         orderNum: idx
       }
     })
 
-    this.blockLinkedList = this.blockLinkedList.map((blockLink, idx) => {
+    const blockLinkedSubmitList = this.blockLinkedList.map((blockLink, idx) => {
       return {
         ...blockLink,
         orderNum: idx
@@ -263,7 +277,7 @@ export class RuntimeFlowComponent implements OnInit {
     console.log(this.runtimeList, this.blockLinkedList)
     
     const promiseRuntimeList = []
-    this.runtimeList.forEach(runtime => {
+    runtimeSubmitList.forEach(runtime => {
       if(runtime.registerDatetime) {
         promiseRuntimeList.push(this.httpService.reqPut('/runtime/modify', runtime, null).toPromise())
       } else {
@@ -271,7 +285,7 @@ export class RuntimeFlowComponent implements OnInit {
       }
     })
 
-    this.blockLinkedList.forEach(blockLink => {
+    blockLinkedSubmitList.forEach(blockLink => {
       if (blockLink.registerDatetime) {
         promiseRuntimeList.push(this.httpService.reqPut('/runtimeLink', blockLink, null).toPromise())
       } else {

@@ -34,7 +34,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="button" class="btn btn-sm btn-warning" (click)="onBtnCancelClicked()">Cancel</button>
-                    <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                    <!-- <button type="button" class="btn btn-sm btn-danger">Delete</button> -->
                     <button type="button" class="btn btn-sm btn-primary" (click)="onSubmit()">Submit</button>
                 </div>
             </form>
@@ -184,13 +184,13 @@
                                                         <div class="col-6">State</div>
                                                         <div class="col-6">
                                                             <select class="form-control" id="ccmonth"
-                                                            (change)="onRuntimeStateChange(runtime)"
+                                                            (change)="onRuntimeStateChange(runtime, i)"
                                                             [disabled]="runtime.registerDatetime == null"
                                                                 [(ngModel)]="runtime.containerState">
-                                                                <option ngValue="start">start</option>
-                                                                <option ngValue="stop">stop</option>
-                                                                <option ngValue="down">down</option>
-                                                                <option ngValue="ready">ready</option>
+                                                                <option [ngValue]="'start'">start</option>
+                                                                <option [ngValue]="'stop'">stop</option>
+                                                                <option [ngValue]="'down'">down</option>
+                                                                <option [ngValue]="'ready'" *ngIf="runtime.registerDate != null">ready</option>
                                                             </select>
                                                         </div>
                                                     </div>
