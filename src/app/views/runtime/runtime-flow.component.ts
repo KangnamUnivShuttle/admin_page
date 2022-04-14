@@ -177,14 +177,38 @@ export class RuntimeFlowComponent implements OnInit {
     }
 
     if (this.focusedImage) {
-      this.runtimeList.splice(idx, 0, this.focusedImage);
+      this.runtimeList.splice(idx, 0, {
+        blockId: this.blockID,
+        containerEnv: '',
+        containerPort: '15000',
+        containerState: 'ready',
+        containerUrl: `${this.focusedImage.name}_${this.guid()}`,
+        imageId: this.focusedImage.imageId,
+        orderNum: idx,
+        image: this.focusedImage
+      });
       console.log(this.runtimeList)
       this.focusedImage = null
     }
   }
 
+  guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4();
+  }
+
   onDragOver(event) {
     // console.log('over', event)
     event.preventDefault()
+  }
+
+  onBtnRemoveRuntime(idx) {
+    if(!this.runtimeList[idx].blockRuntimeId) {
+      this.runtimeList.splice(idx, 1);
+    }
   }
 }

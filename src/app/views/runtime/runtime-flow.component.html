@@ -184,10 +184,11 @@
                                                         <div class="col-6">State</div>
                                                         <div class="col-6">
                                                             <select class="form-control" id="ccmonth"
-                                                                ([ngModel])="runtime.containerState">
+                                                                [(ngModel)]="runtime.containerState">
                                                                 <option ngValue="start">start</option>
                                                                 <option ngValue="stop">stop</option>
                                                                 <option ngValue="down">down</option>
+                                                                <option ngValue="ready">ready</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -206,7 +207,10 @@
                                                 </div>
                                                 <div class="card-footer">
                                                     <!-- <button type="button" class="btn btn-sm btn-warning">Cancel</button> -->
-                                                    <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                                                    <button type="button" class="btn btn-sm btn-danger"
+                                                    (click)="onBtnRemoveRuntime(i)"
+                                                    [disabled]="(runtime.blockRuntimeId && (runtime.containerState != 'down' || runtime.containerState != 'stop'))"
+                                                    >Delete</button>
                                                     <!-- <button type="button" class="btn btn-sm btn-primary">Submit</button> -->
                                                 </div>
                                             </div>
