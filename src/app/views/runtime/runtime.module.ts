@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     FormsModule,
     // BrowserModule,
     ReactiveFormsModule,
+    MatSelectModule,
     AlertModule.forRoot(),
     ModalModule.forRoot()
   ],

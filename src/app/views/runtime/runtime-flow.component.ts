@@ -48,6 +48,13 @@ export class RuntimeFlowComponent implements OnInit {
     nextBlockName: new FormControl(this.editingQuick.nextBlockName, [])
   })
 
+  stateList = [
+    'start',
+    'stop',
+    'down',
+    'ready'
+  ]
+
   blockID: string;
 
   currentBlock: BlockModel = null;
@@ -231,11 +238,13 @@ export class RuntimeFlowComponent implements OnInit {
         });
       })
     } else {
-      console.warn('asdf', runtime.containerState, runtime.containerStateOrigin)
-      this.runtimeList[idx].containerState = this.runtimeList[idx].containerStateOrigin
-      // runtime.containerState = runtime.containerStateOrigin
-      console.warn('run', runtime, this.runtimeList)
-      this.cdr.detectChanges();
+      setTimeout(() => {
+        console.warn('asdf', runtime.containerState, runtime.containerStateOrigin)
+        this.runtimeList[idx].containerState = this.runtimeList[idx].containerStateOrigin
+        // runtime.containerState = runtime.containerStateOrigin
+        console.warn('run', runtime, this.runtimeList)
+        this.cdr.detectChanges();
+      }, 1)
     }
   }
 
