@@ -73,7 +73,12 @@ export class RuntimeFlowComponent implements OnInit {
     .then(res => {
       this.currentBlock = res[0].data[0];
       this.blockLinkedList = res[1].data;
-      this.runtimeList = res[2].data;
+      this.runtimeList = res[2].data.map(runtime => {
+        return {
+          ...runtime,
+          containerStateOrigin: runtime.containerState
+        }
+      });
     })
   }
 
@@ -192,6 +197,34 @@ export class RuntimeFlowComponent implements OnInit {
     }
   }
 
+  onRuntimeStateChange(runtime) {
+    // console.log('asdf', runtime)
+    if (runtime.containerState !== runtime.containerStateOrigin && runtime.blockRuntimeId > 0 && confirm('상태 변경 하시겠습니까?')) {
+      runtime.containerStateOrigin = runtime.containerState
+      this.httpService.reqPost('/runtime/state',
+        {
+          blockRuntimeID: runtime.blockRuntimeId,
+          container_name: `${runtime.image.name}_${this.guid()}`,
+          container_state: runtime.containerState,
+          image_url: runtime.image.githubUrl,
+          cpu: '0.1',
+          ram: '128M',
+          path: '.',
+          env: runtime.containerEnv.split('\n')
+        }, null
+      ).toPromise()
+      .then(res => this.loadRuntimeData(this.blockID))
+      .then(res => {
+        this.runtimeList = res.data.map(_runtime => {
+          return {
+            ..._runtime,
+            containerStateOrigin: _runtime.containerState
+          }
+        });
+      })
+    }
+  }
+
   guid() {
     function s4() {
       return Math.floor((1 + Math.random()) * 0x10000)
@@ -210,5 +243,42 @@ export class RuntimeFlowComponent implements OnInit {
     if(!this.runtimeList[idx].blockRuntimeId) {
       this.runtimeList.splice(idx, 1);
     }
+  }
+
+  async onSubmit() {
+    this.runtimeList = this.runtimeList.map((runtime, idx) => {
+      return {
+        ...runtime,
+        orderNum: idx
+      }
+    })
+
+    this.blockLinkedList = this.blockLinkedList.map((blockLink, idx) => {
+      return {
+        ...blockLink,
+        orderNum: idx
+      }
+    })
+
+    console.log(this.runtimeList, this.blockLinkedList)
+    
+    const promiseRuntimeList = []
+    this.runtimeList.forEach(runtime => {
+      if(runtime.registerDatetime) {
+        promiseRuntimeList.push(this.httpService.reqPut('/runtime/modify', runtime, null).toPromise())
+      } else {
+        promiseRuntimeList.push(this.httpService.reqPost('/runtime/register', runtime, null).toPromise())
+      }
+    })
+
+    this.blockLinkedList.forEach(blockLink => {
+      if (blockLink.registerDatetime) {
+        promiseRuntimeList.push(this.httpService.reqPut('/runtimeLink', blockLink, null).toPromise())
+      } else {
+        promiseRuntimeList.push(this.httpService.reqPost('/runtimeLink', blockLink, null).toPromise())
+      }
+    })
+
+    const reqResult = await Promise.all(promiseRuntimeList)
   }
 }
