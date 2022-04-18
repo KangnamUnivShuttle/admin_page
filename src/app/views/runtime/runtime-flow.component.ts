@@ -288,17 +288,55 @@ export class RuntimeFlowComponent implements OnInit {
     const promiseRuntimeList = []
     runtimeSubmitList.forEach(runtime => {
       if(runtime.registerDatetime) {
-        promiseRuntimeList.push(this.httpService.reqPut('/runtime/modify', runtime, null).toPromise())
+        promiseRuntimeList.push(this.httpService.reqPut('/runtime/modify', 
+        {
+          blockRuntimeID: runtime.blockRuntimeId,
+          blockID: runtime.blockId,
+          imageID: runtime.imageId,
+          order_num: runtime.orderNum,
+          container_url: runtime.containerUrl,
+          container_port: runtime.containerPort,
+          container_env: runtime.containerEnv
+        }, null).toPromise())
       } else {
-        promiseRuntimeList.push(this.httpService.reqPost('/runtime/register', runtime, null).toPromise())
+        promiseRuntimeList.push(this.httpService.reqPost('/runtime/register', 
+        {
+          // blockRuntimeID: runtime.blockRuntimeId,
+          blockID: runtime.blockId,
+          imageID: runtime.imageId,
+          order_num: runtime.orderNum,
+          container_url: runtime.containerUrl,
+          container_port: runtime.containerPort,
+          container_env: runtime.containerEnv
+        }, null).toPromise())
       }
     })
 
     blockLinkedSubmitList.forEach(blockLink => {
       if (blockLink.registerDatetime) {
-        promiseRuntimeList.push(this.httpService.reqPut('/runtimeLink', blockLink, null).toPromise())
+        promiseRuntimeList.push(this.httpService.reqPut('/runtimeLink', {
+          blockLinkID: blockLink.blockLinkId,
+          blockID: blockLink.blockId,
+          nextBlockID: blockLink.nextBlockId,
+          messageText: blockLink.messageText,
+          action: blockLink.action,
+          label: blockLink.label,
+          webLinkUrl: blockLink.webLinkUrl,
+          enabled: blockLink.enabled,
+          order_num: blockLink.orderNum
+        }, null).toPromise())
       } else {
-        promiseRuntimeList.push(this.httpService.reqPost('/runtimeLink', blockLink, null).toPromise())
+        promiseRuntimeList.push(this.httpService.reqPost('/runtimeLink', {
+          // blockLinkID: blockLink.blockLinkId,
+          blockID: blockLink.blockId,
+          nextBlockID: blockLink.nextBlockId,
+          messageText: blockLink.messageText,
+          action: blockLink.action,
+          label: blockLink.label,
+          webLinkUrl: blockLink.webLinkUrl,
+          enabled: blockLink.enabled,
+          order_num: blockLink.orderNum
+        }, null).toPromise())
       }
     })
 
