@@ -51,8 +51,8 @@ export class RuntimeFlowComponent implements OnInit {
   stateList = [
     'start',
     'stop',
-    'down',
-    'ready'
+    'remove',
+    'Down'
   ]
 
   blockID: string;
@@ -72,7 +72,7 @@ export class RuntimeFlowComponent implements OnInit {
     this.blockID = this.route.snapshot.params['blockID'] || 'intro';
   }
 
-  ngOnInit(): void {
+  initData() {
     Promise.all([
       this.loadBlockData(this.blockID),
       this.loadBlockLinkData(this.blockID),
@@ -89,6 +89,10 @@ export class RuntimeFlowComponent implements OnInit {
         }
       });
     })
+  }
+
+  ngOnInit(): void {
+    this.initData();
   }
 
   onBtnSearchBlockClicked() {
@@ -317,7 +321,7 @@ export class RuntimeFlowComponent implements OnInit {
         promiseRuntimeList.push(this.httpService.reqPut('/runtimeLink', {
           blockLinkID: blockLink.blockLinkId,
           blockID: blockLink.blockId,
-          nextBlockID: blockLink.nextBlockId,
+          nextBlockID: blockLink.nextBlockId === '' ? null : blockLink.nextBlockId,
           messageText: blockLink.messageText,
           action: blockLink.action,
           label: blockLink.label,
@@ -329,7 +333,7 @@ export class RuntimeFlowComponent implements OnInit {
         promiseRuntimeList.push(this.httpService.reqPost('/runtimeLink', {
           // blockLinkID: blockLink.blockLinkId,
           blockID: blockLink.blockId,
-          nextBlockID: blockLink.nextBlockId,
+          nextBlockID: blockLink.nextBlockId === '' ? null : blockLink.nextBlockId,
           messageText: blockLink.messageText,
           action: blockLink.action,
           label: blockLink.label,
@@ -341,5 +345,6 @@ export class RuntimeFlowComponent implements OnInit {
     })
 
     const reqResult = await Promise.all(promiseRuntimeList)
+    this.initData()
   }
 }
