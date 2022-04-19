@@ -45,3 +45,12 @@ export interface BlockRuntimeModel {
     updateDatetime: Date;
     image: BlockImageModel;
 }
+
+export interface BlockImageModel  {
+    imageId: number;
+    name: string;
+    orderNum: number;
+    githubUrl: string;
+    registerDatetime: Date;
+    updateDatetime: Date;
+}

@@ -16,7 +16,79 @@
                     List
                 </div>
                 <div class="card-body">
-                    
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>image id</th>
+                                <th>Name</th>
+                                <th>github url</th>
+                                <th>RegisterTime / UpdateTime</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let image of blockImageList">
+                                <tr (click)="onRowClicked(image)"
+                                [ngStyle]="focusedBlockImage && image.imageId == focusedBlockImage.imageId && { 'background-color': '#acb4bc' }">
+                                    <td>{{image.imageId}}</td>
+                                    <td>{{image.name}}</td>
+                                    <td>{{image.githubUrl}}</td>
+                                    <td>{{image.registerDatetime}} / {{image.updateDatetime}}</td>
+                                </tr>
+                            </ng-container>
+                            <!-- <tr>
+                                <td>Vishnu Serghei</td>
+                                <td>2012/01/01</td>
+                                <td>Member</td>
+                                <td>
+                                    <span class="badge badge-success">Active</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Zbyněk Phoibos</td>
+                                <td>2012/02/01</td>
+                                <td>Staff</td>
+                                <td>
+                                    <span class="badge badge-danger">Banned</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Einar Randall</td>
+                                <td>2012/02/01</td>
+                                <td>Admin</td>
+                                <td>
+                                    <span class="badge badge-secondary">Inactive</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Félix Troels</td>
+                                <td>2012/03/01</td>
+                                <td>Member</td>
+                                <td>
+                                    <span class="badge badge-warning">Pending</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Aulus Agmundr</td>
+                                <td>2012/01/21</td>
+                                <td>Staff</td>
+                                <td>
+                                    <span class="badge badge-success">Active</span>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
