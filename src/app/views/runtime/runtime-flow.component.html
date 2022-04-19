@@ -209,7 +209,7 @@
                                                     <!-- <button type="button" class="btn btn-sm btn-warning">Cancel</button> -->
                                                     <button type="button" class="btn btn-sm btn-danger"
                                                     (click)="onBtnRemoveRuntime(i)"
-                                                    [disabled]="(runtime.blockRuntimeId && (runtime.containerState != 'down' || runtime.containerState != 'stop'))"
+                                                    [disabled]="(runtime.blockRuntimeId && runtime.containerState != 'Down')"
                                                     >Delete</button>
                                                     <!-- <button type="button" class="btn btn-sm btn-primary">Submit</button> -->
                                                 </div>

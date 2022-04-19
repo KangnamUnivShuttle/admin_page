@@ -267,8 +267,17 @@ export class RuntimeFlowComponent implements OnInit {
   }
 
   onBtnRemoveRuntime(idx) {
+    if (!confirm('정말로 삭제 하시겠습니까')) {
+      return
+    }
+
     if(!this.runtimeList[idx].blockRuntimeId) {
       this.runtimeList.splice(idx, 1);
+    } else {
+      this.httpService.reqDelete(`runtime/${this.runtimeList[idx].blockRuntimeId}`, null).toPromise()
+      .then(res => {
+        this.initData()
+      })
     }
   }
 
@@ -353,7 +362,10 @@ export class RuntimeFlowComponent implements OnInit {
       return
     }
     if(targetBlock.registerDatetime) {
-
+      this.httpService.reqDelete(`runtimeLink/${targetBlock.blockLinkId}`, null).toPromise()
+      .then(res => {
+        this.initData()
+      })
     } else {
       const idx = this.blockLinkedList.indexOf(targetBlock)
       if (idx >= 0) {
