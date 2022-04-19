@@ -347,4 +347,21 @@ export class RuntimeFlowComponent implements OnInit {
     const reqResult = await Promise.all(promiseRuntimeList)
     this.initData()
   }
+
+  onBtnBlockLinkDeleteClicked(targetBlock) {
+    if(!confirm('정말로 삭제하시겠습니까?')) {
+      return
+    }
+    if(targetBlock.registerDatetime) {
+
+    } else {
+      const idx = this.blockLinkedList.indexOf(targetBlock)
+      if (idx >= 0) {
+        this.blockLinkedList.splice(idx, 1)
+      } else {
+        console.warn(`cannot find idx: ${idx}`)
+      }
+    }
+    this.quickModal.hide()
+  }
 }
