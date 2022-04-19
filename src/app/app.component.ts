@@ -5,6 +5,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { freeSet } from '@coreui/icons';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { HttpService } from './services/http.services';
+import { LoadingService } from './services/loading.service';
 
 @Component({
   // tslint:disable-next-line
@@ -15,14 +16,17 @@ import { HttpService } from './services/http.services';
 export class AppComponent implements OnInit, OnDestroy {
 
   logginSubscription: Subscription;
+  loadingStatus: boolean;
 
   constructor(
     private router: Router,
     public iconSet: IconSetService,
-    private httpSerivce: HttpService
+    private httpSerivce: HttpService,
+    private loadingService: LoadingService
   ) {
     // iconSet singleton
     iconSet.icons = { ...freeSet };
+    this.loadingStatus = false;
   }
 
   ngOnDestroy(): void {
@@ -44,6 +48,10 @@ export class AppComponent implements OnInit, OnDestroy {
         console.warn(`[AppComponent] [ngOnInit-IsAuthorized] status is false`)
         this.router.navigate(['/login'])
       }
+    })
+
+    this.loadingService.loading.subscribe((status) => {
+      this.loadingStatus = status
     })
   }
 }
