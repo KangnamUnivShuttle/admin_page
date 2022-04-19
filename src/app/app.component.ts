@@ -10,7 +10,8 @@ import { LoadingService } from './services/loading.service';
 @Component({
   // tslint:disable-next-line
   selector: 'body',
-  template: '<router-outlet></router-outlet>',
+  templateUrl: 'app.component.html',
+  // template: '<router-outlet></router-outlet>',
   providers: [IconSetService],
 })
 export class AppComponent implements OnInit, OnDestroy {
