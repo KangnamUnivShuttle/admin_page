@@ -1,0 +1,54 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col">
+            <div class="card" style="height: 700px;overflow: auto;position: relative;">
+                <div style="width: 3000px; height: 3000px;position: absolute;
+                background-image: linear-gradient(rgba(0, 0, 0, .1) .1em, transparent .1em), linear-gradient(90deg, rgba(0, 0, 0, .1) .1em, transparent .1em);
+                background-size: 3em 3em;">
+                    <div style="position: sticky;
+                right: 15px;
+                float: right;
+                top: 15px;height: 600px;    background-color: #f0f3f5;
+                border-radius: 5px;">
+                        <div style="width: 48px; height: 48px;    line-height: 48px;
+                    border-radius: 5px;text-align: center;">
+                            <i class="fa fa-search fa-2x"></i>
+                        </div>
+                        <div style="width: 48px; height: 48px;    line-height: 48px;
+                    border-radius: 5px;text-align: center;"
+                            (click)="mode.drag = mode.drag == 'item' ? 'view' : 'item'">
+                            <ng-template [ngIf]="mode.drag == 'item'">
+                                <i class="fa fa-hand-pointer-o fa-2x"></i>
+                            </ng-template>
+                            <ng-template [ngIf]="mode.drag == 'view'">
+                                <i class="fa fa-arrows fa-2x"></i>
+                            </ng-template>
+                        </div>
+                        <div style="width: 48px; height: 48px;    line-height: 48px;
+                    border-radius: 5px;text-align: center;"
+                            (click)="mode.execute = mode.execute == 'idle' ? 'running' : 'idle'">
+                            <ng-template [ngIf]="mode.execute == 'idle'">
+                                <i class="fa fa-play fa-2x"></i>
+                            </ng-template>
+                            <ng-template [ngIf]="mode.execute == 'running'">
+                                <i class="fa fa-stop fa-2x"></i>
+                            </ng-template>
+                        </div>
+                        <div style="width: 48px; height: 48px;    line-height: 48px;
+                    border-radius: 5px;text-align: center;">
+                            <i class="fa fa-gear fa-2x"></i>
+                        </div>
+                        <div style="width: 48px; height: 48px;    line-height: 48px;
+                    border-radius: 5px;text-align: center;">
+                            <i class="fa fa-check fa-2x"></i>
+                        </div>
+                        <div style="width: 48px; height: 48px;    line-height: 48px;
+                    border-radius: 5px;text-align: center;">
+                            <i class="fa fa-sign-out fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

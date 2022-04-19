@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BlockComponent } from './block.component';
 import { PluginComponent } from './plugin.component';
 import { RuntimeFlowComponent } from './runtime-flow.component';
+import { RuntimeFlow2Component } from './runtime-flow2.component';
 
 // import { WidgetsComponent } from './widgets.component';
 
@@ -34,6 +35,13 @@ const routes: Routes = [
       {
         path: 'flow/:blockID',
         component: RuntimeFlowComponent,
+        data: {
+          title: 'Runtime Flow'
+        }
+      },
+      {
+        path: 'flow2/:blockID',
+        component: RuntimeFlow2Component,
         data: {
           title: 'Runtime Flow'
         }

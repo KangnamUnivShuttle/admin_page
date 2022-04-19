@@ -13,6 +13,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import {MatSelectModule} from '@angular/material/select';
+import { RuntimeFlow2Component } from './runtime-flow2.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,6 @@ import {MatSelectModule} from '@angular/material/select';
     AlertModule.forRoot(),
     ModalModule.forRoot()
   ],
-  declarations: [BlockComponent, RuntimeFlowComponent, PluginComponent] //[ WidgetsComponent ]
+  declarations: [BlockComponent, RuntimeFlowComponent, PluginComponent, RuntimeFlow2Component] //[ WidgetsComponent ]
 })
 export class RuntimeModule { }
