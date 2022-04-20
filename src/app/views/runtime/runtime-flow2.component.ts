@@ -273,7 +273,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
 
         const idx = this.childComponents.indexOf(tmp[0])
 
-        if ((event.dir < 0 && idx <= 1) || (event.dir > 0 && idx >= this.childComponents.length - 2)) {
+        if ((event.dir === -1 && idx <= 1) || (event.dir === 1 && idx >= this.childComponents.length - 2)) {
             return
         }
 
