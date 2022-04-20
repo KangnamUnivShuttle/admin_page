@@ -19,7 +19,7 @@
                  </ng-container> -->
                  <div #dynamicLineSvg></div>
 
-                    <ng-container *ngFor="let child of childComponents">
+                    <ng-container *ngFor="let child of childComponents; let i = index">
 
                         <runtime-start *ngIf="child.type == 'start'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
                             [y]="child.y" [msg]="child.msg" (onDragStartPos)="onDragStart($event)"
@@ -27,7 +27,8 @@
 
                         <runtime-card *ngIf="child.type == 'card'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
                             [y]="child.y" (onDragStartPos)="onDragStart($event)"
-                            (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-card>
+                            (onRectChange)="child.w = $event.w;child.h = $event.h"
+                            (onSortChange)="onSortChageRequested($event)"></runtime-card>
 
                         <runtime-link *ngIf="child.type == 'link'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
                             [y]="child.y" (onDragStartPos)="onDragStart($event)"

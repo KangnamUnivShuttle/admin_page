@@ -22,6 +22,7 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
 
     @Output() onDragStartPos: EventEmitter<{x: number, y: number, id: string, ele: any}> = new EventEmitter();
     @Output() onRectChange: EventEmitter<{w: number, h: number}> = new EventEmitter();
+    @Output() onSortChange: EventEmitter<{dir: number, ele: any}> = new EventEmitter();
 
     lastX: number = 0;
     lastY: number = 0;
@@ -71,5 +72,12 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
 
     onResized(event: any) {
         console.log('re', event)
+    }
+
+    onBtnSortChange(dir: number) {
+        this.onSortChange.emit({
+            dir,
+            ele: this
+        })
     }
 }

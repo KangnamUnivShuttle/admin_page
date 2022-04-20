@@ -41,6 +41,15 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
             orderNum: 1
         },
         {
+            type: 'card',
+            ref: 'fsadfasf',
+            x: 400,
+            y: 219,
+            w: 0,
+            h: 0,
+            orderNum: 2
+        },
+        {
             type: 'link',
             ref: 'ffasdf',
             x: 950,
@@ -144,7 +153,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
                 this.focusedChildComponent.x <= 0 ||
                 this.focusedChildComponent.y <= 0) {
                 // console.warn('fail')
-                this._snackBar.open('블록 생성 중 문제가 발생했습니다.', 'OK', {
+                this._snackBar.open('블록 생성 중 문제가 발생했습니다. ', 'OK', {
                     horizontalPosition: 'right',
                     verticalPosition: 'top',
                     duration: 5000
@@ -249,5 +258,33 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
 
     onBtnMoveBack() {
         this.router.navigate(['/runtime/block/list'])
+    }
+
+    findById(id: string) {
+        return this.childComponents.filter(i => i.ref === id)
+    }
+
+    onSortChageRequested(event) {
+        console.log('e', event, this.findById(event.ele.id))
+        const tmp = this.findById(event.ele.id)
+        if (tmp.length <= 0) {
+            return
+        }
+
+        const idx = this.childComponents.indexOf(tmp[0])
+
+        if ((event.dir < 0 && idx <= 1) || (event.dir > 0 && idx >= this.childComponents.length - 2)) {
+            return
+        }
+
+        const orderNumTmp = this.childComponents[idx].orderNum
+        this.childComponents[idx].orderNum = this.childComponents[idx + event.dir].orderNum
+        this.childComponents[idx + event.dir].orderNum = orderNumTmp
+
+        const compTmp = this.childComponents[idx]
+        this.childComponents[idx] = this.childComponents[idx + event.dir]
+        this.childComponents[idx + event.dir] = compTmp
+
+        console.log('list', this.childComponents)
     }
 }
