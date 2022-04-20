@@ -12,6 +12,8 @@ import { RuntimeCardComponent } from './components/runtime-card.component';
 })
 export class RuntimeFlow2Component implements OnInit, AfterViewInit {
 
+    @ViewChild('playgroundWrapper') playgroundWrapperEle: ElementRef;
+    @ViewChild('playground') playgroundEle: ElementRef;
     @ViewChild('dynamicLineSvg') dynamicLineSvg: ElementRef;
 
     playGroundWidth = 3000
@@ -127,8 +129,47 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
             this.updateFocusedChildComponentPos(this.focusedChildComponent)
         } else if(this.focusedChildComponent && this.focusedChildComponent.id === environment.DEFAULT_RUNTIME_ID) {
 
+            const rect = this.playgroundEle.nativeElement.getBoundingClientRect()
+            this.focusedChildComponent.x = event.x - rect.x - this.focusedChildComponent.w / 2
+            this.focusedChildComponent.y = event.y - rect.y
+
+            // console.log('f', this.focusedChildComponent, this.checkBlockDuplicated(this.focusedChildComponent), this.checkIfOutOfPlayground(this.focusedChildComponent))
+            // console.log('a', this.playgroundEle.nativeElement.getBoundingClientRect())
+            // console.log('b', this.playgroundWrapperEle.nativeElement.getBoundingClientRect())
+
+            if(this.checkBlockDuplicated(this.focusedChildComponent) || 
+                this.checkIfOutOfPlayground(this.focusedChildComponent) ||
+                this.focusedChildComponent.x <= 0 ||
+                this.focusedChildComponent.y <= 0) {
+                // console.warn('fail')
+                return
+            }
+            this.appendNewRuntime(this.focusedChildComponent)
         }
         this.draw()
+    }
+
+    guid() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + s4();
+    }
+
+    appendNewRuntime(ele) {
+        console.log('ele', ele)
+        this.childComponents.splice(this.childComponents.length - 1, 0, {
+            type: 'card',
+            ref: this.guid(),
+            x: ele.x,
+            y: ele.y,
+            w: ele.w,
+            h: ele.h,
+            orderNum: this.childComponents[this.childComponents.length - 2].orderNum + 1
+        })
+        console.log('app', this.childComponents)
     }
 
     updateFocusedChildComponentPos(focusedChildComponent) {
@@ -169,7 +210,9 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
             x + w < 0 || x + w > this.playGroundWidth || y + h < 0 || y + h > this.playGroundHeight) {
                 focusedChildComponent.x = focusedChildComponent.backupX
                 focusedChildComponent.y = focusedChildComponent.backupY
+                return true
             }
+        return false
     }
 
     checkBlockDuplicated(focusedChildComponent) {
@@ -192,7 +235,9 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
         if(duplicatedRect.length > 0) {
             focusedChildComponent.x = focusedChildComponent.backupX
             focusedChildComponent.y = focusedChildComponent.backupY
+            return true
         }
+        return false
     }
 
     onBtnMoveBack() {

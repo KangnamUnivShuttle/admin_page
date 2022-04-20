@@ -1,9 +1,9 @@
 <div class="animated fadeIn">
     <div class="row">
         <div class="col">
-            <div class="card playground-wrapper"
+            <div class="card playground-wrapper" #playgroundWrapper
                 [ngStyle]="mode.drag == 'view' ? {'overflow': 'scroll'} : {'overflow': 'hidden'}">
-                <div class="playground"
+                <div class="playground" #playground
                     [style.width.px]="playGroundWidth"
                     [style.height.px]="playGroundHeight"
                  (dragover)="onDragging($event)" (drop)="onDragDrop($event)">
