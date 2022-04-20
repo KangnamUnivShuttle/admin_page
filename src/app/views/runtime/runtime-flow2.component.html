@@ -68,7 +68,8 @@
                         </div>
                     </div>
 
-                    <div class="side-popup">
+                    <div class="side-popup"
+                    [ngStyle]="{'pointer-events': mode.search ? 'auto' : 'none'}">
                         <runtime-search *ngIf="mode.search"></runtime-search>
                     </div>
                 </div>
