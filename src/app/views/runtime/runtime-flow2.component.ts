@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { HttpService } from '../../services/http.services';
-import { BlockModel, RuntimeItemPosModel } from './block.model';
+import { BlockImageModel, BlockModel, BlockRuntimeModel, RuntimeItemPosModel } from './block.model';
 import { RuntimeCardComponent } from './components/runtime-card.component';
 
 @Component({
@@ -230,7 +230,21 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
             y: ele.y,
             w: ele.w,
             h: ele.h,
-            orderNum: this.childComponents[this.childComponents.length - 2].orderNum + 1
+            orderNum: this.childComponents[this.childComponents.length - 2].orderNum + 1,
+            data: {
+                blockId: this.blockID,
+                imageId: ele.plugin.imageId,
+                containerEnv: '',
+                containerPort: '15000',
+                containerUrl: `${ele.plugin.name}_${this.guid()}`,
+                containerState: 'Down',
+                containerStateOrigin: 'Down',
+                orderNum: this.childComponents[this.childComponents.length - 2].orderNum + 1,
+                image: {
+                    githubUrl: ele.plugin.githubUrl,
+                    name: ele.plugin.name
+                } as BlockImageModel
+            } as BlockRuntimeModel
         })
         console.log('app', this.childComponents)
     }
