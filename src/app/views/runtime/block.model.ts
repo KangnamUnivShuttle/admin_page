@@ -56,7 +56,7 @@ export interface BlockImageModel  {
 }
 
 export interface RuntimeItemPosModel {
-    data?: BlockRuntimeModel;
+    data?: BlockRuntimeModel | BlockLinkModel[] | BlockModel;
     type: string;
     ref: string;
     x: number;

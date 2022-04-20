@@ -73,7 +73,7 @@ export class BlockComponent implements OnInit, OnDestroy {
 
     onBtnEditRuntimeClicked() {
         if(this.focusedBlock) {
-            this.router.navigate([`/runtime/block/flow/${this.focusedBlock.blockId}`])
+            this.router.navigate([`/runtime/block/flow2/${this.focusedBlock.blockId}`])
         }
     }
 }

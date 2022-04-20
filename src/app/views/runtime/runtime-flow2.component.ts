@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit, ApplicationRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,43 +21,43 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
     playGroundHeight = 3000
 
     childComponents: RuntimeItemPosModel[] = [
-        {
-            type: 'start',
-            ref: 'asdfasdf',
-            x: 50,
-            y: 50,
-            w: 0,
-            h: 0,
-            msg: 'asdfasdfasdfasdfad',
-            orderNum: 0
-        },
-        {
-            type: 'card',
-            ref: 'asdf',
-            x: 205,
-            y: 419,
-            w: 0,
-            h: 0,
-            orderNum: 1
-        },
-        {
-            type: 'card',
-            ref: 'fsadfasf',
-            x: 550,
-            y: 119,
-            w: 0,
-            h: 0,
-            orderNum: 2
-        },
-        {
-            type: 'link',
-            ref: 'ffasdf',
-            x: 950,
-            y: 380,
-            w: 0,
-            h: 0,
-            orderNum: 99999
-        }
+        // {
+        //     type: 'start',
+        //     ref: 'asdfasdf',
+        //     x: 50,
+        //     y: 50,
+        //     w: 0,
+        //     h: 0,
+        //     msg: 'asdfasdfasdfasdfad',
+        //     orderNum: 0
+        // },
+        // {
+        //     type: 'card',
+        //     ref: 'asdf',
+        //     x: 205,
+        //     y: 419,
+        //     w: 0,
+        //     h: 0,
+        //     orderNum: 1
+        // },
+        // {
+        //     type: 'card',
+        //     ref: 'fsadfasf',
+        //     x: 550,
+        //     y: 119,
+        //     w: 0,
+        //     h: 0,
+        //     orderNum: 2
+        // },
+        // {
+        //     type: 'link',
+        //     ref: 'ffasdf',
+        //     x: 950,
+        //     y: 380,
+        //     w: 0,
+        //     h: 0,
+        //     orderNum: 99999
+        // }
     ];
 
     focusedChildComponent: any;
@@ -73,6 +73,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
     
     constructor(private route: ActivatedRoute,
         private router: Router,
+        private appRef: ApplicationRef,
         private formBuilder: FormBuilder,
         private cdr: ChangeDetectorRef,
         private _snackBar: MatSnackBar,
@@ -89,6 +90,52 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
         ])
         .then(res => {
             console.log('res', res)
+            const [start, runtime, link] = res
+
+            if (!start.data || start.data.length <= 0 || !runtime.data || !link.data) {
+                return
+            }
+
+            this.childComponents.length = 0
+            this.childComponents.push({
+                type: 'start',
+                ref: this.guid(),
+                x: start.data[0].x,
+                y: start.data[0].y,
+                w: 0,
+                h: 0,
+                orderNum: 0,
+                data: start.data[0]
+            })
+
+            runtime.data.forEach((run, idx) => {
+                this.childComponents.push({
+                    type: 'card',
+                    ref: this.guid(),
+                    x: run.x,
+                    y: run.y,
+                    w: 0,
+                    h: 0,
+                    orderNum: idx + 1,
+                    data: run
+                })
+            })
+
+            this.childComponents.push({
+                type: 'link',
+                ref: this.guid(),
+                x: start.data[0].linkX,
+                y: start.data[0].linkY,
+                w: 0,
+                h: 0,
+                orderNum: 99999,
+                data: link.data
+            })
+            this.appRef.tick()
+            this.cdr.detectChanges()
+
+            this.draw()
+            console.log('child', this.childComponents)
         })
     }
 
@@ -118,7 +165,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
     }
     
     ngOnInit(): void {
-        // this.initData()
+        this.initData()
     }
 
     onDragStart(event) {
