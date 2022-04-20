@@ -3,7 +3,10 @@
         <div class="col">
             <div class="card playground-wrapper"
                 [ngStyle]="mode.drag == 'view' ? {'overflow': 'scroll'} : {'overflow': 'hidden'}">
-                <div class="playground" (dragover)="onDragging($event)" (drop)="onDragDrop($event)">
+                <div class="playground"
+                    [ngStyle.width]="playGroundWidth + 'px'"
+                    [ngStyle.height]="playGroundHeight + 'px'"
+                 (dragover)="onDragging($event)" (drop)="onDragDrop($event)">
 
                     <ng-container *ngFor="let child of childComponents">
 
