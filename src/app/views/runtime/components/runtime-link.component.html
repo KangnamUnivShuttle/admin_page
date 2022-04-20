@@ -1,0 +1,25 @@
+<div class="card" style="width: 350px;position: absolute;" [draggable]="drag == 'item'"
+[id]="id"
+                    [ngStyle]="getStyle()"
+                    (dragstart)="onDragStart($event)">
+                    <div class="card-header">퀵 메뉴 응답</div>
+                    <div class="card-body">
+                        <div style="min-height: 40px;
+                        display: inline-block;
+                        background-color: #ffe100;
+                        padding: 15px;
+                        margin-bottom: 15px;
+                        border-radius: 8px;
+                        font-weight: bold;
+                        min-width: 50px;
+                        max-width: 150px;
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    text-overflow: ellipsis;"> asdfasdfasdfasdfasdf</div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-sm btn-primary">
+                            버튼 추가
+                        </button>
+                    </div>
+                </div>

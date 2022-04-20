@@ -1,0 +1,15 @@
+<div style="min-height: 40px;
+display: inline-block;
+background-color: #ffe100;
+padding: 15px;
+margin-bottom: 15px;
+border-radius: 8px;
+font-weight: bold;
+line-break: auto;
+min-width: 50px;
+max-width: 150px;position: absolute;" [draggable]="drag == 'item'"
+[id]="id"
+                    [ngStyle]="getStyle()"
+                    (dragstart)="onDragStart($event)">
+                    {{msg}}
+                </div>

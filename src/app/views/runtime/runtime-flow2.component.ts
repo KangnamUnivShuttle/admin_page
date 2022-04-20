@@ -1,12 +1,46 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '../../services/http.services';
+import { RuntimeCardComponent } from './components/runtime-card.component';
 
 @Component({
     templateUrl: 'runtime-flow2.component.html'
 })
 export class RuntimeFlow2Component implements OnInit {
+
+    childComponents = [
+        {
+            type: 'start',
+            ref: 'asdfasdf',
+            x: 50,
+            y: 50,
+            w: 0,
+            h: 0,
+            msg: 'asdfasdfasdfasdfad',
+            orderNum: 0
+        },
+        {
+            type: 'card',
+            ref: 'asdf',
+            x: 100,
+            y: 150,
+            w: 0,
+            h: 0,
+            orderNum: 1
+        },
+        {
+            type: 'link',
+            ref: 'asdf',
+            x: 500,
+            y: 250,
+            w: 0,
+            h: 0,
+            orderNum: 2
+        }
+    ];
+
+    focusedChildComponent: any;
 
     mode = {
         search: false,
@@ -22,5 +56,23 @@ export class RuntimeFlow2Component implements OnInit {
     }
     
     ngOnInit(): void {
+    }
+
+    onDragStart(event) {
+        console.log('start', event)
+        this.focusedChildComponent = event.ele
+    }
+
+    onDragging(event) {
+        event.preventDefault()
+    }
+
+    onDragDrop(event) {
+        event.preventDefault()
+        if (this.focusedChildComponent) {
+            this.focusedChildComponent.onDrop(event)
+        }
+
+        console.log(this.childComponents)
     }
 }

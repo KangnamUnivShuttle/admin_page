@@ -1,0 +1,9 @@
+<div class="card" style="width: 300px;position: absolute;" [draggable]="drag == 'item'"
+[id]="id"
+                    [ngStyle]="getStyle()"
+                    (dragstart)="onDragStart($event)"
+                    (resized)="onResized($event)">
+                    <div class="card-header">asdf</div>
+                    <div class="card-body">asdf</div>
+                    <div class="card-footer">asdf</div>
+                </div>
