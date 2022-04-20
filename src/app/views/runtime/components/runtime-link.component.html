@@ -1,21 +1,11 @@
-<div class="card" style="width: 350px;position: absolute;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" [draggable]="drag == 'item'"
+<div class="card link-card"
+[draggable]="drag == 'item'"
 [id]="id"
                     [ngStyle]="getStyle()"
                     (dragstart)="onDragStart($event)">
                     <div class="card-header">퀵 메뉴 응답</div>
                     <div class="card-body">
-                        <div style="min-height: 40px;
-                        display: inline-block;
-                        background-color: #ffe100;
-                        padding: 15px;
-                        margin-bottom: 15px;
-                        border-radius: 8px;
-                        font-weight: bold;
-                        min-width: 50px;
-                        max-width: 150px;
-                                    overflow: hidden;
-                                    white-space: nowrap;
-                                    text-overflow: ellipsis;"> asdfasdfasdfasdfasdf</div>
+                        <div class="quickReply" *ngFor="let reply of data">{{reply.label}}</div>
                     </div>
                     <div class="card-footer">
                         <button type="button" class="btn btn-sm btn-primary">

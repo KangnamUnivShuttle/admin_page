@@ -1,4 +1,5 @@
 import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { BlockModel } from "../block.model";
 import { RuntimeItem } from "./template.interface";
 
 @Component({
@@ -9,6 +10,9 @@ export class RuntimeStartComponent implements OnInit, RuntimeItem, AfterViewChec
 
     lastX: number;
     lastY: number;
+
+    @Input()
+    data: BlockModel;
     
     @Input()
     drag: string;

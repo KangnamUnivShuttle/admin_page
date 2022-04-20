@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, ElementRef, AfterViewChecked } from "@angular/core";
 import { environment } from "../../../../environments/environment";
+import { BlockRuntimeModel } from "../block.model";
 import { RuntimeItem } from "./template.interface";
 
 @Component({
@@ -7,6 +8,9 @@ import { RuntimeItem } from "./template.interface";
     templateUrl: 'runtime-card.component.html'
 })
 export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewChecked {
+
+    @Input()
+    data: BlockRuntimeModel;
 
     @Input()
     id: string = environment.DEFAULT_RUNTIME_ID;

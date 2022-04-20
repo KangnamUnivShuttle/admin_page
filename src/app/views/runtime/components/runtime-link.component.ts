@@ -1,11 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked, ElementRef } from "@angular/core";
+import { BlockLinkModel } from "../block.model";
 import { RuntimeItem } from "./template.interface";
 
 @Component({
     selector: 'runtime-link',
-    templateUrl: 'runtime-link.component.html'
+    templateUrl: 'runtime-link.component.html',
+    styleUrls: ['./runtime-link.component.css']
 })
 export class RuntimeLinkComponent implements OnInit, RuntimeItem, AfterViewChecked {
+
+    @Input()
+    data: BlockLinkModel[];
 
     @Input()
     id: string = 'untitled';

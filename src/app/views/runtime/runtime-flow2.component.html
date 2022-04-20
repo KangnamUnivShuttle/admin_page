@@ -22,17 +22,19 @@
                     <ng-container *ngFor="let child of childComponents; let i = index">
 
                         <runtime-start *ngIf="child.type == 'start'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
-                            [y]="child.y" [msg]="child.msg"
+                            [y]="child.y" [msg]="child.msg" [data]="child.data"
                             (onDragStartPos)="onDragStart($event)"
                             (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-start>
 
                         <runtime-card *ngIf="child.type == 'card'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
-                            [y]="child.y"  [orderNum]="child.orderNum" (onDragStartPos)="onDragStart($event)"
+                            [y]="child.y"  [orderNum]="child.orderNum" [data]="child.data"
+                            (onDragStartPos)="onDragStart($event)"
                             (onRectChange)="child.w = $event.w;child.h = $event.h"
                             (onSortChange)="onSortChageRequested($event)"></runtime-card>
 
                         <runtime-link *ngIf="child.type == 'link'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
-                            [y]="child.y" (onDragStartPos)="onDragStart($event)"
+                            [y]="child.y" [data]="child.data"
+                            (onDragStartPos)="onDragStart($event)"
                             (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-link>
 
                     </ng-container>
