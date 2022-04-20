@@ -5,7 +5,8 @@ import { HttpService } from '../../services/http.services';
 import { RuntimeCardComponent } from './components/runtime-card.component';
 
 @Component({
-    templateUrl: 'runtime-flow2.component.html'
+    templateUrl: 'runtime-flow2.component.html',
+    styleUrls: ['./runtime-flow2.component.css']
 })
 export class RuntimeFlow2Component implements OnInit {
 

@@ -1,43 +1,30 @@
 <div class="animated fadeIn">
     <div class="row">
         <div class="col">
-            <div class="card" style="height: 700px;position: relative;" [ngStyle]="mode.drag == 'view' ? {'overflow': 'scroll'} : {'overflow': 'hidden'}">
-                <div style="width: 3000px; height: 3000px;position: absolute;
-                background-image: linear-gradient(rgba(0, 0, 0, .1) .1em, transparent .1em), linear-gradient(90deg, rgba(0, 0, 0, .1) .1em, transparent .1em);
-                background-size: 3em 3em;"
-                    (dragover)="onDragging($event)"
-                    (drop)="onDragDrop($event)">
-                
+            <div class="card playground-wrapper"
+                [ngStyle]="mode.drag == 'view' ? {'overflow': 'scroll'} : {'overflow': 'hidden'}">
+                <div class="playground" (dragover)="onDragging($event)" (drop)="onDragDrop($event)">
+
                     <ng-container *ngFor="let child of childComponents">
-                        
-                        <runtime-start *ngIf="child.type == 'start'"
-                        [id]="child.ref" [drag]="mode.drag" [x]="child.x" [y]="child.y"
-                        [msg]="child.msg"
-                        (onDragStartPos)="onDragStart($event)"
-                        (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-start>
 
-                        <runtime-card *ngIf="child.type == 'card'"
-                        [id]="child.ref" [drag]="mode.drag" [x]="child.x" [y]="child.y" 
-                        (onDragStartPos)="onDragStart($event)"
-                        (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-card>
+                        <runtime-start *ngIf="child.type == 'start'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
+                            [y]="child.y" [msg]="child.msg" (onDragStartPos)="onDragStart($event)"
+                            (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-start>
 
-                        <runtime-link *ngIf="child.type == 'link'"
-                        [id]="child.ref" [drag]="mode.drag" [x]="child.x" [y]="child.y" 
-                        (onDragStartPos)="onDragStart($event)"
-                        (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-link>
-                        
+                        <runtime-card *ngIf="child.type == 'card'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
+                            [y]="child.y" (onDragStartPos)="onDragStart($event)"
+                            (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-card>
+
+                        <runtime-link *ngIf="child.type == 'link'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
+                            [y]="child.y" (onDragStartPos)="onDragStart($event)"
+                            (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-link>
+
                     </ng-container>
-                    <div style="position: sticky;
-                right: 15px;
-                float: right;
-                top: 15px;height: 600px;    background-color: #f0f3f5;
-                border-radius: 5px;">
-                        <div style="width: 48px; height: 48px;    line-height: 48px;
-                    border-radius: 5px;text-align: center;">
+                    <div class="side-menu">
+                        <div class="side-menu-btn">
                             <i class="fa fa-search fa-2x"></i>
                         </div>
-                        <div style="width: 48px; height: 48px;    line-height: 48px;
-                    border-radius: 5px;text-align: center;"
+                        <div class="side-menu-btn"
                             (click)="mode.drag = mode.drag == 'item' ? 'view' : 'item'">
                             <ng-template [ngIf]="mode.drag == 'item'">
                                 <i class="fa fa-hand-pointer-o fa-2x"></i>
@@ -46,8 +33,7 @@
                                 <i class="fa fa-arrows fa-2x"></i>
                             </ng-template>
                         </div>
-                        <div style="width: 48px; height: 48px;    line-height: 48px;
-                    border-radius: 5px;text-align: center;"
+                        <div class="side-menu-btn"
                             (click)="mode.execute = mode.execute == 'idle' ? 'running' : 'idle'">
                             <ng-template [ngIf]="mode.execute == 'idle'">
                                 <i class="fa fa-play fa-2x"></i>
@@ -56,16 +42,13 @@
                                 <i class="fa fa-stop fa-2x"></i>
                             </ng-template>
                         </div>
-                        <div style="width: 48px; height: 48px;    line-height: 48px;
-                    border-radius: 5px;text-align: center;">
+                        <div class="side-menu-btn">
                             <i class="fa fa-gear fa-2x"></i>
                         </div>
-                        <div style="width: 48px; height: 48px;    line-height: 48px;
-                    border-radius: 5px;text-align: center;">
+                        <div class="side-menu-btn">
                             <i class="fa fa-check fa-2x"></i>
                         </div>
-                        <div style="width: 48px; height: 48px;    line-height: 48px;
-                    border-radius: 5px;text-align: center;">
+                        <div class="side-menu-btn">
                             <i class="fa fa-sign-out fa-2x"></i>
                         </div>
                     </div>
