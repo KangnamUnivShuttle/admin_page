@@ -76,4 +76,8 @@ export class RuntimeFlow2Component implements OnInit {
 
         console.log(this.childComponents)
     }
+
+    onBtnMoveBack() {
+        this.router.navigate(['/runtime/block/list'])
+    }
 }

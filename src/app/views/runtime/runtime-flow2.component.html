@@ -20,8 +20,13 @@
                             (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-link>
 
                     </ng-container>
+
+                    <div class="side-popup">
+                        <runtime-search *ngIf="mode.search"></runtime-search>
+                    </div>
+
                     <div class="side-menu">
-                        <div class="side-menu-btn">
+                        <div class="side-menu-btn" (click)="mode.search = !mode.search">
                             <i class="fa fa-search fa-2x"></i>
                         </div>
                         <div class="side-menu-btn"
@@ -48,7 +53,7 @@
                         <div class="side-menu-btn">
                             <i class="fa fa-check fa-2x"></i>
                         </div>
-                        <div class="side-menu-btn">
+                        <div class="side-menu-btn" (click)="onBtnMoveBack()">
                             <i class="fa fa-sign-out fa-2x"></i>
                         </div>
                     </div>

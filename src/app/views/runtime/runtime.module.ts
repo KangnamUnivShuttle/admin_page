@@ -17,6 +17,7 @@ import { RuntimeFlow2Component } from './runtime-flow2.component';
 import { RuntimeCardComponent } from './components/runtime-card.component';
 import { RuntimeStartComponent } from './components/runtime-start.component';
 import { RuntimeLinkComponent } from './components/runtime-link.component';
+import { RuntimeSearchComponent } from './components/runtime-search.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,8 @@ import { RuntimeLinkComponent } from './components/runtime-link.component';
   declarations: [BlockComponent, RuntimeFlowComponent, PluginComponent, RuntimeFlow2Component, 
     RuntimeCardComponent,
     RuntimeStartComponent,
-    RuntimeLinkComponent] //[ WidgetsComponent ]
+    RuntimeLinkComponent,
+  
+    RuntimeSearchComponent] //[ WidgetsComponent ]
 })
 export class RuntimeModule { }
