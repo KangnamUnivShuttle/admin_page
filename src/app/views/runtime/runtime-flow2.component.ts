@@ -70,11 +70,33 @@ export class RuntimeFlow2Component implements OnInit {
 
     onDragDrop(event) {
         event.preventDefault()
+        this.focusedChildComponent.onDrop(event)
         if (this.focusedChildComponent) {
-            this.focusedChildComponent.onDrop(event)
+            this.checkBlockDuplicated(this.focusedChildComponent)
         }
+    }
 
-        console.log(this.childComponents)
+    checkBlockDuplicated(focusedChildComponent) {
+        const x = focusedChildComponent.x
+        const y = focusedChildComponent.y
+        const w = focusedChildComponent.w
+        const h = focusedChildComponent.h
+
+        const duplicatedRect = this.childComponents.filter(i => i.ref !== focusedChildComponent.id).filter(i => {
+            if (
+                (i.x <= x && x <= i.x + i.w && i.y <= y && y <= i.y + i.h) || // left top
+                (i.x <= x + w && x + w <= i.x + i.w && i.y <= y && y <= i.y + i.h) || // right top
+                (i.x <= x && x <= i.x + i.w && i.y <= y + h && y + h <= i.y + i.h) || // left bottom
+                (i.x <= x + w && x + w <= i.x + i.w && i.y <= y + h && y + h <= i.y + i.h) // right bottom
+            ) {
+                return true
+            }
+            return false
+        })
+        if(duplicatedRect.length > 0) {
+            focusedChildComponent.x = focusedChildComponent.backupX
+            focusedChildComponent.y = focusedChildComponent.backupY
+        }
     }
 
     onBtnMoveBack() {

@@ -19,17 +19,23 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     @Input()
     y: number = 0
 
-    @Output() onDragStartPos: EventEmitter<{x: number, y: number, ele: any}> = new EventEmitter();
+    @Output() onDragStartPos: EventEmitter<{x: number, y: number, id: string, ele: any}> = new EventEmitter();
     @Output() onRectChange: EventEmitter<{w: number, h: number}> = new EventEmitter();
 
     lastX: number = 0;
     lastY: number = 0;
+    w: number;
+    h: number;
+    backupX: number;
+    backupY: number;
 
     constructor(private elementRef: ElementRef) {}
 
     ngAfterViewChecked(): void {
         // console.log('checked', this.elementRef.nativeElement.getBoundingClientRect(), this.elementRef.nativeElement.querySelector('div'), this.elementRef.nativeElement.querySelector('div').getBoundingClientRect())
         const rect = this.elementRef.nativeElement.querySelector('div').getBoundingClientRect()
+        this.w = rect.width
+        this.h = rect.height
         this.onRectChange.emit({
             w: rect.width,
             h: rect.height
@@ -37,7 +43,8 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     }
 
     ngOnInit(): void {
-        console.log(this.drag, this.x, this.y, this.id, this.elementRef.nativeElement.getBoundingClientRect())
+        this.backupX = this.x
+        this.backupY = this.y
     }
 
     getStyle(): Object {
@@ -51,10 +58,12 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     onDragStart(event) {
         this.lastX = event.x;
         this.lastY = event.y;
-        this.onDragStartPos.emit({x: event.x, y: event.y, ele: this})
+        this.onDragStartPos.emit({x: event.x, y: event.y, id: this.id, ele: this})
     }
 
     onDrop(event: any) {
+        this.backupX = this.x
+        this.backupY = this.y
         this.x += event.x - this.lastX;
         this.y += event.y - this.lastY;
     }
