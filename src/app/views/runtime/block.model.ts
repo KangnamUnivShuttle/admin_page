@@ -9,7 +9,7 @@ export interface BlockModel {
 }
 
 export interface BlockLinkModel {
-    blockLinkId: number;
+    blockLinkId?: number;
     blockId: string;
     nextBlockId: string;
     messageText: string;
