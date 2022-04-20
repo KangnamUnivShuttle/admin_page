@@ -8,6 +8,17 @@
                     [style.height.px]="playGroundHeight"
                  (dragover)="onDragging($event)" (drop)="onDragDrop($event)">
 
+                 <!-- <ng-container *ngIf="childComponents.length >= 2">
+                    <ng-container *ngFor="let line of drawLine()">
+                        <svg><line 
+                            [x1]="line.x1" 
+                            [y1]="line.y1" 
+                            [x2]="line.x2" 
+                            [y2]="line.y2" stroke="red" stroke-width="3"/></svg>
+                     </ng-container>
+                 </ng-container> -->
+                 <div #dynamicLineSvg></div>
+
                     <ng-container *ngFor="let child of childComponents">
 
                         <runtime-start *ngIf="child.type == 'start'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
