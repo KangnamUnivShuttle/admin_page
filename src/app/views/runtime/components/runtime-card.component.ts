@@ -9,6 +9,13 @@ import { RuntimeItem } from "./template.interface";
 })
 export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewChecked {
 
+    stateList = [
+      'start',
+      'stop',
+      'remove',
+      'Down'
+    ]
+
     @Input()
     data: BlockRuntimeModel;
 
