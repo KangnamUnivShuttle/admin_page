@@ -21,11 +21,7 @@
 
                     </ng-container>
 
-                    <div class="side-popup">
-                        <runtime-search *ngIf="mode.search"></runtime-search>
-                    </div>
-
-                    <div class="side-menu">
+                    <div class="side-menu side-shadow">
                         <div class="side-menu-btn" (click)="mode.search = !mode.search">
                             <i class="fa fa-search fa-2x"></i>
                         </div>
@@ -56,6 +52,10 @@
                         <div class="side-menu-btn" (click)="onBtnMoveBack()">
                             <i class="fa fa-sign-out fa-2x"></i>
                         </div>
+                    </div>
+
+                    <div class="side-popup">
+                        <runtime-search *ngIf="mode.search"></runtime-search>
                     </div>
                 </div>
             </div>

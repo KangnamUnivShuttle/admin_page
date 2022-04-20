@@ -31,6 +31,10 @@ div.side-menu {
     border-radius: 5px;
 }
 
+div.side-shadow {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
 div.side-menu-btn {
     width: 48px;
     height: 48px;

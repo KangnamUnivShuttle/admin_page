@@ -10,6 +10,9 @@ import { RuntimeCardComponent } from './components/runtime-card.component';
 })
 export class RuntimeFlow2Component implements OnInit {
 
+    playGroundWidth = 3000
+    playGroundHeight = 3000
+
     childComponents = [
         {
             type: 'start',
@@ -73,7 +76,21 @@ export class RuntimeFlow2Component implements OnInit {
         this.focusedChildComponent.onDrop(event)
         if (this.focusedChildComponent) {
             this.checkBlockDuplicated(this.focusedChildComponent)
+            this.checkIfOutOfPlayground(this.focusedChildComponent)
         }
+    }
+
+    checkIfOutOfPlayground(focusedChildComponent) {
+        const x = focusedChildComponent.x
+        const y = focusedChildComponent.y
+        const w = focusedChildComponent.w
+        const h = focusedChildComponent.h
+
+        if (x < 0 || x > this.playGroundWidth || y < 0 || y > this.playGroundHeight || 
+            x + w < 0 || x + w > this.playGroundWidth || y + h < 0 || y + h > this.playGroundHeight) {
+                focusedChildComponent.x = focusedChildComponent.backupX
+                focusedChildComponent.y = focusedChildComponent.backupY
+            }
     }
 
     checkBlockDuplicated(focusedChildComponent) {
