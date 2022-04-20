@@ -333,5 +333,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
         this.childComponents[idx + event.dir] = compTmp
 
         console.log('list', this.childComponents)
+
+        this.draw()
     }
 }
