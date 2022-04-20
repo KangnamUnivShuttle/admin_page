@@ -6,5 +6,7 @@
 export const environment = {
   production: false,
 
-  host: 'https://kws1.gapmoe.net/'
+  host: 'https://kws1.gapmoe.net/',
+
+  DEFAULT_RUNTIME_ID: 'untitled'
 };

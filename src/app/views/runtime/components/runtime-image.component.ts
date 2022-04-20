@@ -1,12 +1,16 @@
-import { Component, Input, OnInit, Output, EventEmitter, ElementRef, AfterViewChecked } from "@angular/core";
-import { environment } from "../../../../environments/environment";
-import { RuntimeItem } from "./template.interface";
+import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { environment } from '../../../../environments/environment';
+import { BlockImageModel } from '../block.model';
+import { RuntimeItem } from './template.interface';
 
 @Component({
-    selector: 'runtime-card',
-    templateUrl: 'runtime-card.component.html'
+    selector: 'runtime-image',
+    templateUrl: 'runtime-image.component.html'
 })
-export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewChecked {
+export class RuntimeImageComponent implements OnInit, RuntimeItem, AfterViewChecked {
+
+    @Input()
+    plugin: BlockImageModel;
 
     @Input()
     id: string = environment.DEFAULT_RUNTIME_ID;
@@ -23,25 +27,14 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     @Output() onDragStartPos: EventEmitter<{x: number, y: number, id: string, ele: any}> = new EventEmitter();
     @Output() onRectChange: EventEmitter<{w: number, h: number}> = new EventEmitter();
 
-    lastX: number = 0;
-    lastY: number = 0;
     w: number;
     h: number;
+    lastX: number;
+    lastY: number;
     backupX: number;
     backupY: number;
 
     constructor(private elementRef: ElementRef) {}
-
-    ngAfterViewChecked(): void {
-        // console.log('checked', this.elementRef.nativeElement.getBoundingClientRect(), this.elementRef.nativeElement.querySelector('div'), this.elementRef.nativeElement.querySelector('div').getBoundingClientRect())
-        const rect = this.elementRef.nativeElement.querySelector('div').getBoundingClientRect()
-        this.w = rect.width
-        this.h = rect.height
-        this.onRectChange.emit({
-            w: rect.width,
-            h: rect.height
-        })
-    }
 
     ngOnInit(): void {
         this.backupX = this.x
@@ -56,7 +49,7 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
         }
     }
 
-    onDragStart(event) {
+    onDragStart(event: any) {
         this.lastX = event.x;
         this.lastY = event.y;
         this.onDragStartPos.emit({x: event.x, y: event.y, id: this.id, ele: this})
@@ -69,7 +62,17 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
         this.y += event.y - this.lastY;
     }
 
-    onResized(event: any) {
-        console.log('re', event)
+    ngAfterViewChecked(): void {
+        const rect = this.elementRef.nativeElement.querySelector('div').getBoundingClientRect()
+        this.w = rect.width
+        this.h = rect.height
+        this.onRectChange.emit({
+            w: rect.width,
+            h: rect.height
+        })
+    }
+
+    onBtnOpenUrlInNewTab(url: string) {
+        window.open(url, '_blank').focus();
     }
 }

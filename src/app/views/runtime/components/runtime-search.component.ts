@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { HttpService } from '../../../services/http.services';
 import { BlockImageModel } from '../block.model';
@@ -22,6 +22,8 @@ export class RuntimeSearchComponent implements OnInit {
     searchForm = this.formBuilder.group({
         searchImageName: new FormControl(this.searchImageName, [Validators.required]),
     })
+
+    @Output() onDragStartPos: EventEmitter<{x: number, y: number, id: string, ele: any}> = new EventEmitter();
 
     constructor(private formBuilder: FormBuilder,
                 private httpService: HttpService) {}

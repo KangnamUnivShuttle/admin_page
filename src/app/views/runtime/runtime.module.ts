@@ -18,6 +18,7 @@ import { RuntimeCardComponent } from './components/runtime-card.component';
 import { RuntimeStartComponent } from './components/runtime-start.component';
 import { RuntimeLinkComponent } from './components/runtime-link.component';
 import { RuntimeSearchComponent } from './components/runtime-search.component';
+import { RuntimeImageComponent } from './components/runtime-image.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,8 @@ import { RuntimeSearchComponent } from './components/runtime-search.component';
     RuntimeStartComponent,
     RuntimeLinkComponent,
   
-    RuntimeSearchComponent] //[ WidgetsComponent ]
+    RuntimeSearchComponent,
+    RuntimeImageComponent
+  ] //[ WidgetsComponent ]
 })
 export class RuntimeModule { }

@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 import { HttpService } from '../../services/http.services';
-import { BlockModel } from './block.model';
+import { BlockModel, RuntimeItemPosModel } from './block.model';
 import { RuntimeCardComponent } from './components/runtime-card.component';
 
 @Component({
@@ -16,7 +17,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
     playGroundWidth = 3000
     playGroundHeight = 3000
 
-    childComponents = [
+    childComponents: RuntimeItemPosModel[] = [
         {
             type: 'start',
             ref: 'asdfasdf',
@@ -108,8 +109,8 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
     }
 
     onDragStart(event) {
-        console.log('start', event)
         this.focusedChildComponent = event.ele
+        console.log('start', event)
     }
 
     onDragging(event) {
@@ -118,11 +119,14 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
 
     onDragDrop(event) {
         event.preventDefault()
-        if (this.focusedChildComponent) {
+        console.log('drop', event)
+        if (this.focusedChildComponent && this.focusedChildComponent.id !== environment.DEFAULT_RUNTIME_ID) {
             this.focusedChildComponent.onDrop(event)
             this.checkBlockDuplicated(this.focusedChildComponent)
             this.checkIfOutOfPlayground(this.focusedChildComponent)
             this.updateFocusedChildComponentPos(this.focusedChildComponent)
+        } else if(this.focusedChildComponent && this.focusedChildComponent.id === environment.DEFAULT_RUNTIME_ID) {
+
         }
         this.draw()
     }

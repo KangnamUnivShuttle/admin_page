@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
 
-  host: '/'
+  host: '/',
+
+  DEFAULT_RUNTIME_ID: 'untitled'
 };

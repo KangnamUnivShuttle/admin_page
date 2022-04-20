@@ -54,3 +54,15 @@ export interface BlockImageModel  {
     registerDatetime: Date;
     updateDatetime: Date;
 }
+
+export interface RuntimeItemPosModel {
+    data?: BlockRuntimeModel;
+    type: string;
+    ref: string;
+    x: number;
+    y: number;
+    w: number;
+    h: number;
+    orderNum: number;
+    msg?: string;
+}

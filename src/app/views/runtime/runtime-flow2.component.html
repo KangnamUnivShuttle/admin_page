@@ -70,7 +70,7 @@
 
                     <div class="side-popup"
                     [ngStyle]="{'pointer-events': mode.search ? 'auto' : 'none'}">
-                        <runtime-search *ngIf="mode.search"></runtime-search>
+                        <runtime-search *ngIf="mode.search" (onDragStartPos)="onDragStart($event)"></runtime-search>
                     </div>
                 </div>
             </div>
