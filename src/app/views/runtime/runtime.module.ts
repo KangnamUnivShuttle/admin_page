@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 // import { WidgetsComponent } from './widgets.component';
 import { BlockComponent } from './block.component';
@@ -30,6 +31,7 @@ import { RuntimeImageComponent } from './components/runtime-image.component';
     // BrowserModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatSnackBarModule,
     AlertModule.forRoot(),
     ModalModule.forRoot()
   ],

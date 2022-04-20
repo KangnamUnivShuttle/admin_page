@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { HttpService } from '../../services/http.services';
@@ -65,6 +66,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
         private router: Router,
         private formBuilder: FormBuilder,
         private cdr: ChangeDetectorRef,
+        private _snackBar: MatSnackBar,
         private httpService: HttpService) {
         this.blockID = this.route.snapshot.params['blockID'] || 'intro';
     }
@@ -142,6 +144,11 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
                 this.focusedChildComponent.x <= 0 ||
                 this.focusedChildComponent.y <= 0) {
                 // console.warn('fail')
+                this._snackBar.open('블록 생성 중 문제가 발생했습니다.', 'OK', {
+                    horizontalPosition: 'right',
+                    verticalPosition: 'top',
+                    duration: 5000
+                });
                 return
             }
             this.appendNewRuntime(this.focusedChildComponent)

@@ -8,3 +8,8 @@
 @import "custom";
 
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+div.cdk-overlay-container {
+    position: absolute;
+    z-index: 99999;
+}
