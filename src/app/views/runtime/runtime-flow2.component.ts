@@ -43,8 +43,8 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
         {
             type: 'card',
             ref: 'fsadfasf',
-            x: 400,
-            y: 219,
+            x: 550,
+            y: 119,
             w: 0,
             h: 0,
             orderNum: 2
