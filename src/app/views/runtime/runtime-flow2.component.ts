@@ -31,12 +31,12 @@ export class RuntimeFlow2Component implements OnInit {
         },
         {
             type: 'link',
-            ref: 'asdf',
+            ref: 'ffasdf',
             x: 500,
             y: 250,
             w: 0,
             h: 0,
-            orderNum: 2
+            orderNum: 99999
         }
     ];
 

@@ -21,7 +21,8 @@ export class BlockComponent implements OnInit, OnDestroy {
         blockId: null,
         name: null,
         enabled: null,
-        deleteable: null
+        deleteable: null,
+        registerDatetime: null
     };
     
     blockId: string = null;
@@ -61,7 +62,8 @@ export class BlockComponent implements OnInit, OnDestroy {
                 blockId: null,
                 name: null,
                 enabled: null,
-                deleteable: null
+                deleteable: null,
+                registerDatetime: null
             }
         } else {
         this.focusedBlock = block
