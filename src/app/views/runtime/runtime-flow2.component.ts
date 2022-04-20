@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef, AfterViewI
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from '../../services/http.services';
+import { BlockModel } from './block.model';
 import { RuntimeCardComponent } from './components/runtime-card.component';
 
 @Component({
@@ -53,12 +54,28 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
         drag: 'view',
         execute: 'idle'
     }
+
+    blockID: string;
+    runtimeBlock: BlockModel;
     
     constructor(private route: ActivatedRoute,
         private router: Router,
         private formBuilder: FormBuilder,
         private cdr: ChangeDetectorRef,
         private httpService: HttpService) {
+        this.blockID = this.route.snapshot.params['blockID'] || 'intro';
+    }
+
+    initData() {
+        Promise.all(
+            [
+                this.httpService.reqGet('runtimeBlock', {blockID: this.blockID}).toPromise(),
+                this.httpService.reqGet('runtime', {blockID: this.blockID}).toPromise(),
+                this.httpService.reqGet('runtimeLink', {blockID: this.blockID}).toPromise()
+        ])
+        .then(res => {
+            console.log('res', res)
+        })
     }
 
     ngAfterViewInit(): void {
@@ -87,6 +104,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
     }
     
     ngOnInit(): void {
+        // this.initData()
     }
 
     onDragStart(event) {
@@ -100,8 +118,8 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
 
     onDragDrop(event) {
         event.preventDefault()
-        this.focusedChildComponent.onDrop(event)
         if (this.focusedChildComponent) {
+            this.focusedChildComponent.onDrop(event)
             this.checkBlockDuplicated(this.focusedChildComponent)
             this.checkIfOutOfPlayground(this.focusedChildComponent)
             this.updateFocusedChildComponentPos(this.focusedChildComponent)
