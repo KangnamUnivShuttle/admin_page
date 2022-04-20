@@ -328,6 +328,14 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
         this.childComponents[idx].orderNum = this.childComponents[idx + event.dir].orderNum
         this.childComponents[idx + event.dir].orderNum = orderNumTmp
 
+        const xTmp = this.childComponents[idx].x
+        this.childComponents[idx].x = this.childComponents[idx + event.dir].x
+        this.childComponents[idx + event.dir].x = xTmp
+
+        const yTmp = this.childComponents[idx].y
+        this.childComponents[idx].y = this.childComponents[idx + event.dir].y
+        this.childComponents[idx + event.dir].y = yTmp
+
         const compTmp = this.childComponents[idx]
         this.childComponents[idx] = this.childComponents[idx + event.dir]
         this.childComponents[idx + event.dir] = compTmp
