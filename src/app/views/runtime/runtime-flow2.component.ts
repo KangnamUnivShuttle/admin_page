@@ -109,6 +109,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
             })
 
             runtime.data.forEach((run, idx) => {
+                run.containerStateOrigin = run.containerState
                 this.childComponents.push({
                     type: 'card',
                     ref: this.guid(),
