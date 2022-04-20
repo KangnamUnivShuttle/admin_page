@@ -1,5 +1,41 @@
 <div class="card" style="height: 100%;">
     <div class="card-header">플러그인 이미지 검색</div>
-    <div class="card-body">asdf</div>
+    <div class="card-body">
+        <form class="row" style="margin-bottom: 15px;" [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()">
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-prepend">
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                    </span>
+                    <input type="text" id="input1-group2" name="input1-group2" class="form-control" formControlName="searchImageName"
+                        placeholder="플러그인 이미지 이름 검색" [(ngModel)]="searchImageName">
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col" style="overflow-y: scroll;height: 450px;">
+
+                <div class="row" *ngFor="let plugin of pluginImageList">
+                    <div class="col">
+                        <div class="card" draggable="true" style="cursor: move;">
+                            <div class="card-header">{{plugin.name}} #{{plugin.imageId}}</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12" style="font-weight: bold;">Source URL</div>
+                                    <div class="col-12">{{plugin.githubUrl}}</div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-sm btn-primary" (click)="onBtnOpenUrlInNewTab(plugin.githubUrl)">
+                                    새 창에서 열기 <i class="fa fa-share-square-o"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
     <!-- <div class="card-footer">asdf</div> -->
 </div>
