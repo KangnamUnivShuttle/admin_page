@@ -39,7 +39,7 @@ export class HttpService {
         // Object.keys(params).forEach(key => {
         //     httpParams.set(key, params[key])
         // })
-        return this.http.get<BasicResponseModel>(`${environment.host}${url}`, {
+        return this.http.get<BasicResponseModel>(`${url.includes('http') ? '' : environment.host}${url}`, {
             params: params
         })
             .pipe(

@@ -20,6 +20,7 @@ import { RuntimeStartComponent } from './components/runtime-start.component';
 import { RuntimeLinkComponent } from './components/runtime-link.component';
 import { RuntimeSearchComponent } from './components/runtime-search.component';
 import { RuntimeImageComponent } from './components/runtime-image.component';
+import { RuntimeOgtagComponent } from './components/runtime-ogtag.component';
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { RuntimeImageComponent } from './components/runtime-image.component';
     RuntimeLinkComponent,
   
     RuntimeSearchComponent,
-    RuntimeImageComponent
+    RuntimeImageComponent,
+    RuntimeOgtagComponent
   ] //[ WidgetsComponent ]
 })
 export class RuntimeModule { }

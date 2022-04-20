@@ -4,6 +4,11 @@ margin: auto;" *ngIf="plugin" (dragstart)="onDragStart($event)">
     <div class="card-header">{{plugin.name}} #{{plugin.imageId}}</div>
     <div class="card-body">
         <div class="row">
+            <div class="col">
+                <runtime-ogtag></runtime-ogtag>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12" style="font-weight: bold;">Source URL</div>
             <div class="col-12">{{plugin.githubUrl}}</div>
         </div>
