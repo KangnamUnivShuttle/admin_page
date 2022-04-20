@@ -20,6 +20,9 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     @Input()
     y: number = 0
 
+    @Input()
+    orderNum: number = 0;
+
     @Output() onDragStartPos: EventEmitter<{x: number, y: number, id: string, ele: any}> = new EventEmitter();
     @Output() onRectChange: EventEmitter<{w: number, h: number}> = new EventEmitter();
     @Output() onSortChange: EventEmitter<{dir: number, ele: any}> = new EventEmitter();

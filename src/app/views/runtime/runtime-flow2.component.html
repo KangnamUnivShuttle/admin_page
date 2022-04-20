@@ -22,11 +22,12 @@
                     <ng-container *ngFor="let child of childComponents; let i = index">
 
                         <runtime-start *ngIf="child.type == 'start'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
-                            [y]="child.y" [msg]="child.msg" (onDragStartPos)="onDragStart($event)"
+                            [y]="child.y" [msg]="child.msg"
+                            (onDragStartPos)="onDragStart($event)"
                             (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-start>
 
                         <runtime-card *ngIf="child.type == 'card'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
-                            [y]="child.y" (onDragStartPos)="onDragStart($event)"
+                            [y]="child.y"  [orderNum]="child.orderNum" (onDragStartPos)="onDragStart($event)"
                             (onRectChange)="child.w = $event.w;child.h = $event.h"
                             (onSortChange)="onSortChageRequested($event)"></runtime-card>
 

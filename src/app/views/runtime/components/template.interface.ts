@@ -1,6 +1,7 @@
 export interface RuntimeItem {
 
     drag: string;
+    orderNum: number;
     x: number;
     y: number;
     w: number;

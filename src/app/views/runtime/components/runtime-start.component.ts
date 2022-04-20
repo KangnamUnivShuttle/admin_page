@@ -22,6 +22,9 @@ export class RuntimeStartComponent implements OnInit, RuntimeItem, AfterViewChec
     @Input()
     id: string;
 
+    @Input()
+    orderNum: number = 0;
+
     @Output() onDragStartPos: EventEmitter<{x: number, y: number, id: string, ele: any}> = new EventEmitter();
     @Output() onRectChange: EventEmitter<{w: number, h: number}> = new EventEmitter();
 
