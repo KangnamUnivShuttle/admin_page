@@ -4,7 +4,11 @@
     <div class="card-body">
         <div class="row">
             <div class="col" *ngFor="let reply of data">
-                <div class="quickReply" (click)="onQuickReplyClicked(reply)">{{reply.label}}</div>
+                <div class="quickReply" (click)="onQuickReplyClicked(reply)" draggable="true"
+                (dragstart)="onQuickReplyDragStart($event, reply)"
+                (dragover)="onQuickReplyDragging($event)"
+                (drop)="onQuickReplyDragDrop($event, reply)"
+                >{{reply.label}}</div>
             </div>
         </div>
 

@@ -45,6 +45,8 @@ export class RuntimeLinkComponent implements OnInit, RuntimeItem, AfterViewCheck
     blockID: string;
     searchBlockName: string;
     searchedBlockList: BlockLinkModel[] = [];
+    isBlockLinkDragging: boolean = false;
+    swapLinkIdx: number;
 
     @ViewChild('quickModal') public quickModal: ModalDirective;
 
@@ -101,13 +103,45 @@ export class RuntimeLinkComponent implements OnInit, RuntimeItem, AfterViewCheck
         }
     }
 
+    onQuickReplyDragStart(event, blockLink: BlockLinkModel) {
+        console.log('st', blockLink)
+        this.isBlockLinkDragging = true
+        this.swapLinkIdx = this.data.indexOf(blockLink)
+    }
+
+    onQuickReplyDragging(event) {
+        event.preventDefault()
+    }
+
+    onQuickReplyDragDrop(event, blockLink: BlockLinkModel) {
+        event.preventDefault()
+        const targetIdx = this.data.indexOf(blockLink)
+        if (this.swapLinkIdx >= 0 && targetIdx >= 0) {
+            const tmp = this.data[this.swapLinkIdx]
+            this.data[this.swapLinkIdx] = this.data[targetIdx]
+            this.data[targetIdx] = tmp
+        }
+        this.data.forEach((_, idx) => {
+            this.data[idx].orderNum = idx
+        })
+        console.log('drop data', this.data)
+        // this.isBlockLinkDragging = false
+    }
+
     onDragStart(event) {
+        if (this.isBlockLinkDragging) {
+            return
+        }
         this.lastX = event.x;
         this.lastY = event.y;
         this.onDragStartPos.emit({x: event.x, y: event.y, id: this.id, ele: this})
     }
 
     onDrop(event: any) {
+        if (this.isBlockLinkDragging) {
+            this.isBlockLinkDragging = false
+            return
+        }
         this.backupX = this.x
         this.backupY = this.y
         this.x += event.x - this.lastX;
