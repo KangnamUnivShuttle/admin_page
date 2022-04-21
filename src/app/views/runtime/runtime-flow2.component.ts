@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { BasicResponseModel } from '../../models/basicResponse.model';
 import { HttpService } from '../../services/http.services';
 import { BlockImageModel, BlockLinkModel, BlockModel, BlockRuntimeModel, ReqBlockLinkModel, ReqBlockModel, ReqBlockRuntimeModel, RuntimeItemPosModel } from './block.model';
 import { RuntimeCardComponent } from './components/runtime-card.component';
@@ -201,7 +202,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
                 this.focusedChildComponent.x <= 0 ||
                 this.focusedChildComponent.y <= 0) {
                 // console.warn('fail')
-                this._snackBar.open('블록 생성 중 문제가 발생했습니다. ', 'OK', {
+                this._snackBar.open(environment.MSG_FAIL_TO_CREATE_BLOCK, 'OK', {
                     horizontalPosition: 'right',
                     verticalPosition: 'top',
                     duration: 5000
@@ -373,7 +374,20 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
 
         Promise.all(promiseList)
         .then(res => {
-            console.log('res', res)
+            console.log('res', res as BasicResponseModel[])
+            let allOk = true
+            res.forEach(response => {
+                if(!response.success) {
+                    allOk = false
+                }
+            })
+
+            this._snackBar.open(allOk ? environment.MSG_OK : environment.MSG_SOME_FAIL, 'OK', {
+                horizontalPosition: 'right',
+                verticalPosition: 'top',
+                duration: 5000
+            });
+            this.initData()
         })
     }
 
