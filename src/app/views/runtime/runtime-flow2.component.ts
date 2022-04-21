@@ -111,6 +111,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
 
             runtime.data.forEach((run, idx) => {
                 run.containerStateOrigin = run.containerState
+                run.containerUrl = `${run.image.name}_${this.guid()}`,
                 this.childComponents.push({
                     type: 'card',
                     ref: this.guid(),
