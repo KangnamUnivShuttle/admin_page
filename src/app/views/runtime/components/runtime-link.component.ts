@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, AfterViewChecked, Eleme
 import { FormControl, FormBuilder } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { ModalDirective } from "ngx-bootstrap/modal";
+import { environment } from "../../../../environments/environment";
 import { HttpService } from "../../../services/http.services";
 import { BlockLinkModel } from "../block.model";
 import { RuntimeItem } from "./template.interface";
@@ -43,6 +44,7 @@ export class RuntimeLinkComponent implements OnInit, RuntimeItem, AfterViewCheck
 
     blockID: string;
     searchBlockName: string;
+    searchedBlockList: BlockLinkModel[] = [];
 
     @ViewChild('quickModal') public quickModal: ModalDirective;
 
@@ -136,6 +138,28 @@ export class RuntimeLinkComponent implements OnInit, RuntimeItem, AfterViewCheck
         this.httpService.reqGet('runtimeBlock', {name : this.searchBlockName}).toPromise()
         .then(res => {
             console.log('re', res)
+            this.searchedBlockList = res.data
         })
+    }
+
+    onBtnBlockLinkDeleteClicked(blockLink: BlockLinkModel) {
+        if (!confirm(environment.MSG_DELETE_WARN)) {
+            return
+        }
+        const idx = this.data.indexOf(blockLink)
+        if (idx < 0) {
+            return
+        }
+        if(blockLink.blockLinkId) {
+            this.httpService.reqDelete(`runtimeLink/${blockLink.blockLinkId}`, null).toPromise()
+            .then(res => {
+                if (res.success) {
+                    this.data.splice(idx, 1)
+                }
+            })
+        } else {
+            this.data.splice(idx, 1)
+        }
+        this.quickModal.hide()
     }
 }
