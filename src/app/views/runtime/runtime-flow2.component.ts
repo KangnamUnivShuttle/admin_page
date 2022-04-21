@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { HttpService } from '../../services/http.services';
-import { BlockImageModel, BlockModel, BlockRuntimeModel, RuntimeItemPosModel } from './block.model';
+import { BlockImageModel, BlockLinkModel, BlockModel, BlockRuntimeModel, ReqBlockLinkModel, ReqBlockModel, ReqBlockRuntimeModel, RuntimeItemPosModel } from './block.model';
 import { RuntimeCardComponent } from './components/runtime-card.component';
 
 @Component({
@@ -358,5 +358,130 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
         console.log('list', this.childComponents)
 
         this.draw()
+    }
+
+    onBtnSubmitClicked() {
+        console.log('asdf', this.childComponents)
+        const {block, blockLink, runtime} = this.splitBlockComponentsFromChildComponents(this.childComponents)
+        console.log('block', block)
+        console.log('blockLink', blockLink)
+        console.log('runtime', runtime)
+        let promiseList = []
+        promiseList.push(this.submitBlock(block, blockLink))
+        promiseList = promiseList.concat(this.submitBlockLink(blockLink))
+        promiseList = promiseList.concat(this.submitRuntime(runtime))
+
+        Promise.all(promiseList)
+        .then(res => {
+            console.log('res', res)
+        })
+    }
+
+    submitBlock(block: RuntimeItemPosModel, blockLink: RuntimeItemPosModel) {
+        const blockData = block.data as BlockModel
+        if (!blockData) {
+            throw new Error('Block data undefined')
+        }
+        if ((block.data as BlockModel).registerDatetime) {
+            return this.httpService.reqPut('runtimeBlock', {
+                blockID: blockData.blockId,
+                name: blockData.name,
+                enabled: blockData.enabled,
+                order_num: blockData.orderNum,
+                x: block.x,
+                y: block.y,
+                linkX: blockLink.x,
+                linkY: blockLink.y
+            } as ReqBlockModel, null).toPromise()
+        } else {
+            return this.httpService.reqPost('runtimeBlock', {
+                blockID: blockData.blockId,
+                name: blockData.name,
+                enabled: blockData.enabled,
+                order_num: blockData.orderNum,
+                x: block.x,
+                y: block.y,
+                linkX: blockLink.x,
+                linkY: blockLink.y
+            } as ReqBlockModel, null).toPromise()
+        }
+    }
+
+    submitBlockLink(blockLink: RuntimeItemPosModel) {
+        const promiseList = [];
+        (blockLink.data as BlockLinkModel[]).forEach(_blockLink => {
+            if (_blockLink.blockLinkId) {
+                promiseList.push(this.httpService.reqPut('runtimeLink', {
+                    blockLinkID: _blockLink.blockLinkId,
+                    blockID: _blockLink.blockId,
+                    nextBlockID: _blockLink.nextBlockId,
+                    messageText: _blockLink.messageText,
+                    action: _blockLink.action,
+                    label: _blockLink.label,
+                    webLinkUrl: _blockLink.webLinkUrl,
+                    enabled: _blockLink.enabled,
+                    order_num: _blockLink.orderNum
+                } as ReqBlockLinkModel, null).toPromise())
+            } else {
+                promiseList.push(this.httpService.reqPost('runtimeLink', {
+                    blockID: _blockLink.blockId,
+                    nextBlockID: _blockLink.nextBlockId,
+                    messageText: _blockLink.messageText,
+                    action: _blockLink.action,
+                    label: _blockLink.label,
+                    webLinkUrl: _blockLink.webLinkUrl,
+                    enabled: _blockLink.enabled,
+                    order_num: _blockLink.orderNum
+                } as ReqBlockLinkModel, null).toPromise())
+            }
+        })
+        return promiseList
+    }
+
+    submitRuntime(runtimeList: RuntimeItemPosModel[]) {
+        const promiseList = []
+        runtimeList.forEach(runtime => {
+            const runtimeData = runtime.data as BlockRuntimeModel
+            if((runtime.data as BlockRuntimeModel).blockRuntimeId) {
+                promiseList.push(this.httpService.reqPut('runtime/modify', {
+                    blockRuntimeID: runtimeData.blockRuntimeId,
+                    blockID: runtimeData.blockId,
+                    imageID: runtimeData.imageId,
+                    order_num: runtimeData.orderNum,
+                    container_url: runtimeData.containerUrl,
+                    container_port: runtimeData.containerPort,
+                    container_env: runtimeData.containerEnv,
+                    x: runtime.x,
+                    y: runtime.y
+                } as ReqBlockRuntimeModel, null).toPromise())
+            } else {
+                promiseList.push(this.httpService.reqPost('runtime/register', {
+                    blockID: runtimeData.blockId,
+                    imageID: runtimeData.imageId,
+                    order_num: runtimeData.orderNum,
+                    container_url: runtimeData.containerUrl,
+                    container_port: runtimeData.containerPort,
+                    container_env: runtimeData.containerEnv,
+                    x: runtime.x,
+                    y: runtime.y
+                } as ReqBlockRuntimeModel, null).toPromise())
+            }
+        })
+        return promiseList
+    }
+
+    splitBlockComponentsFromChildComponents(childComponents: RuntimeItemPosModel[]) {
+        if (childComponents.length < 2) {
+            return {
+                block: undefined,
+                blockLink: undefined,
+                runtime: undefined
+            }
+        }
+        return {
+            block: childComponents[0],
+            blockLink: childComponents[childComponents.length - 1],
+            runtime: childComponents.slice(1, childComponents.length - 1)
+        }
     }
 }

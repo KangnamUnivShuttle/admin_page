@@ -66,3 +66,38 @@ export interface RuntimeItemPosModel {
     orderNum: number;
     msg?: string;
 }
+
+export interface ReqBlockModel {
+    blockID: string;
+    name: string;
+    enabled: number;
+    order_num: number;
+    x: number;
+    y: number;
+    linkX: number;
+    linkY: number;
+}
+
+export interface ReqBlockRuntimeModel {
+    blockRuntimeID?: number;
+    blockID: string;
+    imageID: number;
+    order_num: number;
+    container_url: string;
+    container_port: string;
+    container_env: string;
+    x: number;
+    y: number;
+}
+
+export interface ReqBlockLinkModel {
+    blockLinkID?: number;
+    blockID: string;
+    nextBlockID?: string;
+    messageText?: string;
+    action: string;
+    label: string;
+    webLinkUrl?: string;
+    enabled: number;
+    order_num: number;
+}
