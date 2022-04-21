@@ -1,14 +1,37 @@
 <div class="animated fadeIn">
     <div class="row">
         <div class="col-4">
-            <div class="card">
+            <form class="card">
                 <div class="card-header">
                     Form
                 </div>
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name"
+                            >
+                          </div>
+                        </div>
+                    </div>
                     
+                    <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label for="name">Github URL</label>
+                            <input type="text" class="form-control" id="name"
+                            >
+                          </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-sm btn-warning">Cancel</button>
+                    <button type="button" class="btn btn-sm btn-danger">Delete</button>
+                    <button type="button" class="btn btn-sm btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
         <div class="col-8">
             <div class="card">
@@ -26,13 +49,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <ng-container *ngFor="let image of blockImageList">
-                                <tr (click)="onRowClicked(image)"
-                                [ngStyle]="focusedBlockImage && image.imageId == focusedBlockImage.imageId && { 'background-color': '#acb4bc' }">
-                                    <td>{{image.imageId}}</td>
-                                    <td>{{image.name}}</td>
-                                    <td>{{image.githubUrl}}</td>
-                                    <td>{{image.registerDatetime}} / {{image.updateDatetime}}</td>
+                            <ng-container *ngFor="let data of tableData">
+                                <tr (click)="onRowClicked(data)"
+                                [ngStyle]="focusedItem && data.imageId == focusedItem.imageId && { 'background-color': '#acb4bc' }">
+                                    <td>{{data.imageId}}</td>
+                                    <td>{{data.name}}</td>
+                                    <td>{{data.githubUrl}}</td>
+                                    <td>{{data.registerDatetime}} / {{data.updateDatetime}}</td>
                                 </tr>
                             </ng-container>
                             <!-- <tr>
