@@ -1,5 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter, ElementRef, AfterViewChecked } from "@angular/core";
+import { ChangeDetectionStrategy } from "@angular/compiler/src/compiler_facade_interface";
+import { Component, Input, OnInit, Output, EventEmitter, ElementRef, AfterViewChecked, ChangeDetectorRef, ApplicationRef } from "@angular/core";
 import { environment } from "../../../../environments/environment";
+import { HttpService } from "../../../services/http.services";
 import { BlockRuntimeModel } from "../block.model";
 import { RuntimeItem } from "./template.interface";
 
@@ -37,6 +39,7 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     @Output() onDragStartPos: EventEmitter<{x: number, y: number, id: string, ele: any}> = new EventEmitter();
     @Output() onRectChange: EventEmitter<{w: number, h: number}> = new EventEmitter();
     @Output() onSortChange: EventEmitter<{dir: number, ele: any}> = new EventEmitter();
+    @Output() onDeleteRequested: EventEmitter<BlockRuntimeModel> = new EventEmitter();
 
     lastX: number = 0;
     lastY: number = 0;
@@ -45,7 +48,10 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     backupX: number;
     backupY: number;
 
-    constructor(private elementRef: ElementRef) {}
+    constructor(private elementRef: ElementRef,
+        private cdr: ChangeDetectorRef,
+        private appRef: ApplicationRef,
+        private httpService: HttpService) {}
 
     ngAfterViewChecked(): void {
         // console.log('checked', this.elementRef.nativeElement.getBoundingClientRect(), this.elementRef.nativeElement.querySelector('div'), this.elementRef.nativeElement.querySelector('div').getBoundingClientRect())
@@ -93,5 +99,37 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
             dir,
             ele: this
         })
+    }
+
+    onBtnDeleteClicked(runtime: BlockRuntimeModel) {
+        if(!confirm(environment.MSG_DELETE_WARN)) {
+            return
+        }
+        this.onDeleteRequested.emit(runtime)
+    }
+
+    onRuntimeStateChange(runtime: BlockRuntimeModel) {
+        if(!confirm(environment.MSG_CHANGE_STATE_WARN)) {
+            this.data.containerState = runtime.containerStateOrigin
+            return
+        }
+        if (runtime.blockRuntimeId && runtime.containerState !== runtime.containerStateOrigin) {
+            runtime.containerStateOrigin = runtime.containerState
+            this.httpService.reqPost('runtime/state', {
+                blockRuntimeID: runtime.blockRuntimeId,
+                container_name: runtime.containerUrl,
+                container_state: runtime.containerState,
+                image_url: runtime.image.githubUrl,
+                cpu: '0.1',
+                ram: '128M',
+                path: '.',
+                env: runtime.containerEnv.split('\n')
+              }, null).toPromise()
+              .then(res => {
+
+              })
+        } else {
+            return
+        }
     }
 }

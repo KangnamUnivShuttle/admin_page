@@ -43,6 +43,7 @@
                                     <mat-form-field>
                                         <mat-label>State</mat-label>
                                         <mat-select [(ngModel)]="data.containerState"
+                                        (selectionChange)="onRuntimeStateChange(data)"
                                         [disabled]="data.registerDatetime == null">
                                         <mat-option *ngFor="let state of stateList" [value]="state">{{state}}</mat-option>
                                         </mat-select>
@@ -55,6 +56,7 @@
                         <ng-container *ngIf="data">
                             <button type="button" class="btn btn-sm btn-danger"
                                                         [disabled]="(data.blockRuntimeId && data.containerState != 'Down')"
+                                                        (click)="onBtnDeleteClicked(data)"
                                                         >Delete</button>
                         </ng-container>
                     </div>
