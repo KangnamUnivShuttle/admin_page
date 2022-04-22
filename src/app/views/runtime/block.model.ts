@@ -101,3 +101,14 @@ export interface ReqBlockLinkModel {
     enabled: number;
     order_num: number;
 }
+
+export interface ReqBlockRuntimeStateModel {
+    blockRuntimeID: number;
+    container_name: string;
+    container_state: string;
+    image_url: string;
+    cpu: string;
+    ram: string;
+    path: string;
+    env: string[];
+}

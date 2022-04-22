@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy } from "@angular/compiler/src/compiler_facade_i
 import { Component, Input, OnInit, Output, EventEmitter, ElementRef, AfterViewChecked, ChangeDetectorRef, ApplicationRef } from "@angular/core";
 import { environment } from "../../../../environments/environment";
 import { HttpService } from "../../../services/http.services";
-import { BlockRuntimeModel } from "../block.model";
+import { BlockRuntimeModel, ReqBlockRuntimeStateModel } from "../block.model";
 import { RuntimeItem } from "./template.interface";
 
 @Component({
@@ -124,12 +124,33 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
                 ram: '128M',
                 path: '.',
                 env: runtime.containerEnv.split('\n')
-              }, null).toPromise()
+              } as ReqBlockRuntimeStateModel, null).toPromise()
               .then(res => {
 
               })
         } else {
             return
         }
+    }
+
+    onBtnUpdateReq(runtime: BlockRuntimeModel) {
+
+        if(!confirm(environment.MSG_CONTAINER_BUILD_REQ_NOTIFY)) {
+            return
+        }
+
+        this.httpService.reqPost('runtime/state', {
+            blockRuntimeID: runtime.blockRuntimeId,
+            container_name: runtime.containerUrl,
+            container_state: 'build',
+            image_url: runtime.image.githubUrl,
+            cpu: '0.1',
+            ram: '128M',
+            path: '.',
+            env: runtime.containerEnv.split('\n')
+        } as ReqBlockRuntimeStateModel, null).toPromise()
+        .then(res => {
+
+        })
     }
 }
