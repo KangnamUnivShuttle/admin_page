@@ -113,12 +113,12 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
         })
     }
 
-    onRuntimeStateChange(runtime: BlockRuntimeModel) {
-        if(!confirm(environment.MSG_CHANGE_STATE_WARN)) {
+    onRuntimeStateChange(runtime: BlockRuntimeModel, silence: boolean = false) {
+        if(!silence && !confirm(environment.MSG_CHANGE_STATE_WARN)) {
             this.data.containerState = runtime.containerStateOrigin
             return
         }
-        if (runtime.blockRuntimeId && runtime.containerState !== runtime.containerStateOrigin) {
+        if (runtime.blockRuntimeId && (runtime.containerState !== runtime.containerStateOrigin || silence)) {
             runtime.containerStateOrigin = runtime.containerState
             this.httpService.reqPost('runtime/state', {
                 blockRuntimeID: runtime.blockRuntimeId,
@@ -155,7 +155,7 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
             env: runtime.containerEnv.split('\n')
         } as ReqBlockRuntimeStateModel, null).toPromise()
         .then(res => {
-
+            this.onRuntimeStateChange(runtime, true)
         })
     }
 }
