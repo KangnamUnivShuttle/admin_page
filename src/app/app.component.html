@@ -1,4 +1,5 @@
-<div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.3);z-index: 99999;" *ngIf="loadingStatus">
-
+<div class="loader-wrapper" *ngIf="loadingStatus">
+<div class="loader loader-pos"></div>
+<div class="loader-text">처리 중 입니다. 잠시만 기다려주세요.</div>
 </div>
 <router-outlet></router-outlet>

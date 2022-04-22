@@ -12,6 +12,7 @@ import { LoadingService } from './services/loading.service';
   selector: 'body',
   templateUrl: 'app.component.html',
   // template: '<router-outlet></router-outlet>',
+  styleUrls: ['./app.component.css'],
   providers: [IconSetService],
 })
 export class AppComponent implements OnInit, OnDestroy {
