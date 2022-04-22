@@ -158,4 +158,29 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
             this.onRuntimeStateChange(runtime, true)
         })
     }
+
+    dynamicStateList() {
+        if (this.data.containerState === 'Down') {
+            return [
+                'start',
+                'Down'
+            ]
+        } else if (this.data.containerState === 'start') {
+            return [
+                'start',
+                'stop'
+            ]
+        } else if (this.data.containerState === 'stop') {
+            return [
+                'start',
+                'stop',
+                'remove'
+            ]
+        } else if (this.data.containerState === 'remove') {
+            return [
+                'remove',
+                'Down'
+            ]
+        }
+    }
 }

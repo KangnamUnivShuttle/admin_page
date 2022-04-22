@@ -47,7 +47,7 @@
                                         <mat-select [(ngModel)]="data.containerState"
                                         (selectionChange)="onRuntimeStateChange(data)"
                                         [disabled]="data.registerDatetime == null">
-                                        <mat-option *ngFor="let state of stateList" [value]="state">{{state}}</mat-option>
+                                        <mat-option *ngFor="let state of dynamicStateList()" [value]="state">{{state}}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
