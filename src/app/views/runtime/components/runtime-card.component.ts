@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy } from "@angular/compiler/src/compiler_facade_interface";
 import { Component, Input, OnInit, Output, EventEmitter, ElementRef, AfterViewChecked, ChangeDetectorRef, ApplicationRef } from "@angular/core";
 import { environment } from "../../../../environments/environment";
+import { BasicResponseModel } from "../../../models/basicResponse.model";
 import { HttpService } from "../../../services/http.services";
-import { BlockRuntimeModel, ReqBlockRuntimeStateModel } from "../block.model";
+import { BlockRuntimeModel, ReqBlockRuntimeModel, ReqBlockRuntimeStateModel } from "../block.model";
 import { RuntimeItem } from "./template.interface";
 
 @Component({
@@ -113,26 +114,48 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
         })
     }
 
+    updateRuntimeInfo(runtime: BlockRuntimeModel): Promise<BasicResponseModel> {
+        if (runtime.blockRuntimeId) {
+            return this.httpService.reqPut('runtime/modify', {
+                blockRuntimeID: runtime.blockRuntimeId,
+                blockID: runtime.blockId,
+                imageID: runtime.imageId,
+                order_num: runtime.orderNum,
+                container_url: runtime.containerUrl,
+                container_port: runtime.containerPort,
+                container_env: runtime.containerEnv,
+                x: this.x,
+                y: this.y
+            } as ReqBlockRuntimeModel, null).toPromise()
+        } else {
+            return Promise.resolve({ success: true} as BasicResponseModel)
+        }
+    }
+
     onRuntimeStateChange(runtime: BlockRuntimeModel, silence: boolean = false) {
         if(!silence && !confirm(environment.MSG_CHANGE_STATE_WARN)) {
             this.data.containerState = runtime.containerStateOrigin
             return
         }
         if (runtime.blockRuntimeId && (runtime.containerState !== runtime.containerStateOrigin || silence)) {
-            runtime.containerStateOrigin = runtime.containerState
-            this.httpService.reqPost('runtime/state', {
-                blockRuntimeID: runtime.blockRuntimeId,
-                container_name: runtime.containerUrl,
-                container_state: runtime.containerState,
-                image_url: runtime.image.githubUrl,
-                cpu: '0.1',
-                ram: '128M',
-                path: '.',
-                env: runtime.containerEnv.split('\n')
-              } as ReqBlockRuntimeStateModel, null).toPromise()
-              .then(res => {
-
-              })
+            this.updateRuntimeInfo(runtime)
+            .then(res => {
+                if (res.success) {
+                    runtime.containerStateOrigin = runtime.containerState
+                    this.httpService.reqPost('runtime/state', {
+                        blockRuntimeID: runtime.blockRuntimeId,
+                        container_name: runtime.containerUrl,
+                        container_state: runtime.containerState,
+                        image_url: runtime.image.githubUrl,
+                        cpu: '0.1',
+                        ram: '128M',
+                        path: '.',
+                        env: runtime.containerEnv.split('\n')
+                      } as ReqBlockRuntimeStateModel, null).toPromise()
+                      .then(_res => {
+                      })
+                }
+            })
         } else {
             return
         }

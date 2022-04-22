@@ -35,8 +35,8 @@
                                 <div class="col-12">
                                     <textarea id="textarea-input" name="textarea-input" rows="4"
                                         class="form-control" placeholder="Content.."
-                                        [readonly]="data.registerDatetime != null"
-                                        [disabled]="data.registerDatetime != null"
+                                        [readonly]="data.containerState == 'start'"
+                                        [disabled]="data.containerState == 'start'"
                                         [(ngModel)]="data.containerEnv"></textarea>
                                 </div>
                             </div>
