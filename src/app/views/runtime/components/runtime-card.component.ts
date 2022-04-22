@@ -39,7 +39,10 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     @Output() onDragStartPos: EventEmitter<{x: number, y: number, id: string, ele: any}> = new EventEmitter();
     @Output() onRectChange: EventEmitter<{w: number, h: number}> = new EventEmitter();
     @Output() onSortChange: EventEmitter<{dir: number, ele: any}> = new EventEmitter();
-    @Output() onDeleteRequested: EventEmitter<BlockRuntimeModel> = new EventEmitter();
+    @Output() onDeleteRequested: EventEmitter<{
+        runtime: BlockRuntimeModel,
+        id: string
+    }> = new EventEmitter();
 
     lastX: number = 0;
     lastY: number = 0;
@@ -105,7 +108,9 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
         if(!confirm(environment.MSG_DELETE_WARN)) {
             return
         }
-        this.onDeleteRequested.emit(runtime)
+        this.onDeleteRequested.emit({
+            runtime, id: this.id
+        })
     }
 
     onRuntimeStateChange(runtime: BlockRuntimeModel) {

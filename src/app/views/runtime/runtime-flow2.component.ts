@@ -499,4 +499,19 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
             runtime: childComponents.slice(1, childComponents.length - 1)
         }
     }
+
+    onRuntimeDeleteReq(event) {
+        if (event.runtime.blockRuntimeId) {
+            this.httpService.reqDelete(`runtime/${event.runtime.blockRuntimeId}`, null).toPromise()
+            .then(res => {
+                this.initData()
+            })
+        } else {
+            const component = this.childComponents.find(i => i.ref === event.id)
+            if (component) {
+                this.childComponents.splice(this.childComponents.indexOf(component), 1)
+                this.draw()
+            }
+        }
+    }
 }

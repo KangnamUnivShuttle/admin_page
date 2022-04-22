@@ -29,6 +29,7 @@
                         <runtime-card *ngIf="child.type == 'card'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
                             [y]="child.y"  [orderNum]="child.orderNum" [data]="child.data"
                             (onDragStartPos)="onDragStart($event)"
+                            (onDeleteRequested)="onRuntimeDeleteReq($event)"
                             (onRectChange)="child.w = $event.w;child.h = $event.h"
                             (onSortChange)="onSortChageRequested($event)"></runtime-card>
 
