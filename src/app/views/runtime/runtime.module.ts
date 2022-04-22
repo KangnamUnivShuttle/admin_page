@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ChartsModule } from 'ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatRadioModule} from '@angular/material/radio';
 
 // import { WidgetsComponent } from './widgets.component';
 import { BlockComponent } from './block.component';
@@ -33,6 +34,7 @@ import { RuntimeOgtagComponent } from './components/runtime-ogtag.component';
     ReactiveFormsModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatRadioModule,
     AlertModule.forRoot(),
     ModalModule.forRoot()
   ],

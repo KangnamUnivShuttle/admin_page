@@ -52,6 +52,8 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     backupX: number;
     backupY: number;
 
+    render: boolean = true;
+
     constructor(private elementRef: ElementRef,
         private cdr: ChangeDetectorRef,
         private appRef: ApplicationRef,
@@ -133,10 +135,20 @@ export class RuntimeCardComponent implements OnInit, RuntimeItem, AfterViewCheck
     }
 
     onRuntimeStateChange(runtime: BlockRuntimeModel, silence: boolean = false) {
+        this.render = false
         if(!silence && !confirm(environment.MSG_CHANGE_STATE_WARN)) {
+            this.appRef.tick()
+            this.cdr.detectChanges()
+            console.log('can u see me?', this.data.containerState, runtime.containerStateOrigin)
             this.data.containerState = runtime.containerStateOrigin
+            console.log('can u see me?', this.data.containerState, runtime.containerStateOrigin)
+            this.appRef.tick()
+            this.cdr.detectChanges()
+            this.render = true
             return
         }
+        this.render = true
+        console.log('can u see asdfas?', this.data.containerState, runtime.containerStateOrigin)
         if (runtime.blockRuntimeId && (runtime.containerState !== runtime.containerStateOrigin || silence)) {
             this.updateRuntimeInfo(runtime)
             .then(res => {
