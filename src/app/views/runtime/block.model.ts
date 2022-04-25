@@ -6,6 +6,10 @@ export interface BlockModel {
   deleteable: number;
   registerDatetime: Date;
   updateDatetime: Date;
+  x: number;
+  y: number;
+  linkX: number;
+  linkY: number;
 }
 
 export interface BlockLinkModel {

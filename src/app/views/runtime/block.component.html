@@ -1,87 +1,110 @@
 <div class="animated fadeIn">
-    <div class="row">
-        <div class="col-4">
-            <form class="card" [formGroup]="mainForm">
-                <div class="card-header">
-                    Form
-                </div>
-                <div class="card-body">
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <label for="name">BlockID</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name" formControlName="blockId" [(ngModel)]="focusedBlock.blockId"
-                            [readonly]="focusedBlock.registerDatetime != null"
-                            [disabled]="focusedBlock.registerDatetime != null"
-                            >
-                          </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name" formControlName="name" [(ngModel)]="focusedBlock.name">
-                          </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">Enabled</div>
-                        <div class="col">
-                            <label class="switch switch-3d switch-primary">
-                                <input type="checkbox" class="switch-input" checked>
-                                <span class="switch-slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="button" class="btn btn-sm btn-primary" (click)="onBtnEditRuntimeClicked()"
-                            [disabled]="focusedBlock.registerDatetime == null">Edit Runtime</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="button" class="btn btn-sm btn-warning">Cancel</button>
-                    <button type="button" class="btn btn-sm btn-danger">Delete</button>
-                    <button type="button" class="btn btn-sm btn-primary">Submit</button>
-                </div>
-            </form>
+  <div class="row">
+    <div class="col-4">
+      <form class="card" [formGroup]="mainForm">
+        <div class="card-header">Form</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="name">BlockID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder="Enter your name"
+                  formControlName="blockId"
+                  [(ngModel)]="focusedItem.blockId"
+                  [readonly]="focusedItem.registerDatetime != null"
+                  [disabled]="focusedItem.registerDatetime != null"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder="Enter your name"
+                  formControlName="name"
+                  [(ngModel)]="focusedItem.name"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">Enabled</div>
+            <div class="col">
+              <label class="switch switch-3d switch-primary">
+                <input type="checkbox" class="switch-input" checked />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-sm btn-primary"
+                (click)="onBtnEditRuntimeClicked()"
+                [disabled]="focusedItem.registerDatetime == null"
+              >
+                Edit Runtime
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="col-8">
-            <div class="card">
-                <div class="card-header">
-                    List
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>BlockID</th>
-                                <th>Name</th>
-                                <th>RegisterTime / UpdateTime</th>
-                                <th>Enabled</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor="let block of blockList">
-                                <tr (click)="onRowClicked(block)"
-                                [ngStyle]="focusedBlock && block.blockId == focusedBlock.blockId && { 'background-color': '#acb4bc' }">
-                                    <td>{{block.blockId}}</td>
-                                    <td>{{block.name}}</td>
-                                    <td>{{block.registerDatetime}} / {{block.updateDatetime}}</td>
-                                    <td>
-                                        <ng-container *ngIf="block.enabled">
-                                            <span class="badge badge-success">Active</span>
-                                        </ng-container>
-                                        <ng-container *ngIf="!block.enabled">
-                                            <span class="badge badge-secondary">Inactive</span>
-                                        </ng-container>
-                                    </td>
-                                </tr>
-                            </ng-container>
-                            <!-- <tr>
+        <div class="card-footer">
+          <button type="button" class="btn btn-sm btn-warning">Cancel</button>
+          <button type="button" class="btn btn-sm btn-danger">Delete</button>
+          <button type="button" class="btn btn-sm btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-8">
+      <div class="card">
+        <div class="card-header">List</div>
+        <div class="card-body">
+          <table class="table table-bordered table-striped table-sm">
+            <thead>
+              <tr>
+                <th>BlockID</th>
+                <th>Name</th>
+                <th>RegisterTime / UpdateTime</th>
+                <th>Enabled</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let block of tableData">
+                <tr
+                  (click)="onRowClicked(block)"
+                  [ngStyle]="
+                    focusedItem &&
+                    block.blockId == focusedItem.blockId && {
+                      'background-color': '#acb4bc'
+                    }
+                  "
+                >
+                  <td>{{ block.blockId }}</td>
+                  <td>{{ block.name }}</td>
+                  <td>
+                    {{ block.registerDatetime }} / {{ block.updateDatetime }}
+                  </td>
+                  <td>
+                    <ng-container *ngIf="block.enabled">
+                      <span class="badge badge-success">Active</span>
+                    </ng-container>
+                    <ng-container *ngIf="!block.enabled">
+                      <span class="badge badge-secondary">Inactive</span>
+                    </ng-container>
+                  </td>
+                </tr>
+              </ng-container>
+              <!-- <tr>
                                 <td>Vishnu Serghei</td>
                                 <td>2012/01/01</td>
                                 <td>Member</td>
@@ -121,22 +144,22 @@
                                     <span class="badge badge-success">Active</span>
                                 </td>
                             </tr> -->
-                        </tbody>
-                    </table>
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+            </tbody>
+          </table>
+          <nav>
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </nav>
         </div>
+      </div>
     </div>
+  </div>
 </div>

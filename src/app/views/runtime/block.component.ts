@@ -1,79 +1,158 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { HttpService } from '../../services/http.services';
-import { environment } from '../../../environments/environment';
-import { HttpParams } from '@angular/common/http';
-import { BasicResponseModel } from '../../models/basicResponse.model';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { getStyle } from "@coreui/coreui/dist/js/coreui-utilities";
+import { CustomTooltips } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
+import { HttpService } from "../../services/http.services";
+import { environment } from "../../../environments/environment";
+import { HttpParams } from "@angular/common/http";
+import { BasicResponseModel } from "../../models/basicResponse.model";
+import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
+import { FormBuilder, FormControl, Validators } from "@angular/forms";
+import { FormPage } from "../../interfaces/formpage.interface";
+import { BlockModel, ReqBlockModel } from "./block.model";
 
 @Component({
-  templateUrl: 'block.component.html'
+  templateUrl: "block.component.html",
 })
-export class BlockComponent implements OnInit, OnDestroy {
+export class BlockComponent implements OnInit, OnDestroy, FormPage {
+  tableData: BlockModel[] = [];
+  blockSubscription: Subscription;
 
-    blockList = []
-    blockSubscription: Subscription;
-    
-    focusedBlock = {
+  focusedItem = {
+    blockId: null,
+    name: null,
+    enabled: null,
+    deleteable: null,
+    registerDatetime: null,
+  } as BlockModel;
+
+  blockId: string = null;
+  name: string = null;
+
+  mainForm = this.formBuilder.group({
+    blockId: new FormControl(this.focusedItem.blockId, [Validators.required]),
+    name: new FormControl(this.focusedItem.name, [Validators.required]),
+  });
+
+  constructor(
+    private httpService: HttpService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {}
+
+  initData() {
+    this.blockSubscription = this.httpService
+      .reqGet(`runtimeBlock`, {
+        page: 1,
+        limit: 10,
+      })
+      .subscribe((data) => {
+        // console.log(data)
+        this.tableData = data.data;
+      });
+  }
+
+  onBtnSubmitClicked() {
+    if (this.focusedItem.blockId) {
+      this.reqUpdateData(this.focusedItem);
+    } else {
+      this.reqInsertData(this.focusedItem);
+    }
+  }
+
+  onBtnDeleteClicked() {
+    if (!confirm(environment.MSG_DELETE_WARN)) {
+      return;
+    }
+
+    this.reqDeleteData(this.focusedItem);
+  }
+
+  reqInsertData(data: BlockModel) {
+    this.httpService
+      .reqPost(
+        "runtimeBlock",
+        {
+          name: data.name,
+          enabled: data.enabled,
+          order_num: data.orderNum,
+          x: data.x,
+          y: data.y,
+          linkX: data.linkX,
+          linkY: data.linkY,
+        } as ReqBlockModel,
+        null
+      )
+      .toPromise()
+      .then((res) => {
+        this.initData();
+      });
+  }
+
+  reqUpdateData(data: BlockModel) {
+    this.httpService
+      .reqPut(
+        "runtimeBlock",
+        {
+          blockID: data.blockId,
+          name: data.name,
+          enabled: data.enabled,
+          order_num: data.orderNum,
+          x: data.x,
+          y: data.y,
+          linkX: data.linkX,
+          linkY: data.linkY,
+        } as ReqBlockModel,
+        null
+      )
+      .toPromise()
+      .then((res) => {
+        this.initData();
+      });
+  }
+
+  reqDeleteData(data: BlockModel) {
+    this.httpService
+      .reqDelete(`runtimeBlock/${this.focusedItem.blockId}`, null)
+      .toPromise()
+      .then((res) => {
+        this.initData();
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.blockSubscription && !this.blockSubscription.closed) {
+      this.blockSubscription.unsubscribe();
+    }
+  }
+
+  ngOnInit(): void {
+    this.initData();
+  }
+
+  onRowClicked(block) {
+    if (this.focusedItem && this.focusedItem.blockId === block.blockId) {
+      this.focusedItem = {
         blockId: null,
         name: null,
         enabled: null,
         deleteable: null,
-        registerDatetime: null
-    };
-    
-    blockId: string = null;
-    name: string = null;
-
-    mainForm = this.formBuilder.group({
-      blockId: new FormControl(this.focusedBlock.blockId, [Validators.required]),
-      name: new FormControl(this.focusedBlock.name, [Validators.required])
-    })
-
-    constructor(private httpService: HttpService,
-        private formBuilder: FormBuilder,
-        private router: Router) {
-        
+        registerDatetime: null,
+        x: null,
+        y: null,
+        linkX: null,
+        linkY: null,
+      } as BlockModel;
+    } else {
+      this.focusedItem = block;
     }
+  }
 
-    ngOnDestroy(): void {
-        if(this.blockSubscription && !this.blockSubscription.closed) {
-            this.blockSubscription.unsubscribe()
-        }
+  onBtnEditRuntimeClicked() {
+    if (this.focusedItem) {
+      this.router.navigate([
+        `/runtime/block/flow2/${this.focusedItem.blockId}`,
+      ]);
     }
-
-    ngOnInit(): void {
-        this.blockSubscription = this.httpService.reqGet(`runtimeBlock`, {
-            page: 1,
-            limit: 10
-        })
-        .subscribe(data => {
-            // console.log(data)
-            this.blockList = data.data;
-        });
-    }
-
-    onRowClicked(block) {
-        if(this.focusedBlock && this.focusedBlock.blockId === block.blockId) {
-            this.focusedBlock = {
-                blockId: null,
-                name: null,
-                enabled: null,
-                deleteable: null,
-                registerDatetime: null
-            }
-        } else {
-        this.focusedBlock = block
-
-        }
-    }
-
-    onBtnEditRuntimeClicked() {
-        if(this.focusedBlock) {
-            this.router.navigate([`/runtime/block/flow2/${this.focusedBlock.blockId}`])
-        }
-    }
+  }
 }
