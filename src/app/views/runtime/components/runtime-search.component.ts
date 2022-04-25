@@ -44,7 +44,9 @@ export class RuntimeSearchComponent implements OnInit {
       .toPromise()
       .then((res) => {
         // console.log(res)
-        this.pluginImageList = res.data;
+        if (res.data && res.data.length > 0) {
+          this.pluginImageList = res.data.slice(1, res.data.length);
+        }
       });
   }
 

@@ -1,28 +1,50 @@
-<div class="card" style="height: 100%;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-    <div class="card-header">플러그인 이미지 검색</div>
-    <div class="card-body">
-        <form class="row" style="margin-bottom: 15px;" [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()">
-            <div class="col">
-                <div class="input-group">
-                    <span class="input-group-prepend">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
-                    </span>
-                    <input type="text" id="input1-group2" name="input1-group2" class="form-control" formControlName="searchImageName"
-                        placeholder="플러그인 이미지 이름 검색" [(ngModel)]="searchImageName">
-                </div>
-            </div>
-        </form>
-        <div class="row">
-            <div class="col" style="overflow-y: scroll;height: 450px;">
-
-                <div class="row" *ngFor="let plugin of pluginImageList">
-                    <div class="col">
-                        <runtime-image [plugin]="plugin" (onDragStartPos)="onDragStartPos.emit($event)"></runtime-image>
-                    </div>
-                </div>
-                
-            </div>
+<div
+  class="card"
+  style="height: 100%; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"
+>
+  <div class="card-header">플러그인 이미지 검색</div>
+  <div class="card-body">
+    <form
+      class="row"
+      style="margin-bottom: 15px"
+      [formGroup]="searchForm"
+      (ngSubmit)="onSearchSubmit()"
+    >
+      <div class="col">
+        <div class="input-group">
+          <span class="input-group-prepend">
+            <button type="submit" class="btn btn-primary">
+              <i class="fa fa-search"></i> Search
+            </button>
+          </span>
+          <input
+            type="text"
+            id="input1-group2"
+            name="input1-group2"
+            class="form-control"
+            formControlName="searchImageName"
+            placeholder="플러그인 이미지 이름 검색"
+            [(ngModel)]="searchImageName"
+          />
         </div>
+      </div>
+    </form>
+    <div class="row">
+      <div class="col" style="overflow-y: scroll; height: 450px">
+        <div
+          class="row"
+          *ngFor="let plugin of pluginImageList"
+          style="margin-bottom: 15px"
+        >
+          <div class="col">
+            <runtime-image
+              [plugin]="plugin"
+              (onDragStartPos)="onDragStartPos.emit($event)"
+            ></runtime-image>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- <div class="card-footer">asdf</div> -->
+  </div>
+  <!-- <div class="card-footer">asdf</div> -->
 </div>
