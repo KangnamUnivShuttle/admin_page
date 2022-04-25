@@ -15,6 +15,8 @@ import { BlockModel, ReqBlockModel } from "./block.model";
   templateUrl: "block.component.html",
 })
 export class BlockComponent implements OnInit, OnDestroy, FormPage {
+  page: number = 1;
+  pageSize: number = 10;
   totalCnt: number = 0;
   tableData: BlockModel[] = [];
   blockSubscription: Subscription;
@@ -44,8 +46,8 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
   initData() {
     this.blockSubscription = this.httpService
       .reqGet(`runtimeBlock`, {
-        page: 1,
-        limit: 10,
+        page: this.page,
+        limit: this.pageSize,
       })
       .subscribe((res) => {
         // console.log(data)

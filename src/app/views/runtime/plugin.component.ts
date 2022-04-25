@@ -16,6 +16,8 @@ import { environment } from "../../../environments/environment";
   templateUrl: "plugin.component.html",
 })
 export class PluginComponent implements OnInit, FormPage {
+  page: number = 1;
+  pageSize: number = 10;
   totalCnt: number = 0;
   focusedItem: BlockImageModel = {
     githubUrl: null,
@@ -51,7 +53,10 @@ export class PluginComponent implements OnInit, FormPage {
 
   initData() {
     this.httpService
-      .reqGet("plugin", {})
+      .reqGet("plugin", {
+        page: this.page,
+        limit: this.pageSize,
+      })
       .toPromise()
       .then((res) => {
         console.log("res", res);
