@@ -32,12 +32,40 @@ export const navItems: INavData[] = [
   },
   {
     title: true,
+    name: "System",
+  },
+  {
+    name: "Chat Statistics",
+    url: "/system/statistics",
+    icon: "icon-chart",
+  },
+  {
+    title: true,
     name: "Account",
   },
   {
     name: "Admin users",
     url: "/account/admin",
     icon: "icon-user",
+  },
+  {
+    title: true,
+    name: "KNU",
+  },
+  {
+    name: "Shuttle Schedule",
+    url: "/knu/shuttle/schedule",
+    icon: "icon-calendar",
+  },
+  {
+    name: "Shuttle Route",
+    url: "/knu/shuttle/route",
+    icon: "icon-direction",
+  },
+  {
+    name: "Shuttle Notice",
+    url: "/knu/shuttle/route",
+    icon: "icon-bulb",
   },
   {
     title: true,
