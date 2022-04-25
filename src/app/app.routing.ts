@@ -104,6 +104,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import("./views/account/account.module").then((m) => m.AccountModule),
       },
+      {
+        path: "system",
+        loadChildren: () =>
+          import("./views/system/system.module").then((m) => m.SystemModule),
+      },
     ],
   },
   { path: "**", component: P404Component },
