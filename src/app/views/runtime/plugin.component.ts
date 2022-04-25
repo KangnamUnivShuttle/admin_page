@@ -16,6 +16,7 @@ import { environment } from "../../../environments/environment";
   templateUrl: "plugin.component.html",
 })
 export class PluginComponent implements OnInit, FormPage {
+  totalCnt: number = 0;
   focusedItem: BlockImageModel = {
     githubUrl: null,
     imageId: null,
@@ -54,7 +55,10 @@ export class PluginComponent implements OnInit, FormPage {
       .toPromise()
       .then((res) => {
         console.log("res", res);
-        this.tableData = res.data;
+        if (res.data && res.data.length > 0) {
+          this.totalCnt = Number(res.data[0].cnt);
+          this.tableData = res.data.slice(1, res.data.length);
+        }
       });
   }
 

@@ -1,6 +1,7 @@
 import { FormGroup } from "@angular/forms";
 
 export interface FormPage {
+  totalCnt: number;
   mainForm: FormGroup;
 
   focusedItem: any;

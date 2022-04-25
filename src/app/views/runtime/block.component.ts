@@ -15,6 +15,7 @@ import { BlockModel, ReqBlockModel } from "./block.model";
   templateUrl: "block.component.html",
 })
 export class BlockComponent implements OnInit, OnDestroy, FormPage {
+  totalCnt: number = 0;
   tableData: BlockModel[] = [];
   blockSubscription: Subscription;
 
@@ -46,9 +47,12 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
         page: 1,
         limit: 10,
       })
-      .subscribe((data) => {
+      .subscribe((res) => {
         // console.log(data)
-        this.tableData = data.data;
+        if (res.data && res.data.length > 0) {
+          this.totalCnt = Number(res.data[0].cnt);
+          this.tableData = res.data.slice(1, res.data.length);
+        }
       });
   }
 

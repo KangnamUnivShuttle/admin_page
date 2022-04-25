@@ -47,7 +47,15 @@ export interface BlockRuntimeModel {
   containerStateOrigin?: string;
   registerDatetime: Date;
   updateDatetime: Date;
+  x: number;
+  y: number;
   image: BlockImageModel;
+  _ChatImage_github_url: string;
+  _ChatImage_imageID: number;
+  _ChatImage_name: string;
+  _ChatImage_order_num: number;
+  _ChatImage_registerDatetime: Date;
+  _ChatImage_updateDatetime: Date;
 }
 
 export interface BlockImageModel {
