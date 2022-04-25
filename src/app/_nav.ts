@@ -64,7 +64,7 @@ export const navItems: INavData[] = [
   },
   {
     name: "Shuttle Notice",
-    url: "/knu/shuttle/route",
+    url: "/knu/shuttle/notice",
     icon: "icon-bulb",
   },
   {

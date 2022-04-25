@@ -109,6 +109,11 @@ export const routes: Routes = [
         loadChildren: () =>
           import("./views/system/system.module").then((m) => m.SystemModule),
       },
+      {
+        path: "knu",
+        loadChildren: () =>
+          import("./views/knu/knu.module").then((m) => m.KNUModule),
+      },
     ],
   },
   { path: "**", component: P404Component },
