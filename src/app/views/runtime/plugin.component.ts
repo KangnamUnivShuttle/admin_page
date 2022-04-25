@@ -1,49 +1,131 @@
-import { Component, OnInit } from '@angular/core';
-import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { HttpService } from '../../services/http.services';
-import { BlockImageModel } from './block.model';
-import { FormPage } from '../../interfaces/formpage.interface';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { getStyle } from "@coreui/coreui/dist/js/coreui-utilities";
+import { CustomTooltips } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
+import { HttpService } from "../../services/http.services";
+import { BlockImageModel, ReqBlockImageModel } from "./block.model";
+import { FormPage } from "../../interfaces/formpage.interface";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { environment } from "../../../environments/environment";
 
 @Component({
-  templateUrl: 'plugin.component.html'
+  templateUrl: "plugin.component.html",
 })
-export class PluginComponent implements OnInit, FormPage{
-
-  mainForm: FormGroup;
-  focusedItem: BlockImageModel;
+export class PluginComponent implements OnInit, FormPage {
+  focusedItem: BlockImageModel = {
+    githubUrl: null,
+    imageId: null,
+    name: null,
+    orderNum: null,
+    registerDatetime: null,
+    updateDatetime: null,
+  };
   tableData: BlockImageModel[] = [];
 
-  constructor(private httpService: HttpService,
-    private formBuilder: FormBuilder,) {}
-  
+  mainForm = this.formBuilder.group({
+    imageId: new FormControl(this.focusedItem.imageId, [Validators.required]),
+    name: new FormControl(this.focusedItem.name, [Validators.required]),
+    orderNum: new FormControl(this.focusedItem.orderNum, [Validators.required]),
+    githubUrl: new FormControl(this.focusedItem.githubUrl, [
+      Validators.required,
+    ]),
+  });
+
+  constructor(
+    private httpService: HttpService,
+    private formBuilder: FormBuilder
+  ) {}
+
+  onBtnDeleteClicked() {
+    if (!confirm(environment.MSG_DELETE_WARN)) {
+      return;
+    }
+
+    this.reqDeleteData(this.focusedItem);
+  }
+
   initData() {
+    this.httpService
+      .reqGet("plugin", {})
+      .toPromise()
+      .then((res) => {
+        console.log("res", res);
+        this.tableData = res.data;
+      });
   }
 
   onBtnSubmitClicked() {
+    if (this.focusedItem.imageId) {
+      this.reqUpdateData(this.focusedItem);
+    } else {
+      this.reqInsertData(this.focusedItem);
+    }
   }
 
   ngOnInit(): void {
-    this.httpService.reqGet('plugin', {}).toPromise()
-    .then(res => {
-      console.log('res', res)
-      this.tableData = res.data;
-    })
+    this.initData();
   }
 
   onRowClicked(image: BlockImageModel) {
-    if(this.focusedItem && this.focusedItem.imageId === image.imageId) {
-        this.focusedItem = {
-          githubUrl: null,
-          imageId: null,
-          name: null,
-          orderNum: null,
-          registerDatetime: null,
-          updateDatetime: null
-        }
+    if (this.focusedItem && this.focusedItem.imageId === image.imageId) {
+      this.focusedItem = {
+        githubUrl: null,
+        imageId: null,
+        name: null,
+        orderNum: null,
+        registerDatetime: null,
+        updateDatetime: null,
+      } as BlockImageModel;
     } else {
-      this.focusedItem = image
+      this.focusedItem = image;
     }
+  }
+
+  reqInsertData(data: BlockImageModel) {
+    this.httpService
+      .reqPost(
+        "plugin",
+        {
+          name: data.name,
+          order_num: data.orderNum,
+          github_url: data.githubUrl,
+        } as ReqBlockImageModel,
+        null
+      )
+      .toPromise()
+      .then((res) => {
+        this.initData();
+      });
+  }
+
+  reqUpdateData(data: BlockImageModel) {
+    this.httpService
+      .reqPut(
+        "plugin",
+        {
+          imageID: data.imageId,
+          name: data.name,
+          order_num: data.orderNum,
+          github_url: data.githubUrl,
+        } as ReqBlockImageModel,
+        null
+      )
+      .toPromise()
+      .then((res) => {
+        this.initData();
+      });
+  }
+
+  reqDeleteData(data: BlockImageModel) {
+    this.httpService
+      .reqDelete(`plugin/${data.imageId}`, null)
+      .toPromise()
+      .then((res) => {
+        this.initData();
+      });
   }
 }
