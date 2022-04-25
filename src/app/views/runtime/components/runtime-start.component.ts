@@ -1,80 +1,102 @@
-import { AfterViewChecked, Component, ElementRef, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from "@angular/core";
 import { BlockModel } from "../block.model";
-import { RuntimeItem } from "./template.interface";
+import { RuntimeItem } from "../../../interfaces/template.interface";
 
 @Component({
-    selector: 'runtime-start',
-    templateUrl: 'runtime-start.component.html'
+  selector: "runtime-start",
+  templateUrl: "runtime-start.component.html",
 })
-export class RuntimeStartComponent implements OnInit, RuntimeItem, AfterViewChecked {
+export class RuntimeStartComponent
+  implements OnInit, RuntimeItem, AfterViewChecked
+{
+  lastX: number;
+  lastY: number;
 
-    lastX: number;
-    lastY: number;
+  @Input()
+  data: BlockModel;
 
-    @Input()
-    data: BlockModel;
-    
-    @Input()
-    drag: string;
-    
-    @Input()
+  @Input()
+  drag: string;
+
+  @Input()
+  x: number;
+
+  @Input()
+  y: number;
+
+  @Input()
+  id: string;
+
+  @Input()
+  orderNum: number = 0;
+
+  @Output() onDragStartPos: EventEmitter<{
     x: number;
-    
-    @Input()
     y: number;
-
-    @Input()
     id: string;
+    ele: any;
+  }> = new EventEmitter();
+  @Output() onRectChange: EventEmitter<{ w: number; h: number }> =
+    new EventEmitter();
 
-    @Input()
-    orderNum: number = 0;
+  @Input()
+  msg: string;
 
-    @Output() onDragStartPos: EventEmitter<{x: number, y: number, id: string, ele: any}> = new EventEmitter();
-    @Output() onRectChange: EventEmitter<{w: number, h: number}> = new EventEmitter();
+  w: number;
+  h: number;
+  backupX: number;
+  backupY: number;
 
-    @Input()
-    msg: string;
+  constructor(private elementRef: ElementRef) {}
 
-    w: number;
-    h: number;
-    backupX: number;
-    backupY: number;
+  ngAfterViewChecked(): void {
+    const rect = this.elementRef.nativeElement
+      .querySelector("div")
+      .getBoundingClientRect();
+    this.w = rect.width;
+    this.h = rect.height;
+    this.onRectChange.emit({
+      w: rect.width,
+      h: rect.height,
+    });
+  }
 
-    constructor(private elementRef: ElementRef) {}
+  ngOnInit(): void {
+    this.backupX = this.x;
+    this.backupY = this.y;
+  }
 
-    ngAfterViewChecked(): void {
-        const rect = this.elementRef.nativeElement.querySelector('div').getBoundingClientRect()
-        this.w = rect.width
-        this.h = rect.height
-        this.onRectChange.emit({
-            w: rect.width,
-            h: rect.height
-        })
-    }
+  getStyle(): Object {
+    return {
+      top: `${this.y}px`,
+      left: `${this.x}px`,
+      cursor: `${this.drag === "view" ? "default" : "move"}`,
+    };
+  }
 
-    ngOnInit(): void {
-        this.backupX = this.x
-        this.backupY = this.y
-    }
+  onDragStart(event) {
+    this.lastX = event.x;
+    this.lastY = event.y;
+    this.onDragStartPos.emit({
+      x: event.x,
+      y: event.y,
+      id: this.id,
+      ele: this,
+    });
+  }
 
-    getStyle(): Object {
-        return {
-            'top': `${this.y}px`,
-            'left': `${this.x}px`,
-            'cursor': `${this.drag === 'view' ? 'default' : 'move'}`
-        }
-    }
-
-    onDragStart(event) {
-        this.lastX = event.x;
-        this.lastY = event.y;
-        this.onDragStartPos.emit({x: event.x, y: event.y, id: this.id, ele: this})
-    }
-
-    onDrop(event: any) {
-        this.backupX = this.x
-        this.backupY = this.y
-        this.x += event.x - this.lastX;
-        this.y += event.y - this.lastY;
-    }
+  onDrop(event: any) {
+    this.backupX = this.x;
+    this.backupY = this.y;
+    this.x += event.x - this.lastX;
+    this.y += event.y - this.lastY;
+  }
 }
