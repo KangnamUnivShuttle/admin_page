@@ -1,64 +1,99 @@
 <div class="animated fadeIn">
-    <div class="row">
-        <div class="col-4">
-            <form class="card">
-                <div class="card-header">
-                    Form
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name"
-                            >
-                          </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-sm-12">
-                          <div class="form-group">
-                            <label for="name">Github URL</label>
-                            <input type="text" class="form-control" id="name"
-                            >
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="button" class="btn btn-sm btn-warning">Cancel</button>
-                    <button type="button" class="btn btn-sm btn-danger">Delete</button>
-                    <button type="button" class="btn btn-sm btn-primary">Submit</button>
-                </div>
-            </form>
+  <div class="row">
+    <div class="col-4">
+      <form class="card" [formGroup]="mainForm">
+        <div class="card-header">Form</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  formControlName="name"
+                  [(ngModel)]="focusedItem.name"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="name">Github URL</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  formControlName="githubUrl"
+                  [(ngModel)]="focusedItem.githubUrl"
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-8">
-            <div class="card">
-                <div class="card-header">
-                    List
-                </div>
-                <div class="card-body">
-                    <table class="table table-bordered table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th>image id</th>
-                                <th>Name</th>
-                                <th>github url</th>
-                                <th>RegisterTime / UpdateTime</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngFor="let data of tableData">
-                                <tr (click)="onRowClicked(data)"
-                                [ngStyle]="focusedItem && data.imageId == focusedItem.imageId && { 'background-color': '#acb4bc' }">
-                                    <td>{{data.imageId}}</td>
-                                    <td>{{data.name}}</td>
-                                    <td>{{data.githubUrl}}</td>
-                                    <td>{{data.registerDatetime}} / {{data.updateDatetime}}</td>
-                                </tr>
-                            </ng-container>
-                            <!-- <tr>
+        <div class="card-footer">
+          <button
+            type="button"
+            class="btn btn-sm btn-warning"
+            (click)="onBtnCancelClicked()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-danger"
+            [disabled]="!focusedItem.imageId"
+            (click)="onBtnDeleteClicked()"
+          >
+            Delete
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-primary"
+            [disabled]="!mainForm.valid"
+            (click)="onBtnSubmitClicked()"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-8">
+      <div class="card">
+        <div class="card-header">List</div>
+        <div class="card-body">
+          <table class="table table-bordered table-striped table-sm">
+            <thead>
+              <tr>
+                <th>image id</th>
+                <th>Name</th>
+                <th>github url</th>
+                <th>RegisterTime / UpdateTime</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let data of tableData">
+                <tr
+                  (click)="onRowClicked(data)"
+                  [ngStyle]="
+                    focusedItem &&
+                    data.imageId == focusedItem.imageId && {
+                      'background-color': '#acb4bc'
+                    }
+                  "
+                >
+                  <td>{{ data.imageId }}</td>
+                  <td>{{ data.name }}</td>
+                  <td>{{ data.githubUrl }}</td>
+                  <td>
+                    {{ data.registerDatetime }} / {{ data.updateDatetime }}
+                  </td>
+                </tr>
+              </ng-container>
+              <!-- <tr>
                                 <td>Vishnu Serghei</td>
                                 <td>2012/01/01</td>
                                 <td>Member</td>
@@ -98,22 +133,22 @@
                                     <span class="badge badge-success">Active</span>
                                 </td>
                             </tr> -->
-                        </tbody>
-                    </table>
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+            </tbody>
+          </table>
+          <nav>
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">4</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </nav>
         </div>
+      </div>
     </div>
+  </div>
 </div>

@@ -19,20 +19,13 @@ export class PluginComponent implements OnInit, FormPage {
   page: number = 1;
   pageSize: number = 10;
   totalCnt: number = 0;
-  focusedItem: BlockImageModel = {
-    githubUrl: null,
-    imageId: null,
-    name: null,
-    orderNum: null,
-    registerDatetime: null,
-    updateDatetime: null,
-  };
+  focusedItem: BlockImageModel = {} as BlockImageModel;
   tableData: BlockImageModel[] = [];
 
   mainForm = this.formBuilder.group({
-    imageId: new FormControl(this.focusedItem.imageId, [Validators.required]),
+    imageId: new FormControl(this.focusedItem.imageId, []),
     name: new FormControl(this.focusedItem.name, [Validators.required]),
-    orderNum: new FormControl(this.focusedItem.orderNum, [Validators.required]),
+    orderNum: new FormControl(this.focusedItem.orderNum, []),
     githubUrl: new FormControl(this.focusedItem.githubUrl, [
       Validators.required,
     ]),
@@ -41,7 +34,9 @@ export class PluginComponent implements OnInit, FormPage {
   constructor(
     private httpService: HttpService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.resetFocusedItem();
+  }
 
   onBtnDeleteClicked() {
     if (!confirm(environment.MSG_DELETE_WARN)) {
@@ -75,9 +70,20 @@ export class PluginComponent implements OnInit, FormPage {
     }
   }
 
-  onBtnCancelClicked() {}
+  onBtnCancelClicked() {
+    this.resetFocusedItem();
+  }
 
-  resetFocusedItem() {}
+  resetFocusedItem() {
+    this.focusedItem = {
+      githubUrl: null,
+      imageId: null,
+      name: null,
+      orderNum: 1,
+      registerDatetime: null,
+      updateDatetime: null,
+    } as BlockImageModel;
+  }
 
   ngOnInit(): void {
     this.initData();
@@ -85,14 +91,7 @@ export class PluginComponent implements OnInit, FormPage {
 
   onRowClicked(image: BlockImageModel) {
     if (this.focusedItem && this.focusedItem.imageId === image.imageId) {
-      this.focusedItem = {
-        githubUrl: null,
-        imageId: null,
-        name: null,
-        orderNum: null,
-        registerDatetime: null,
-        updateDatetime: null,
-      } as BlockImageModel;
+      this.resetFocusedItem();
     } else {
       this.focusedItem = image;
     }
@@ -112,6 +111,7 @@ export class PluginComponent implements OnInit, FormPage {
       .toPromise()
       .then((res) => {
         this.initData();
+        this.resetFocusedItem();
       });
   }
 
@@ -130,6 +130,7 @@ export class PluginComponent implements OnInit, FormPage {
       .toPromise()
       .then((res) => {
         this.initData();
+        this.resetFocusedItem();
       });
   }
 
@@ -139,6 +140,7 @@ export class PluginComponent implements OnInit, FormPage {
       .toPromise()
       .then((res) => {
         this.initData();
+        this.resetFocusedItem();
       });
   }
 }
