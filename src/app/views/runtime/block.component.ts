@@ -55,7 +55,7 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
   }
 
   onBtnSubmitClicked() {
-    if (this.focusedItem.blockId) {
+    if (this.focusedItem.registerDatetime) {
       this.reqUpdateData(this.focusedItem);
     } else {
       this.reqInsertData(this.focusedItem);
@@ -94,20 +94,22 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
       .reqPost(
         "runtimeBlock",
         {
+          blockID: data.blockId,
           name: data.name,
-          enabled: data.enabled,
-          order_num: data.orderNum,
+          enabled: Number(data.enabled),
+          order_num: 1,
           x: data.x,
           y: data.y,
           linkX: data.linkX,
           linkY: data.linkY,
-          loopable: data.loopable,
+          loopable: Number(data.loopable),
         } as ReqBlockModel,
         null
       )
       .toPromise()
       .then((res) => {
         this.initData();
+        this.resetFocusedItem();
       });
   }
 
@@ -118,19 +120,20 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
         {
           blockID: data.blockId,
           name: data.name,
-          enabled: data.enabled,
+          enabled: Number(data.enabled),
           order_num: data.orderNum,
           x: data.x,
           y: data.y,
           linkX: data.linkX,
           linkY: data.linkY,
-          loopable: data.loopable,
+          loopable: Number(data.loopable),
         } as ReqBlockModel,
         null
       )
       .toPromise()
       .then((res) => {
         this.initData();
+        this.resetFocusedItem();
       });
   }
 
@@ -140,6 +143,7 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
       .toPromise()
       .then((res) => {
         this.initData();
+        this.resetFocusedItem();
       });
   }
 
