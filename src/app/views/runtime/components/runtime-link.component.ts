@@ -203,7 +203,9 @@ export class RuntimeLinkComponent
       .toPromise()
       .then((res) => {
         console.log("re", res);
-        this.searchedBlockList = res.data;
+        if (res.data && res.data.length > 0) {
+          this.searchedBlockList = res.data.slice(1, res.data.length);
+        }
       });
   }
 

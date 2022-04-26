@@ -137,12 +137,10 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
         data: start.data[1],
       });
 
+      console.log("runtime data", runtime.data.slice(1, runtime.data.length));
       runtime.data
         .slice(1, runtime.data.length)
         .forEach((run: BlockRuntimeModel, idx) => {
-          run.containerStateOrigin = run.containerState;
-          run.containerUrl =
-            run.containerUrl || `${run.image.name}_${this.guid()}`;
           run.image = {
             githubUrl: run._ChatImage_github_url,
             imageId: run._ChatImage_imageID,
@@ -151,6 +149,9 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
             registerDatetime: run._ChatImage_registerDatetime,
             updateDatetime: run._ChatImage_updateDatetime,
           } as BlockImageModel;
+          run.containerStateOrigin = run.containerState;
+          run.containerUrl =
+            run.containerUrl || `${run.image.name}_${this.guid()}`;
           this.childComponents.push({
             type: "card",
             ref: this.guid(),
