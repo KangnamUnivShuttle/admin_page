@@ -10,6 +10,7 @@ export interface FormPage {
   tableData: any[];
 
   initData();
+  resetFocusedItem();
   onRowClicked(row: any);
   onBtnSubmitClicked();
   onBtnDeleteClicked();

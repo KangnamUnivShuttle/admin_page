@@ -77,6 +77,8 @@ export class PluginComponent implements OnInit, FormPage {
 
   onBtnCancelClicked() {}
 
+  resetFocusedItem() {}
+
   ngOnInit(): void {
     this.initData();
   }

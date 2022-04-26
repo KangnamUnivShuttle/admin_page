@@ -23,6 +23,8 @@ export class ShuttleNoticeComponent implements OnInit, FormPage {
 
   onBtnCancelClicked() {}
 
+  resetFocusedItem() {}
+
   reqInsertData(data: any) {}
 
   reqUpdateData(data: any) {}

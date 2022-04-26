@@ -76,13 +76,20 @@
           </div>
         </div>
         <div class="card-footer">
-          <button type="button" class="btn btn-sm btn-warning">Cancel</button>
+          <button
+            type="button"
+            class="btn btn-sm btn-warning"
+            (click)="onBtnCancelClicked()"
+          >
+            Cancel
+          </button>
           <button
             type="button"
             class="btn btn-sm btn-danger"
             [disabled]="
               !focusedItem.registerDatetime || !focusedItem.deleteable
             "
+            (click)="onBtnDeleteClicked()"
           >
             Delete
           </button>
@@ -90,6 +97,7 @@
             type="button"
             class="btn btn-sm btn-primary"
             [disabled]="!mainForm.valid"
+            (click)="onBtnSubmitClicked()"
           >
             Submit
           </button>

@@ -21,13 +21,7 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
   tableData: BlockModel[] = [];
   blockSubscription: Subscription;
 
-  focusedItem = {
-    blockId: null,
-    name: null,
-    enabled: null,
-    deleteable: null,
-    registerDatetime: null,
-  } as BlockModel;
+  focusedItem = {} as BlockModel;
 
   blockId: string = null;
   name: string = null;
@@ -41,7 +35,9 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
     private httpService: HttpService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) {
+    this.resetFocusedItem();
+  }
 
   initData() {
     this.blockSubscription = this.httpService
@@ -74,7 +70,24 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
     this.reqDeleteData(this.focusedItem);
   }
 
-  onBtnCancelClicked() {}
+  onBtnCancelClicked() {
+    this.resetFocusedItem();
+  }
+
+  resetFocusedItem() {
+    this.focusedItem = {
+      blockId: null,
+      name: null,
+      enabled: 1,
+      deleteable: null,
+      registerDatetime: null,
+      x: 100,
+      y: 100,
+      linkX: 300,
+      linkY: 100,
+      loopable: 0,
+    } as BlockModel;
+  }
 
   reqInsertData(data: BlockModel) {
     this.httpService
@@ -142,17 +155,7 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
 
   onRowClicked(block) {
     if (this.focusedItem && this.focusedItem.blockId === block.blockId) {
-      this.focusedItem = {
-        blockId: null,
-        name: null,
-        enabled: null,
-        deleteable: null,
-        registerDatetime: null,
-        x: null,
-        y: null,
-        linkX: null,
-        linkY: null,
-      } as BlockModel;
+      this.resetFocusedItem();
     } else {
       this.focusedItem = block;
     }
