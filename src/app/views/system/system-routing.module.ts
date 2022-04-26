@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { SchedulerComponent } from "./scheduler.component";
 import { StatisticsComponent } from "./statistics.component";
 
 // import { WidgetsComponent } from './widgets.component';
@@ -27,6 +28,13 @@ const routes: Routes = [
         component: StatisticsComponent,
         data: {
           title: "Statistics",
+        },
+      },
+      {
+        path: "scheduler",
+        component: SchedulerComponent,
+        data: {
+          title: "Scheduler",
         },
       },
     ],

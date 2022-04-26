@@ -40,6 +40,11 @@ export const navItems: INavData[] = [
     icon: "icon-chart",
   },
   {
+    name: "Scheduler",
+    url: "/system/scheduler",
+    icon: "icon-calendar",
+  },
+  {
     title: true,
     name: "Account",
   },
