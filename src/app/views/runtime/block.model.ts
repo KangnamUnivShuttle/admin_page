@@ -10,6 +10,7 @@ export interface BlockModel {
   y: number;
   linkX: number;
   linkY: number;
+  loopable: number;
 }
 
 export interface BlockLinkModel {
@@ -24,6 +25,7 @@ export interface BlockLinkModel {
   orderNum: number;
   registerDatetime: Date;
   updateDatetime: Date;
+  is_ml_category: number;
 }
 
 export interface BlockImageModel {
@@ -88,6 +90,7 @@ export interface ReqBlockModel {
   y: number;
   linkX: number;
   linkY: number;
+  loopable: number;
 }
 
 export interface ReqBlockRuntimeModel {
@@ -112,6 +115,7 @@ export interface ReqBlockLinkModel {
   webLinkUrl?: string;
   enabled: number;
   order_num: number;
+  isMlCategory: number;
 }
 
 export interface ReqBlockRuntimeStateModel {

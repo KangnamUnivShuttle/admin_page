@@ -488,6 +488,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
             y: block.y,
             linkX: blockLink.x,
             linkY: blockLink.y,
+            loopable: blockData.loopable,
           } as ReqBlockModel,
           null
         )
@@ -530,6 +531,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
                 webLinkUrl: _blockLink.webLinkUrl,
                 enabled: _blockLink.enabled,
                 order_num: _blockLink.orderNum,
+                isMlCategory: _blockLink.is_ml_category,
               } as ReqBlockLinkModel,
               null
             )

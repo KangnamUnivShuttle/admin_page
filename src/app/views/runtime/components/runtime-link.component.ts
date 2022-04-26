@@ -78,6 +78,7 @@ export class RuntimeLinkComponent
     registerDatetime: null,
     updateDatetime: null,
     webLinkUrl: null,
+    is_ml_category: null,
     //   nextBlockName: null
   };
 
@@ -192,6 +193,7 @@ export class RuntimeLinkComponent
         this.data.length >= 1 ? this.data[this.data.length - 1].orderNum : 1,
       registerDatetime: undefined,
       updateDatetime: undefined,
+      is_ml_category: 1,
     });
   }
 

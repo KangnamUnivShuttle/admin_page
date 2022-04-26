@@ -86,6 +86,7 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
           y: data.y,
           linkX: data.linkX,
           linkY: data.linkY,
+          loopable: data.loopable,
         } as ReqBlockModel,
         null
       )
@@ -108,6 +109,7 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
           y: data.y,
           linkX: data.linkX,
           linkY: data.linkY,
+          loopable: data.loopable,
         } as ReqBlockModel,
         null
       )
