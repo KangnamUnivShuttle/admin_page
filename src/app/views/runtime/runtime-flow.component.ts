@@ -166,7 +166,7 @@ export class RuntimeFlowComponent implements OnInit {
       enabled: 1,
       registerDatetime: undefined,
       updateDatetime: undefined,
-      is_ml_category: 1,
+      isMlCategory: 1,
     });
   }
 

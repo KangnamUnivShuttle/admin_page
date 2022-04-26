@@ -25,7 +25,7 @@ export interface BlockLinkModel {
   orderNum: number;
   registerDatetime: Date;
   updateDatetime: Date;
-  is_ml_category: number;
+  isMlCategory: number;
 }
 
 export interface BlockImageModel {
@@ -115,7 +115,7 @@ export interface ReqBlockLinkModel {
   webLinkUrl?: string;
   enabled: number;
   order_num: number;
-  isMlCategory: number;
+  is_ml_category: number;
 }
 
 export interface ReqBlockRuntimeStateModel {
