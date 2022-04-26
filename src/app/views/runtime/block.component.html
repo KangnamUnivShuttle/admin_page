@@ -44,6 +44,7 @@
                   type="checkbox"
                   class="switch-input"
                   [checked]="focusedItem.enabled"
+                  (change)="focusedItem.enabled = !focusedItem.enabled"
                 />
                 <span class="switch-slider"></span>
               </label>
@@ -57,6 +58,7 @@
                   type="checkbox"
                   class="switch-input"
                   [checked]="focusedItem.loopable"
+                  (change)="focusedItem.loopable = !focusedItem.loopable"
                 />
                 <span class="switch-slider"></span>
               </label>
