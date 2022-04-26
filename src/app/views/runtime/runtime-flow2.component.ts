@@ -503,6 +503,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
             name: blockData.name,
             enabled: blockData.enabled,
             order_num: blockData.orderNum,
+            loopable: blockData.loopable,
             x: block.x,
             y: block.y,
             linkX: blockLink.x,
@@ -532,7 +533,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
                 webLinkUrl: _blockLink.webLinkUrl,
                 enabled: _blockLink.enabled,
                 order_num: _blockLink.orderNum,
-                is_ml_category: _blockLink.isMlCategory,
+                is_ml_category: Number(_blockLink.isMlCategory),
               } as ReqBlockLinkModel,
               null
             )
@@ -552,6 +553,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
                 webLinkUrl: _blockLink.webLinkUrl,
                 enabled: _blockLink.enabled,
                 order_num: _blockLink.orderNum,
+                is_ml_category: Number(_blockLink.isMlCategory),
               } as ReqBlockLinkModel,
               null
             )

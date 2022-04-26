@@ -1,116 +1,257 @@
-<div class="card link-card" [draggable]="drag == 'item'" [id]="id" [ngStyle]="getStyle()"
-    (dragstart)="onDragStart($event)">
-    <div class="card-header">퀵 메뉴 응답</div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col" *ngFor="let reply of data">
-                <div class="quickReply" (click)="onQuickReplyClicked(reply)" draggable="true"
-                (dragstart)="onQuickReplyDragStart($event, reply)"
-                (dragover)="onQuickReplyDragging($event)"
-                (drop)="onQuickReplyDragDrop($event, reply)"
-                >{{reply.label}}</div>
-            </div>
+<div
+  class="card link-card"
+  [draggable]="drag == 'item'"
+  [id]="id"
+  [ngStyle]="getStyle()"
+  (dragstart)="onDragStart($event)"
+>
+  <div class="card-header">퀵 메뉴 응답</div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col" *ngFor="let reply of data">
+        <div
+          class="quickReply"
+          (click)="onQuickReplyClicked(reply)"
+          draggable="true"
+          (dragstart)="onQuickReplyDragStart($event, reply)"
+          (dragover)="onQuickReplyDragging($event)"
+          (drop)="onQuickReplyDragDrop($event, reply)"
+        >
+          {{ reply.label }}
         </div>
-
+      </div>
     </div>
-    <div class="card-footer">
-        <button type="button" class="btn btn-sm btn-primary" (click)="onBtnAddQuickReply()">
-            버튼 추가
-        </button>
-    </div>
+  </div>
+  <div class="card-footer">
+    <button
+      type="button"
+      class="btn btn-sm btn-primary"
+      (click)="onBtnAddQuickReply()"
+    >
+      버튼 추가
+    </button>
+  </div>
 </div>
 
+<div
+  bsModal
+  #quickModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <form class="modal-content" [formGroup]="quickForm">
+      <div class="modal-header">
+        <h4 class="modal-title">퀵 버튼 편집</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="quickModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="select2">Action</label>
+          <div class="col-md-9">
+            <select
+              id="select2"
+              name="select2"
+              class="form-control form-control-lg"
+              formControlName="action"
+              [(ngModel)]="editingQuick.action"
+            >
+              <option value="message">message</option>
+              <option value="webLink">webLink</option>
+            </select>
+          </div>
+        </div>
+        <div class="row" style="margin-bottom: 15px">
+          <label class="col-md-3 col-form-label" for="disabled-input"
+            >label</label
+          >
+          <div class="col-md-9">
+            <input
+              type="text"
+              id="disabled-input"
+              name="disabled-input"
+              class="form-control"
+              placeholder=""
+              formControlName="label"
+              [(ngModel)]="editingQuick.label"
+            />
+          </div>
+        </div>
+        <div
+          class="row"
+          style="margin-bottom: 15px"
+          *ngIf="editingQuick.action == 'message'"
+        >
+          <label class="col-md-3 col-form-label" for="disabled-input"
+            >message</label
+          >
+          <div class="col-md-9">
+            <input
+              type="text"
+              id="disabled-input"
+              name="disabled-input"
+              class="form-control"
+              placeholder=""
+              formControlName="messageText"
+              [(ngModel)]="editingQuick.messageText"
+            />
+          </div>
+        </div>
+        <div
+          class="row"
+          style="margin-bottom: 15px"
+          *ngIf="editingQuick.action == 'webLink'"
+        >
+          <label class="col-md-3 col-form-label" for="disabled-input"
+            >web link</label
+          >
+          <div class="col-md-9">
+            <input
+              type="text"
+              id="disabled-input"
+              name="disabled-input"
+              class="form-control"
+              placeholder=""
+              formControlName="webLinkUrl"
+              [(ngModel)]="editingQuick.webLinkUrl"
+            />
+          </div>
+        </div>
 
-<div bsModal #quickModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <form class="modal-content" [formGroup]="quickForm">
-            <div class="modal-header">
-                <h4 class="modal-title">퀵 버튼 편집</h4>
-                <button type="button" class="close" (click)="quickModal.hide()" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+        <div class="row">
+          <div class="col">머신러닝 적용 여부</div>
+          <div class="col">
+            <label class="switch switch-3d switch-primary">
+              <input
+                type="checkbox"
+                class="switch-input"
+                [checked]="editingQuick.isMlCategory"
+                (change)="
+                  editingQuick.isMlCategory = !editingQuick.isMlCategory
+                "
+              />
+              <span class="switch-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 15px">
+          <label class="col-md-3 col-form-label" for="disabled-input"
+            >next block</label
+          >
+          <div class="col-md-9">
+            <div class="input-group">
+              <span class="input-group-prepend">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="editingQuick.nextBlockId = null"
+                >
+                  <i class="fa fa-cross"></i> reset
                 </button>
-            </div>
-            <div class="modal-body">
-                
-                <div class="form-group row">
-                    <label class="col-md-3 col-form-label" for="select2">Action</label>
-                    <div class="col-md-9">
-                    <select id="select2" name="select2" class="form-control form-control-lg" formControlName="action" [(ngModel)]="editingQuick.action">
-                        <option value="message">message</option>
-                        <option value="webLink">webLink</option>
-                    </select>
-                    </div>
-                </div>
-                <div class="row" style="margin-bottom: 15px;">
-                    <label class="col-md-3 col-form-label" for="disabled-input">label</label>
-                    <div class="col-md-9">
-                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="label"
-                      [(ngModel)]="editingQuick.label">
-                    </div>
-                </div>
-                <div class="row" style="margin-bottom: 15px;" *ngIf="editingQuick.action == 'message'">
-                    <label class="col-md-3 col-form-label" for="disabled-input">message</label>
-                    <div class="col-md-9">
-                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="messageText"
-                      [(ngModel)]="editingQuick.messageText">
-                    </div>
-                </div>
-                <div class="row" style="margin-bottom: 15px;" *ngIf="editingQuick.action == 'webLink'">
-                    <label class="col-md-3 col-form-label" for="disabled-input">web link</label>
-                    <div class="col-md-9">
-                      <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" formControlName="webLinkUrl"
-                      [(ngModel)]="editingQuick.webLinkUrl">
-                    </div>
-                </div>
-
-
-                <div class="row" style="margin-bottom: 15px;">
-                    <label class="col-md-3 col-form-label" for="disabled-input">next block</label>
-                    <div class="col-md-9">
-                        <div class="input-group">
-                            <span class="input-group-prepend">
-                                <button type="button" class="btn btn-primary" (click)="editingQuick.nextBlockId = null;"><i class="fa fa-cross"></i>
-                                    reset</button>
-                            </span>
-                            <!-- <input type="text" id="input1-group2" name="input1-group2" class="form-control"
+              </span>
+              <!-- <input type="text" id="input1-group2" name="input1-group2" class="form-control"
                                [(ngModel)]="editingQuick.nextBlockName" disabled readonly formControlName="nextBlockName"> -->
-                               <input type="text" id="disabled-input" name="disabled-input" class="form-control" placeholder="" disabled readonly formControlName="nextBlockId"
-                               [(ngModel)]="editingQuick.nextBlockId">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <span class="input-group-prepend">
-                        <button type="button" class="btn btn-primary" (click)="onBtnSearchBlockClicked()"><i class="fa fa-search"></i>
-                            Search</button>
-                    </span>
-                    <input type="text" id="input1-group2" name="input1-group2" class="form-control"
-                        placeholder="블록 이름 검색" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchBlockName">
-                </div>
-
-                <div class="row" style="max-height: 200px;overflow-y: auto; padding-top: 15px;">
-                    <div class="col">
-                        <div class="row" *ngFor="let block of searchedBlockList"
-                        (click)="editingQuick.nextBlockId = block.blockId;">
-                            <div class="col">
-                                <div class="card" [ngStyle]="editingQuick && block.blockId == editingQuick.nextBlockId && { 'background-color': '#acb4bc' }">
-                                    <div class="card-body">
-                                      {{block.name}} #{{block.blockId}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+              <input
+                type="text"
+                id="disabled-input"
+                name="disabled-input"
+                class="form-control"
+                placeholder=""
+                disabled
+                readonly
+                formControlName="nextBlockId"
+                [(ngModel)]="editingQuick.nextBlockId"
+              />
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" (click)="onBtnBlockLinkDeleteClicked(editingQuick)">Delete</button>
-                <button type="button" class="btn btn-secondary" (click)="quickModal.hide()">Close</button>
-                <button type="button" class="btn btn-primary" (click)="quickModal.hide()">Save changes</button>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <span class="input-group-prepend">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="onBtnSearchBlockClicked()"
+            >
+              <i class="fa fa-search"></i> Search
+            </button>
+          </span>
+          <input
+            type="text"
+            id="input1-group2"
+            name="input1-group2"
+            class="form-control"
+            placeholder="블록 이름 검색"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="searchBlockName"
+          />
+        </div>
+
+        <div
+          class="row"
+          style="max-height: 200px; overflow-y: auto; padding-top: 15px"
+        >
+          <div class="col">
+            <div
+              class="row"
+              *ngFor="let block of searchedBlockList"
+              (click)="editingQuick.nextBlockId = block.blockId"
+            >
+              <div class="col">
+                <div
+                  class="card"
+                  [ngStyle]="
+                    editingQuick &&
+                    block.blockId == editingQuick.nextBlockId && {
+                      'background-color': '#acb4bc'
+                    }
+                  "
+                >
+                  <div class="card-body">
+                    {{ block.name }} #{{ block.blockId }}
+                  </div>
+                </div>
+              </div>
             </div>
-        </form><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onBtnBlockLinkDeleteClicked(editingQuick)"
+        >
+          Delete
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="quickModal.hide()"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="quickModal.hide()"
+        >
+          Save changes
+        </button>
+      </div>
+    </form>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>
