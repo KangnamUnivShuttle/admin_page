@@ -15,7 +15,7 @@ import { StatisticsComponent } from "./statistics.component";
 import { SystemRoutingModule } from "./system-routing.module";
 import { SchedulerComponent } from "./scheduler.component";
 
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+// import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CalendarModule, DateAdapter } from "angular-calendar";
 import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 
@@ -33,7 +33,7 @@ import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
     MatRadioModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
