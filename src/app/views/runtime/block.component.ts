@@ -74,6 +74,8 @@ export class BlockComponent implements OnInit, OnDestroy, FormPage {
     this.reqDeleteData(this.focusedItem);
   }
 
+  onBtnCancelClicked() {}
+
   reqInsertData(data: BlockModel) {
     this.httpService
       .reqPost(

@@ -13,6 +13,7 @@ export interface FormPage {
   onRowClicked(row: any);
   onBtnSubmitClicked();
   onBtnDeleteClicked();
+  onBtnCancelClicked();
 
   reqInsertData(data: any);
   reqUpdateData(data: any);

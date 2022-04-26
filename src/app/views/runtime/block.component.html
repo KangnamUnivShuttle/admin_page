@@ -12,7 +12,7 @@
                   type="text"
                   class="form-control"
                   id="name"
-                  placeholder="Enter your name"
+                  placeholder=""
                   formControlName="blockId"
                   [(ngModel)]="focusedItem.blockId"
                   [readonly]="focusedItem.registerDatetime != null"
@@ -29,7 +29,7 @@
                   type="text"
                   class="form-control"
                   id="name"
-                  placeholder="Enter your name"
+                  placeholder=""
                   formControlName="name"
                   [(ngModel)]="focusedItem.name"
                 />
@@ -40,7 +40,24 @@
             <div class="col">Enabled</div>
             <div class="col">
               <label class="switch switch-3d switch-primary">
-                <input type="checkbox" class="switch-input" checked />
+                <input
+                  type="checkbox"
+                  class="switch-input"
+                  [checked]="focusedItem.enabled"
+                />
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">Loopable</div>
+            <div class="col">
+              <label class="switch switch-3d switch-primary">
+                <input
+                  type="checkbox"
+                  class="switch-input"
+                  [checked]="focusedItem.loopable"
+                />
                 <span class="switch-slider"></span>
               </label>
             </div>
@@ -60,8 +77,22 @@
         </div>
         <div class="card-footer">
           <button type="button" class="btn btn-sm btn-warning">Cancel</button>
-          <button type="button" class="btn btn-sm btn-danger">Delete</button>
-          <button type="button" class="btn btn-sm btn-primary">Submit</button>
+          <button
+            type="button"
+            class="btn btn-sm btn-danger"
+            [disabled]="
+              !focusedItem.registerDatetime || !focusedItem.deleteable
+            "
+          >
+            Delete
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-primary"
+            [disabled]="!mainForm.valid"
+          >
+            Submit
+          </button>
         </div>
       </form>
     </div>
@@ -76,6 +107,8 @@
                 <th>Name</th>
                 <th>RegisterTime / UpdateTime</th>
                 <th>Enabled</th>
+                <!-- <th>Deleteable</th> -->
+                <th>Loopable</th>
               </tr>
             </thead>
             <tbody>
@@ -99,6 +132,14 @@
                       <span class="badge badge-success">Active</span>
                     </ng-container>
                     <ng-container *ngIf="!block.enabled">
+                      <span class="badge badge-secondary">Inactive</span>
+                    </ng-container>
+                  </td>
+                  <td>
+                    <ng-container *ngIf="block.loopable">
+                      <span class="badge badge-success">Active</span>
+                    </ng-container>
+                    <ng-container *ngIf="!block.loopable">
                       <span class="badge badge-secondary">Inactive</span>
                     </ng-container>
                   </td>

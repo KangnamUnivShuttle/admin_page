@@ -21,6 +21,8 @@ export class StatisticsComponent implements OnInit, FormPage {
 
   onBtnDeleteClicked() {}
 
+  onBtnCancelClicked() {}
+
   reqInsertData(data: any) {}
 
   reqUpdateData(data: any) {}

@@ -21,6 +21,8 @@ export class AdminComponent implements OnInit, FormPage {
 
   onBtnDeleteClicked() {}
 
+  onBtnCancelClicked() {}
+
   reqInsertData(data: any) {}
 
   reqUpdateData(data: any) {}
