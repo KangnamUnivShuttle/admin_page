@@ -24,7 +24,11 @@ export class PluginComponent implements OnInit, FormPage {
 
   mainForm = this.formBuilder.group({
     imageId: new FormControl(this.focusedItem.imageId, []),
-    name: new FormControl(this.focusedItem.name, [Validators.required]),
+    name: new FormControl(this.focusedItem.name, [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(8),
+    ]),
     orderNum: new FormControl(this.focusedItem.orderNum, []),
     githubUrl: new FormControl(this.focusedItem.githubUrl, [
       Validators.required,
