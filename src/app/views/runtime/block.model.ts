@@ -1,7 +1,7 @@
 export interface BlockModel {
   blockId: string;
   name: string;
-  enabled: number;
+  enabled: number | boolean;
   orderNum: number;
   deleteable: number;
   registerDatetime: Date;
@@ -10,7 +10,7 @@ export interface BlockModel {
   y: number;
   linkX: number;
   linkY: number;
-  loopable: number;
+  loopable: number | boolean;
 }
 
 export interface BlockLinkModel {
@@ -25,7 +25,7 @@ export interface BlockLinkModel {
   orderNum: number;
   registerDatetime: Date;
   updateDatetime: Date;
-  isMlCategory: number;
+  isMlCategory: number | boolean;
 }
 
 export interface BlockImageModel {
@@ -59,15 +59,6 @@ export interface BlockRuntimeModel {
   _ChatImage_order_num: number;
   _ChatImage_registerDatetime: Date;
   _ChatImage_updateDatetime: Date;
-}
-
-export interface BlockImageModel {
-  imageId: number;
-  name: string;
-  orderNum: number;
-  githubUrl: string;
-  registerDatetime: Date;
-  updateDatetime: Date;
 }
 
 export interface RuntimeItemPosModel {
