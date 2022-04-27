@@ -27,7 +27,7 @@ export class PluginComponent implements OnInit, FormPage {
     name: new FormControl(this.focusedItem.name, [
       Validators.required,
       Validators.minLength(2),
-      Validators.maxLength(8),
+      Validators.maxLength(7),
     ]),
     title: new FormControl(this.focusedItem.title, [Validators.required]),
     orderNum: new FormControl(this.focusedItem.orderNum, []),
