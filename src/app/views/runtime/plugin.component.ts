@@ -29,6 +29,7 @@ export class PluginComponent implements OnInit, FormPage {
       Validators.minLength(2),
       Validators.maxLength(8),
     ]),
+    title: new FormControl(this.focusedItem.title, [Validators.required]),
     orderNum: new FormControl(this.focusedItem.orderNum, []),
     githubUrl: new FormControl(this.focusedItem.githubUrl, [
       Validators.required,
@@ -83,6 +84,7 @@ export class PluginComponent implements OnInit, FormPage {
       githubUrl: null,
       imageId: null,
       name: null,
+      title: null,
       orderNum: 1,
       registerDatetime: null,
       updateDatetime: null,
@@ -107,6 +109,7 @@ export class PluginComponent implements OnInit, FormPage {
         "plugin",
         {
           name: data.name,
+          title: data.title,
           order_num: data.orderNum,
           github_url: data.githubUrl,
         } as ReqBlockImageModel,
@@ -126,6 +129,7 @@ export class PluginComponent implements OnInit, FormPage {
         {
           imageID: data.imageId,
           name: data.name,
+          title: data.title,
           order_num: data.orderNum,
           github_url: data.githubUrl,
         } as ReqBlockImageModel,

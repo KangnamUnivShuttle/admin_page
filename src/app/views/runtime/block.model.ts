@@ -31,6 +31,7 @@ export interface BlockLinkModel {
 export interface BlockImageModel {
   imageId: number;
   name: string;
+  title: string;
   orderNum: number;
   githubUrl: string;
   registerDatetime: Date;
@@ -132,6 +133,7 @@ export interface ReqBlockRuntimeStateModel {
 export interface ReqBlockImageModel {
   imageID?: number;
   name: string;
+  title: string;
   order_num: number;
   github_url: string;
   registerDatetime?: string;
