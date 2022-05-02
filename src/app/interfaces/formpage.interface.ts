@@ -9,7 +9,7 @@ export interface FormPage {
   focusedItem: any;
   tableData: any[];
 
-  initData();
+  initData(page: number, pageSize: number, isAppend: boolean);
   resetFocusedItem();
   onRowClicked(row: any);
   onBtnSubmitClicked();

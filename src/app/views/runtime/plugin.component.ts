@@ -11,6 +11,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { environment } from "../../../environments/environment";
+import { InfiniteScrollService } from "../../services/infiniteScroll.services";
 
 @Component({
   templateUrl: "plugin.component.html",
@@ -38,10 +39,18 @@ export class PluginComponent implements OnInit, FormPage {
 
   constructor(
     private httpService: HttpService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private infiniteScrollService: InfiniteScrollService
   ) {
     this.resetFocusedItem();
+
+    this.infiniteScrollService.infiniteBroadcaster.subscribe(() => {
+      console.log("sdaf");
+      this.initData(++this.page, this.pageSize, true);
+    });
   }
+
+  onBtnOpenGithubUrl(url: string) {}
 
   onBtnDeleteClicked() {
     if (!confirm(environment.MSG_DELETE_WARN)) {
@@ -51,18 +60,24 @@ export class PluginComponent implements OnInit, FormPage {
     this.reqDeleteData(this.focusedItem);
   }
 
-  initData() {
+  initData(page: number = 1, pageSize: number = 10, isAppend: boolean = false) {
     this.httpService
       .reqGet("plugin", {
-        page: this.page,
-        limit: this.pageSize,
+        page: page,
+        limit: pageSize,
       })
       .toPromise()
       .then((res) => {
         console.log("res", res);
         if (res.data && res.data.length > 0) {
           this.totalCnt = Number(res.data[0].cnt);
-          this.tableData = res.data.slice(1, res.data.length);
+          if (isAppend) {
+            this.tableData = this.tableData.concat(
+              res.data.slice(1, res.data.length)
+            );
+          } else {
+            this.tableData = res.data.slice(1, res.data.length);
+          }
         }
       });
   }
