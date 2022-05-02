@@ -130,8 +130,9 @@
   </app-sidebar>
   <!-- Main content -->
   <main
+    #mainEle
     class="main"
-    style="max-height: calc(100vh - 55px); overflow: scroll"
+    style="max-height: calc(100vh - 105px); overflow: scroll"
     (scroll)="infiniteScrollService.onScroll($event)"
   >
     <!-- Breadcrumb -->
@@ -168,6 +169,17 @@
     <!--</ol>-->
     <div class="container-fluid">
       <router-outlet></router-outlet>
+    </div>
+
+    <div
+      *ngIf="infiniteScrollService.isInfiniteScrollPage"
+      [style]="{
+        height: infiniteScrollService.refreshLine + 'px',
+        'line-height': infiniteScrollService.refreshLine + 'px'
+      }"
+      style="text-align: center; font-weight: bold; font-size: 1.5em"
+    >
+      추가 내용 로드
     </div>
     <!-- /.container-fluid -->
   </main>

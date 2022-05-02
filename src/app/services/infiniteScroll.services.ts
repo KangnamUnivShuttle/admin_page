@@ -11,6 +11,7 @@ class InfiniteScrollEventBroadcaster extends EventEmitter {}
 export class InfiniteScrollService {
   refreshLine = 300;
   refreshReqSended = false;
+  isInfiniteScrollPage: boolean = true;
   //   https://stackoverflow.com/a/33344803
   constructor(public infiniteBroadcaster: InfiniteScrollEventBroadcaster) {}
 
