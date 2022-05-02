@@ -1,168 +1,146 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn container">
   <div class="row">
-    <div class="col-4">
-      <form class="card" [formGroup]="mainForm">
-        <div class="card-header">Form</div>
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+      <div class="card">
+        <div class="card-header"><i class="fa fa-plus"></i> 추가</div>
         <div class="card-body">
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-12">
               <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">이미지 제목</label>
                 <input
                   type="text"
                   class="form-control"
                   id="name"
-                  formControlName="name"
-                  [(ngModel)]="focusedItem.name"
+                  placeholder=""
                 />
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-12">
               <div class="form-group">
-                <label for="name">Title</label>
+                <label for="name">이미지 태그</label>
                 <input
                   type="text"
                   class="form-control"
                   id="name"
-                  formControlName="title"
-                  [(ngModel)]="focusedItem.title"
+                  placeholder=""
                 />
               </div>
             </div>
           </div>
-
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-12">
               <div class="form-group">
-                <label for="name">Github URL</label>
+                <label for="name">이미지 github 주소</label>
                 <input
                   type="text"
                   class="form-control"
                   id="name"
-                  formControlName="githubUrl"
-                  [(ngModel)]="focusedItem.githubUrl"
+                  placeholder=""
                 />
               </div>
             </div>
           </div>
         </div>
         <div class="card-footer">
-          <button
-            type="button"
-            class="btn btn-sm btn-warning"
-            (click)="onBtnCancelClicked()"
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
-            class="btn btn-sm btn-danger"
-            [disabled]="!focusedItem.imageId"
-            (click)="onBtnDeleteClicked()"
-          >
-            Delete
-          </button>
-          <button
-            type="button"
-            class="btn btn-sm btn-primary"
-            [disabled]="!mainForm.valid"
-            (click)="onBtnSubmitClicked()"
-          >
-            Submit
-          </button>
+          <button type="button" class="btn btn-sm btn-warning">Cancel</button>
+          <button type="button" class="btn btn-sm btn-danger">Delete</button>
+          <button type="button" class="btn btn-sm btn-primary">Submit</button>
         </div>
-      </form>
+      </div>
     </div>
-    <div class="col-8">
+
+    <div class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let a of test">
       <div class="card">
-        <div class="card-header">List</div>
+        <div class="card-header">
+          이미지 #10
+          <div class="card-header-actions" style="height: 21px">
+            <i class="fa fa-edit" style="cursor: pointer"></i>
+            <i class="fa fa-check" style="cursor: pointer"></i>
+          </div>
+        </div>
         <div class="card-body">
-          <table class="table table-bordered table-striped table-sm">
-            <thead>
-              <tr>
-                <th>image id</th>
-                <th>Name</th>
-                <th>Title</th>
-                <th>github url</th>
-                <th>RegisterTime / UpdateTime</th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-container *ngFor="let data of tableData">
-                <tr
-                  (click)="onRowClicked(data)"
-                  [ngStyle]="
-                    focusedItem &&
-                    data.imageId == focusedItem.imageId && {
-                      'background-color': '#acb4bc'
-                    }
-                  "
-                >
-                  <td>{{ data.imageId }}</td>
-                  <td>{{ data.name }}</td>
-                  <td>{{ data.title }}</td>
-                  <td>{{ data.githubUrl }}</td>
-                  <td>
-                    {{ data.registerDatetime }} / {{ data.updateDatetime }}
-                  </td>
-                </tr>
-              </ng-container>
-              <!-- <tr>
-                                <td>Vishnu Serghei</td>
-                                <td>2012/01/01</td>
-                                <td>Member</td>
-                                <td>
-                                    <span class="badge badge-success">Active</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Zbyněk Phoibos</td>
-                                <td>2012/02/01</td>
-                                <td>Staff</td>
-                                <td>
-                                    <span class="badge badge-danger">Banned</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Einar Randall</td>
-                                <td>2012/02/01</td>
-                                <td>Admin</td>
-                                <td>
-                                    <span class="badge badge-secondary">Inactive</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Félix Troels</td>
-                                <td>2012/03/01</td>
-                                <td>Member</td>
-                                <td>
-                                    <span class="badge badge-warning">Pending</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Aulus Agmundr</td>
-                                <td>2012/01/21</td>
-                                <td>Staff</td>
-                                <td>
-                                    <span class="badge badge-success">Active</span>
-                                </td>
-                            </tr> -->
-            </tbody>
-          </table>
-          <nav>
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </nav>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="name">이미지 제목</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder=""
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="name">이미지 태그</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder=""
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="name">이미지 github 주소</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder=""
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" style="font-weight: bold">이미지 제목</div>
+          </div>
+          <div class="row">
+            <div class="col">dasfadsf</div>
+          </div>
+          <div class="row" style="font-weight: bold">
+            <div class="col">태그</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-brand btn-sm btn-twitter mr-1"
+                style="margin-bottom: 4px"
+              >
+                <span>Twitter</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="row" style="font-weight: bold">
+            <div class="col">Github Repo</div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <button
+                type="button"
+                class="btn btn-brand btn-github mr-1"
+                style="margin-bottom: 4px"
+              >
+                <i class="fa fa-github"></i>
+                <span>Github</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="button" class="btn btn-sm btn-danger">Delete</button>
         </div>
       </div>
     </div>

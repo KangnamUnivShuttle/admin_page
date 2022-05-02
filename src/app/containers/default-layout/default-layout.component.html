@@ -129,7 +129,11 @@
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
   <!-- Main content -->
-  <main class="main">
+  <main
+    class="main"
+    style="max-height: calc(100vh - 55px); overflow: scroll"
+    (scroll)="infiniteScrollService.onScroll($event)"
+  >
     <!-- Breadcrumb -->
     <!-- breaking change 'cui-breadcrumb' -->
     <cui-breadcrumb>

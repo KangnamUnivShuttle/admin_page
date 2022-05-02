@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { HttpService } from "../../services/http.services";
+import { InfiniteScrollService } from "../../services/infiniteScroll.services";
 import { navItems } from "../../_nav";
 
 @Component({
@@ -11,7 +12,11 @@ export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
 
-  constructor(private httpService: HttpService, private router: Router) {}
+  constructor(
+    private httpService: HttpService,
+    private router: Router,
+    private infiniteScrollService: InfiniteScrollService
+  ) {}
 
   toggleMinimize(e) {
     this.sidebarMinimized = e;
@@ -24,5 +29,9 @@ export class DefaultLayoutComponent {
       .then((res) => {
         this.router.navigate(["/login"]);
       });
+  }
+
+  onScroll(event) {
+    this.infiniteScrollService.onScroll(event);
   }
 }
