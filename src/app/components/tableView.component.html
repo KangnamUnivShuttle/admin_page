@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-4">
+    <form class="card">
+      <div class="card-header">{{ formCardName }}</div>
+      <div class="card-body">
+        <ng-content></ng-content>
+      </div>
+      <div class="card-footer">
+        <button
+          type="button"
+          class="btn btn-sm btn-warning"
+          (click)="onBtnCancelClicked()"
+        >
+          Cancel
+        </button>
+        <ng-container *ngIf="uniqueKey">
+          <button
+            type="button"
+            class="btn btn-sm btn-danger"
+            [disabled]="!isValidDelBtn()"
+            (click)="onBtnDeleteClicked()"
+          >
+            Delete
+          </button>
+        </ng-container>
+        <ng-container *ngIf="!uniqueKey">
+          <span style="color: red">Delete button, uniqueKey undefined</span>
+        </ng-container>
+        <ng-container *ngIf="mainForm">
+          <button
+            type="button"
+            class="btn btn-sm btn-primary"
+            [disabled]="!mainForm.valid"
+            (click)="onBtnSubmitClicked()"
+          >
+            Submit
+          </button>
+        </ng-container>
+        <ng-container *ngIf="!mainForm">
+          <span style="color: red">Submit button, mainForm undefined</span>
+        </ng-container>
+      </div>
+    </form>
+  </div>
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header">{{ tableCardName }}</div>
+      <div class="card-body"></div>
+      <div class="card-footer"></div>
+    </div>
+  </div>
+</div>
