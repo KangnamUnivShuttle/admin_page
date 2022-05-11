@@ -31,12 +31,15 @@ export class TableViewComponent implements OnInit, FormPage {
   @Input()
   mainForm: FormGroup;
 
+  @Input()
   focusedItem: any;
 
+  // 현재 선택된 모델에서 사용될 키 값들 목록, 값 은 기본값 내용
   @Input()
   focusedItemModelInfo: { [key: string]: any };
 
-  @Input()
+  //@Input()
+  // 테이블 데이터 목록
   tableData: any[] = [];
 
   @Input()
@@ -47,6 +50,7 @@ export class TableViewComponent implements OnInit, FormPage {
     },
     POST: {
       url: "",
+      // insert, put == val <= datamap key
       dataMap: {},
     },
     PUT: {
@@ -60,7 +64,9 @@ export class TableViewComponent implements OnInit, FormPage {
   };
 
   @Input()
-  talbeHeader: TableViewHeaderModel[] = [];
+  // col: column name
+  // val: table data row key
+  tableHeader: TableViewHeaderModel[] = [];
 
   @Input()
   uniqueKey: string;
@@ -103,7 +109,7 @@ export class TableViewComponent implements OnInit, FormPage {
 
     const result = {};
     Object.keys(this.tableViewData[method].dataMap).forEach((key) => {
-      result[dataFrom[key]] = dataFrom[key];
+      result[this.tableViewData[method].dataMap[key]] = dataFrom[key];
     });
     return result;
   }
@@ -133,6 +139,7 @@ export class TableViewComponent implements OnInit, FormPage {
           if (res.data && res.data.length > 0) {
             this.totalCnt = Number(res.data[0].cnt);
             this.tableData = res.data.slice(1, res.data.length);
+            console.log("data", this.tableData);
           } else {
             console.warn("[TableViewComponent] [initData] data len <= 0");
           }

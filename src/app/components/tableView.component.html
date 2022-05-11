@@ -62,7 +62,7 @@
           </div>
         </div>
 
-        <div class="row" *ngIf="talbeHeader.length <= 0">
+        <div class="row" *ngIf="tableHeader.length <= 0">
           <div class="col">
             <span style="color: red">table header len = 0</span>
           </div>
@@ -73,7 +73,7 @@
             <table class="table table-bordered table-striped table-sm">
               <thead>
                 <tr>
-                  <th *ngFor="let header of talbeHeader">{{ header.col }}</th>
+                  <th *ngFor="let header of tableHeader">{{ header.col }}</th>
                 </tr>
               </thead>
               <tbody *ngIf="uniqueKey">
@@ -87,7 +87,15 @@
                       }
                     "
                   >
-                    <td *ngFor="let header of tableHeader">
+                    <td
+                      *ngFor="let header of tableHeader"
+                      style="
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        max-width: 80px;
+                      "
+                    >
                       {{ row[header.val] }}
                     </td>
                   </tr>
