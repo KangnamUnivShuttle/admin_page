@@ -37,45 +37,7 @@ export class RuntimeFlow2Component implements OnInit, AfterViewInit {
   playGroundWidth = 3000;
   playGroundHeight = 3000;
 
-  childComponents: RuntimeItemPosModel[] = [
-    // {
-    //     type: 'start',
-    //     ref: 'asdfasdf',
-    //     x: 50,
-    //     y: 50,
-    //     w: 0,
-    //     h: 0,
-    //     msg: 'asdfasdfasdfasdfad',
-    //     orderNum: 0
-    // },
-    // {
-    //     type: 'card',
-    //     ref: 'asdf',
-    //     x: 205,
-    //     y: 419,
-    //     w: 0,
-    //     h: 0,
-    //     orderNum: 1
-    // },
-    // {
-    //     type: 'card',
-    //     ref: 'fsadfasf',
-    //     x: 550,
-    //     y: 119,
-    //     w: 0,
-    //     h: 0,
-    //     orderNum: 2
-    // },
-    // {
-    //     type: 'link',
-    //     ref: 'ffasdf',
-    //     x: 950,
-    //     y: 380,
-    //     w: 0,
-    //     h: 0,
-    //     orderNum: 99999
-    // }
-  ];
+  childComponents: RuntimeItemPosModel[] = [];
 
   focusedChildComponent: any;
 

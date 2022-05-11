@@ -24,6 +24,7 @@ import { RuntimeImageComponent } from "./components/runtime-image.component";
 import { RuntimeOgtagComponent } from "./components/runtime-ogtag.component";
 import { TableViewComponent } from "../../components/tableView.component";
 import { PagingComponent } from "../../components/paging.component";
+import { RuntimeExecuteComponent } from "./components/runtime-execute.component";
 
 @NgModule({
   imports: [
@@ -50,6 +51,7 @@ import { PagingComponent } from "../../components/paging.component";
     RuntimeLinkComponent,
 
     RuntimeSearchComponent,
+    RuntimeExecuteComponent,
     RuntimeImageComponent,
     RuntimeOgtagComponent,
 
