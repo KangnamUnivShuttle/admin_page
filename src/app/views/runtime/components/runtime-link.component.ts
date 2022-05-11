@@ -181,6 +181,7 @@ export class RuntimeLinkComponent
   }
 
   onBtnAddQuickReply() {
+    console.log("this.data", this.data, this.data.length);
     this.data.push({
       blockId: this.blockID,
       nextBlockId: null,
@@ -190,7 +191,9 @@ export class RuntimeLinkComponent
       webLinkUrl: null,
       enabled: 1,
       orderNum:
-        this.data.length >= 1 ? this.data[this.data.length - 1].orderNum : 1,
+        this.data.length >= 1
+          ? this.data[this.data.length - 1].orderNum + 1
+          : 1,
       registerDatetime: undefined,
       updateDatetime: undefined,
       isMlCategory: 1,
