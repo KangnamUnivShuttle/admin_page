@@ -23,6 +23,7 @@ import { RuntimeSearchComponent } from "./components/runtime-search.component";
 import { RuntimeImageComponent } from "./components/runtime-image.component";
 import { RuntimeOgtagComponent } from "./components/runtime-ogtag.component";
 import { TableViewComponent } from "../../components/tableView.component";
+import { PagingComponent } from "../../components/paging.component";
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { TableViewComponent } from "../../components/tableView.component";
     RuntimeOgtagComponent,
 
     TableViewComponent,
+    PagingComponent,
   ], //[ WidgetsComponent ]
 })
 export class RuntimeModule {}

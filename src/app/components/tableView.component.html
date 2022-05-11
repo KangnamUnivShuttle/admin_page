@@ -45,8 +45,69 @@
   <div class="col-8">
     <div class="card">
       <div class="card-header">{{ tableCardName }}</div>
-      <div class="card-body"></div>
-      <div class="card-footer"></div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <paging
+              [page]="page"
+              [pageSize]="pageSize"
+              [totalCnt]="totalCnt"
+            ></paging>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="!uniqueKey">
+          <div class="col">
+            <span style="color: red">Table uniqueKey undefined</span>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="talbeHeader.length <= 0">
+          <div class="col">
+            <span style="color: red">table header len = 0</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <table class="table table-bordered table-striped table-sm">
+              <thead>
+                <tr>
+                  <th *ngFor="let header of talbeHeader">{{ header.col }}</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="uniqueKey">
+                <ng-container *ngFor="let row of tableData">
+                  <tr
+                    (click)="onRowClicked(row)"
+                    [ngStyle]="
+                      focusedItem &&
+                      row[uniqueKey] == focusedItem[uniqueKey] && {
+                        'background-color': '#acb4bc'
+                      }
+                    "
+                  >
+                    <td *ngFor="let header of tableHeader">
+                      {{ row[header.val] }}
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <paging
+              [page]="page"
+              [pageSize]="pageSize"
+              [totalCnt]="totalCnt"
+            ></paging>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="card-footer"></div> -->
     </div>
   </div>
 </div>

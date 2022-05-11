@@ -1,0 +1,15 @@
+<nav>
+  <ul class="pagination">
+    <li class="page-item" (click)="onPrevBtnClicked.emit()">
+      <a class="page-link">Prev</a>
+    </li>
+    <ng-container *ngFor="let pageNum of pageBtnGen()">
+      <li class="page-item" [class]="page == pageNum ? 'active' : ''">
+        <a class="page-link">{{ pageNum }}</a>
+      </li>
+    </ng-container>
+    <li class="page-item" (click)="onNextBtnClicked.emit()">
+      <a class="page-link">Next</a>
+    </li>
+  </ul>
+</nav>
