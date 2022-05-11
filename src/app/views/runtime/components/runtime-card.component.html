@@ -1,69 +1,154 @@
-<div class="card" style="width: 300px;position: absolute;box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;" [draggable]="drag == 'item'"
-[id]="id"
-                    [ngStyle]="getStyle()"
-                    (dragstart)="onDragStart($event)"
-                    (resized)="onResized($event)">
-                    <div class="card-header">
-                        <ng-container *ngIf="data">{{data.blockId}}</ng-container> #{{orderNum}}
-                        <div class="card-header-actions" style="height: 21px;" >
-                            <i *ngIf="data.blockRuntimeId"
-                            class="fa fa-refresh" style="margin-right: 10px;cursor:pointer"  (click)="onBtnUpdateReq(data)"></i>
-                            <i class="fa fa-arrow-up" style="margin-right: 10px;cursor:pointer" (click)="onBtnSortChange(-1)"></i>
-                            <i class="fa fa-arrow-down" style="cursor:pointer" (click)="onBtnSortChange(1)"></i>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <ng-container *ngIf="data">
-                            <div class="row">
-                                <div class="col-12" style="font-weight: bold;">-Base Image</div>
-                                <div class="col-12">{{data.image.name}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12" style="font-weight: bold;">-Base Image URL</div>
-                                <div class="col-12">{{data.image.githubUrl}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12" style="font-weight: bold;">-Container URL</div>
-                                <div class="col-12">{{data.containerUrl}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12" style="font-weight: bold;">-Container PORT</div>
-                                <div class="col-12">{{data.containerPort}}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12" style="font-weight: bold;">-ENV</div>
-                                <div class="col-12">
-                                    <textarea id="textarea-input" name="textarea-input" rows="4"
-                                        class="form-control" placeholder="Content.."
-                                        [readonly]="data.containerState == 'start'"
-                                        [disabled]="data.containerState == 'start'"
-                                        [(ngModel)]="data.containerEnv"></textarea>
-                                </div>
-                            </div>
-                            <div class="row" *ngIf="render" style="margin-top: 5px;">
-                                <div class="col-4">
-                                    <label id="example-radio-group-label" style="font-weight: bold;">-State</label>
-                                </div>
-                                <div class="col-8">
-                                    <mat-radio-group
-                                    aria-labelledby="example-radio-group-label"
-                                    class="example-radio-group"
-                                    (change)="onRuntimeStateChange(data)"
-                                    [(ngModel)]="data.containerState">
-                                        <mat-radio-button class="example-radio-button" *ngFor="let state of dynamicStateList()" [value]="state">
-                                            {{state}}
-                                        </mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
-                        </ng-container>
-                    </div>
-                    <div class="card-footer">
-                        <ng-container *ngIf="data">
-                            <button type="button" class="btn btn-sm btn-danger"
-                                                        [disabled]="(data.blockRuntimeId && data.containerState != 'Down')"
-                                                        (click)="onBtnDeleteClicked(data)"
-                                                        >Delete</button>
-                        </ng-container>
-                    </div>
-                </div>
+<div
+  class="card"
+  style="
+    width: 300px;
+    position: absolute;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  "
+  [draggable]="drag == 'item'"
+  [id]="id"
+  [ngStyle]="getStyle()"
+  (dragstart)="onDragStart($event)"
+  (resized)="onResized($event)"
+>
+  <div class="card-header">
+    <ng-container *ngIf="data">{{ data.blockId }}</ng-container> #{{ orderNum }}
+    <div class="card-header-actions" style="height: 21px">
+      <i
+        class="fa fa-code"
+        style="margin-right: 10px; cursor: pointer"
+        *ngIf="recentLog"
+        (click)="myModal.show()"
+      ></i>
+      <i
+        *ngIf="data.blockRuntimeId"
+        class="fa fa-refresh"
+        style="margin-right: 10px; cursor: pointer"
+        (click)="onBtnUpdateReq(data)"
+      ></i>
+      <i
+        class="fa fa-arrow-up"
+        style="margin-right: 10px; cursor: pointer"
+        (click)="onBtnSortChange(-1)"
+      ></i>
+      <i
+        class="fa fa-arrow-down"
+        style="cursor: pointer"
+        (click)="onBtnSortChange(1)"
+      ></i>
+    </div>
+  </div>
+  <div class="card-body">
+    <ng-container *ngIf="data">
+      <div class="row">
+        <div class="col-12" style="font-weight: bold">-Base Image</div>
+        <div class="col-12">{{ data.image.name }}</div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="font-weight: bold">-Base Image URL</div>
+        <div class="col-12">{{ data.image.githubUrl }}</div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="font-weight: bold">-Container URL</div>
+        <div class="col-12">{{ data.containerUrl }}</div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="font-weight: bold">-Container PORT</div>
+        <div class="col-12">{{ data.containerPort }}</div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="font-weight: bold">-ENV</div>
+        <div class="col-12">
+          <textarea
+            id="textarea-input"
+            name="textarea-input"
+            rows="4"
+            class="form-control"
+            placeholder="Content.."
+            [readonly]="data.containerState == 'start'"
+            [disabled]="data.containerState == 'start'"
+            [(ngModel)]="data.containerEnv"
+          ></textarea>
+        </div>
+      </div>
+      <div class="row" *ngIf="render" style="margin-top: 5px">
+        <div class="col-4">
+          <label id="example-radio-group-label" style="font-weight: bold"
+            >-State</label
+          >
+        </div>
+        <div class="col-8">
+          <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group"
+            (change)="onRuntimeStateChange(data)"
+            [(ngModel)]="data.containerState"
+          >
+            <mat-radio-button
+              class="example-radio-button"
+              *ngFor="let state of dynamicStateList()"
+              [value]="state"
+            >
+              {{ state }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="card-footer">
+    <ng-container *ngIf="data">
+      <button
+        type="button"
+        class="btn btn-sm btn-danger"
+        [disabled]="data.blockRuntimeId && data.containerState != 'Down'"
+        (click)="onBtnDeleteClicked(data)"
+      >
+        Delete
+      </button>
+    </ng-container>
+  </div>
+</div>
+
+<div
+  bsModal
+  #myModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">로그</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="myModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre
+          >{{ recentLog }}
+        </pre>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="myModal.hide()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -9,6 +9,7 @@ import {
   AfterViewChecked,
   ChangeDetectorRef,
   ApplicationRef,
+  ViewChild,
 } from "@angular/core";
 import { environment } from "../../../../environments/environment";
 import { BasicResponseModel } from "../../../models/basicResponse.model";
@@ -19,6 +20,7 @@ import {
   ReqBlockRuntimeStateModel,
 } from "../block.model";
 import { RuntimeItem } from "../../../interfaces/template.interface";
+import { ModalDirective } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "runtime-card",
@@ -27,7 +29,10 @@ import { RuntimeItem } from "../../../interfaces/template.interface";
 export class RuntimeCardComponent
   implements OnInit, RuntimeItem, AfterViewChecked
 {
+  @ViewChild("myModal") public myModal: ModalDirective;
   stateList = ["start", "stop", "remove", "Down"];
+
+  recentLog = "";
 
   @Input()
   data: BlockRuntimeModel;
@@ -126,6 +131,8 @@ export class RuntimeCardComponent
     console.log("re", event);
   }
 
+  onBtnShowLog() {}
+
   onBtnSortChange(dir: number) {
     this.onSortChange.emit({
       dir,
@@ -217,7 +224,11 @@ export class RuntimeCardComponent
               null
             )
             .toPromise()
-            .then((_res) => {});
+            .then((_res) => {
+              if (_res.message) {
+                this.recentLog = _res.message;
+              }
+            });
         }
       });
     } else {
@@ -247,6 +258,9 @@ export class RuntimeCardComponent
       )
       .toPromise()
       .then((res) => {
+        if (res.message) {
+          this.recentLog = res.message;
+        }
         this.onRuntimeStateChange(runtime, true);
       });
   }
