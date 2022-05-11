@@ -3,7 +3,16 @@
   style="height: 100%; box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px"
 >
   <div class="card-header">모의 실행</div>
-  <div class="card-body"></div>
+  <div class="card-body" style="overflow-y: scroll">
+    <ng-container *ngFor="let log of sendLog; let i = index">
+      <alert type="warning" *ngIf="i % 2 == 0">
+        {{ log }}
+      </alert>
+      <alert type="success" *ngIf="i % 2 == 1">
+        <code>{{ log }}</code>
+      </alert>
+    </ng-container>
+  </div>
   <div class="card-footer">
     <div class="row">
       <div class="col-sm-12">
@@ -14,6 +23,7 @@
             name="input1-group2"
             class="form-control"
             placeholder="텍스트 입력"
+            [(ngModel)]="msg"
           />
           <span class="input-group-prepend">
             <button
@@ -24,6 +34,7 @@
                 border-color: rgb(255, 225, 0);
                 color: black;
               "
+              (click)="onBtnTestClicked()"
             >
               전송
             </button>

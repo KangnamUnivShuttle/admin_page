@@ -117,6 +117,7 @@
               (onDragStartPos)="onDragStart($event)"
             ></runtime-search>
             <runtime-execute
+              [blockId]="blockID"
               *ngIf="mode.execute == 'running'"
             ></runtime-execute>
           </div>
