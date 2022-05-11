@@ -39,7 +39,7 @@ export class RuntimeExecuteComponent implements OnInit {
             utterance: this.msg /* 사용자가 입력한 대화 내용 */,
             lang: "kr",
             user: {
-              id: "620678" /* 유저의 id 값 */,
+              id: "test_user" /* 유저의 id 값 */,
               type: "talk_user_id" /* 유저의 값의 종류  */,
               properties: {
                 /* 부가적인 아이디 정보들  */ appUserId: "708203191",
