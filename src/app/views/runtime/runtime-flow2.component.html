@@ -1,14 +1,22 @@
 <div class="animated fadeIn">
-    <div class="row">
-        <div class="col">
-            <div class="card playground-wrapper" #playgroundWrapper
-                [ngStyle]="mode.drag == 'view' ? {'overflow': 'scroll'} : {'overflow': 'hidden'}">
-                <div class="playground" #playground
-                    [style.width.px]="playGroundWidth"
-                    [style.height.px]="playGroundHeight"
-                 (dragover)="onDragging($event)" (drop)="onDragDrop($event)">
-
-                 <!-- <ng-container *ngIf="childComponents.length >= 2">
+  <div class="row">
+    <div class="col">
+      <div
+        class="card playground-wrapper"
+        #playgroundWrapper
+        [ngStyle]="
+          mode.drag == 'view' ? { overflow: 'scroll' } : { overflow: 'hidden' }
+        "
+      >
+        <div
+          class="playground"
+          #playground
+          [style.width.px]="playGroundWidth"
+          [style.height.px]="playGroundHeight"
+          (dragover)="onDragging($event)"
+          (drop)="onDragDrop($event)"
+        >
+          <!-- <ng-container *ngIf="childComponents.length >= 2">
                     <ng-container *ngFor="let line of drawLine()">
                         <svg><line 
                             [x1]="line.x1" 
@@ -17,68 +25,97 @@
                             [y2]="line.y2" stroke="red" stroke-width="3"/></svg>
                      </ng-container>
                  </ng-container> -->
-                 <div #dynamicLineSvg></div>
+          <div #dynamicLineSvg></div>
 
-                    <ng-container *ngFor="let child of childComponents; let i = index">
+          <ng-container *ngFor="let child of childComponents; let i = index">
+            <runtime-start
+              *ngIf="child.type == 'start'"
+              [id]="child.ref"
+              [drag]="mode.drag"
+              [x]="child.x"
+              [y]="child.y"
+              [msg]="child.msg"
+              [data]="child.data"
+              (onDragStartPos)="onDragStart($event)"
+              (onRectChange)="child.w = $event.w; child.h = $event.h"
+            ></runtime-start>
 
-                        <runtime-start *ngIf="child.type == 'start'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
-                            [y]="child.y" [msg]="child.msg" [data]="child.data"
-                            (onDragStartPos)="onDragStart($event)"
-                            (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-start>
+            <runtime-card
+              *ngIf="child.type == 'card'"
+              [id]="child.ref"
+              [drag]="mode.drag"
+              [x]="child.x"
+              [y]="child.y"
+              [orderNum]="child.orderNum"
+              [data]="child.data"
+              (onDragStartPos)="onDragStart($event)"
+              (onDeleteRequested)="onRuntimeDeleteReq($event)"
+              (onRectChange)="child.w = $event.w; child.h = $event.h"
+              (onSortChange)="onSortChageRequested($event)"
+            ></runtime-card>
 
-                        <runtime-card *ngIf="child.type == 'card'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
-                            [y]="child.y"  [orderNum]="child.orderNum" [data]="child.data"
-                            (onDragStartPos)="onDragStart($event)"
-                            (onDeleteRequested)="onRuntimeDeleteReq($event)"
-                            (onRectChange)="child.w = $event.w;child.h = $event.h"
-                            (onSortChange)="onSortChageRequested($event)"></runtime-card>
+            <runtime-link
+              *ngIf="child.type == 'link'"
+              [id]="child.ref"
+              [drag]="mode.drag"
+              [x]="child.x"
+              [y]="child.y"
+              [data]="child.data"
+              (onDragStartPos)="onDragStart($event)"
+              (onRectChange)="child.w = $event.w; child.h = $event.h"
+            ></runtime-link>
+          </ng-container>
 
-                        <runtime-link *ngIf="child.type == 'link'" [id]="child.ref" [drag]="mode.drag" [x]="child.x"
-                            [y]="child.y" [data]="child.data"
-                            (onDragStartPos)="onDragStart($event)"
-                            (onRectChange)="child.w = $event.w;child.h = $event.h"></runtime-link>
-
-                    </ng-container>
-
-                    <div class="side-menu side-shadow">
-                        <div class="side-menu-btn" (click)="mode.search = !mode.search">
-                            <i class="fa fa-search fa-2x"></i>
-                        </div>
-                        <div class="side-menu-btn"
-                            (click)="mode.drag = mode.drag == 'item' ? 'view' : 'item'">
-                            <ng-template [ngIf]="mode.drag == 'item'">
-                                <i class="fa fa-hand-pointer-o fa-2x"></i>
-                            </ng-template>
-                            <ng-template [ngIf]="mode.drag == 'view'">
-                                <i class="fa fa-arrows fa-2x"></i>
-                            </ng-template>
-                        </div>
-                        <div class="side-menu-btn"
-                            (click)="mode.execute = mode.execute == 'idle' ? 'running' : 'idle'">
-                            <ng-template [ngIf]="mode.execute == 'idle'">
-                                <i class="fa fa-play fa-2x"></i>
-                            </ng-template>
-                            <ng-template [ngIf]="mode.execute == 'running'">
-                                <i class="fa fa-stop fa-2x"></i>
-                            </ng-template>
-                        </div>
-                        <div class="side-menu-btn">
-                            <i class="fa fa-gear fa-2x"></i>
-                        </div>
-                        <div class="side-menu-btn" (click)="onBtnSubmitClicked()">
-                            <i class="fa fa-check fa-2x"></i>
-                        </div>
-                        <div class="side-menu-btn" (click)="onBtnMoveBack()">
-                            <i class="fa fa-sign-out fa-2x"></i>
-                        </div>
-                    </div>
-
-                    <div class="side-popup"
-                    [ngStyle]="{'pointer-events': mode.search ? 'auto' : 'none'}">
-                        <runtime-search *ngIf="mode.search" (onDragStartPos)="onDragStart($event)"></runtime-search>
-                    </div>
-                </div>
+          <div class="side-menu side-shadow">
+            <div class="side-menu-btn" (click)="mode.search = !mode.search">
+              <i class="fa fa-search fa-2x"></i>
             </div>
+            <div
+              class="side-menu-btn"
+              (click)="mode.drag = mode.drag == 'item' ? 'view' : 'item'"
+            >
+              <ng-template [ngIf]="mode.drag == 'item'">
+                <i class="fa fa-hand-pointer-o fa-2x"></i>
+              </ng-template>
+              <ng-template [ngIf]="mode.drag == 'view'">
+                <i class="fa fa-arrows fa-2x"></i>
+              </ng-template>
+            </div>
+            <div
+              class="side-menu-btn"
+              (click)="
+                mode.execute = mode.execute == 'idle' ? 'running' : 'idle'
+              "
+            >
+              <ng-template [ngIf]="mode.execute == 'idle'">
+                <i class="fa fa-play fa-2x"></i>
+              </ng-template>
+              <ng-template [ngIf]="mode.execute == 'running'">
+                <i class="fa fa-stop fa-2x"></i>
+              </ng-template>
+            </div>
+            <!-- <div class="side-menu-btn">
+                            <i class="fa fa-gear fa-2x"></i>
+                        </div> -->
+            <div class="side-menu-btn" (click)="onBtnSubmitClicked()">
+              <i class="fa fa-check fa-2x"></i>
+            </div>
+            <div class="side-menu-btn" (click)="onBtnMoveBack()">
+              <i class="fa fa-sign-out fa-2x"></i>
+            </div>
+          </div>
+
+          <div
+            class="side-popup"
+            [ngStyle]="{ 'pointer-events': mode.search ? 'auto' : 'none' }"
+          >
+            <runtime-search
+              *ngIf="mode.search"
+              (onDragStartPos)="onDragStart($event)"
+            ></runtime-search>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
