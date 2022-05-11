@@ -67,13 +67,23 @@ export class PluginComponent implements OnInit {
     },
     DELETE: {
       url: "plugin",
-      dataMap: {},
+      dataMap: {
+        key: "imageId",
+      },
     },
   };
 
   uniqueKey = "imageId";
 
   focusedItem: BlockImageModel = {} as BlockImageModel;
+
+  focusedItemModelInfo = {
+    imageId: 0,
+    name: "",
+    title: "",
+    orderNum: 0,
+    githubUrl: "",
+  };
 
   mainForm = this.formBuilder.group({
     imageId: new FormControl(this.focusedItem.imageId, []),
@@ -91,4 +101,9 @@ export class PluginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {}
   ngOnInit(): void {}
+
+  test(e) {
+    console.log(e);
+    console.log("f", this.focusedItem);
+  }
 }

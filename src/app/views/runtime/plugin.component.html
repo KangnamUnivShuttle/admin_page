@@ -3,5 +3,56 @@
     [uniqueKey]="uniqueKey"
     [tableHeader]="tableHeader"
     [tableViewData]="tableViewData"
-  ></table-view>
+    [mainForm]="mainForm"
+    [focusedItemModelInfo]="focusedItemModelInfo"
+    [(focusedItem)]="focusedItem"
+  >
+    <form [formGroup]="mainForm">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="name">고유 키</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder=""
+              formControlName="name"
+              [(ngModel)]="focusedItem.name"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="name">제목</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder=""
+              formControlName="title"
+              [(ngModel)]="focusedItem.title"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="col-md-3 col-form-label" for="textarea-input"
+          >소스 URL (github)</label
+        >
+        <div class="col-md-9">
+          <textarea
+            id="textarea-input"
+            name="textarea-input"
+            rows="4"
+            class="form-control"
+            formControlName="githubUrl"
+            [(ngModel)]="focusedItem.githubUrl"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+  </table-view>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { environment } from "../../environments/environment";
@@ -33,6 +33,7 @@ export class TableViewComponent implements OnInit, FormPage {
 
   @Input()
   focusedItem: any;
+  @Output() focusedItemChange = new EventEmitter<any>();
 
   // 현재 선택된 모델에서 사용될 키 값들 목록, 값 은 기본값 내용
   @Input()
@@ -161,9 +162,14 @@ export class TableViewComponent implements OnInit, FormPage {
       return;
     }
 
+    const resetObj = {};
     Object.keys(this.focusedItemModelInfo).forEach((key) => {
-      this.focusedItem[key] = this.focusedItemModelInfo[key];
+      // this.focusedItem[key] = this.focusedItemModelInfo[key];
+      resetObj[key] = this.focusedItemModelInfo[key];
     });
+    this.focusedItem = resetObj;
+
+    this.focusedItemChange.emit(this.focusedItem);
   }
 
   onRowClicked(row: any) {
@@ -175,6 +181,7 @@ export class TableViewComponent implements OnInit, FormPage {
     } else {
       this.focusedItem = row;
     }
+    this.focusedItemChange.emit(this.focusedItem);
   }
 
   onBtnSubmitClicked() {
@@ -266,7 +273,10 @@ export class TableViewComponent implements OnInit, FormPage {
 
   reqDeleteData(data: any) {
     const method = "DELETE";
-    if (!this.isValidTableViewData(method)) {
+    if (
+      !this.isValidTableViewData(method) &&
+      !this.tableViewData[method].dataMap.hasOwnProperty("key")
+    ) {
       console.warn(
         `[TableViewComponent] [reqDeleteData] table view data method ${method} undefined`
       );
