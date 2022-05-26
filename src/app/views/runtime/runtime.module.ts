@@ -25,6 +25,7 @@ import { RuntimeOgtagComponent } from "./components/runtime-ogtag.component";
 import { TableViewComponent } from "../../components/tableView.component";
 import { PagingComponent } from "../../components/paging.component";
 import { RuntimeExecuteComponent } from "./components/runtime-execute.component";
+import { CustomComponentModule } from "../../components/customComponent.module";
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { RuntimeExecuteComponent } from "./components/runtime-execute.component"
     MatRadioModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
+    CustomComponentModule,
   ],
   declarations: [
     BlockComponent,
@@ -54,9 +56,6 @@ import { RuntimeExecuteComponent } from "./components/runtime-execute.component"
     RuntimeExecuteComponent,
     RuntimeImageComponent,
     RuntimeOgtagComponent,
-
-    TableViewComponent,
-    PagingComponent,
   ], //[ WidgetsComponent ]
 })
 export class RuntimeModule {}

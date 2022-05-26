@@ -11,15 +11,11 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AlertModule } from "ngx-bootstrap/alert";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { MatSelectModule } from "@angular/material/select";
-import { AdminComponent } from "./admin.component";
-import { AccountRoutingModule } from "./account-routing.module";
-import { TableViewComponent } from "../../components/tableView.component";
-import { PagingComponent } from "../../components/paging.component";
-import { CustomComponentModule } from "../../components/customComponent.module";
+import { TableViewComponent } from "./tableView.component";
+import { PagingComponent } from "./paging.component";
 
 @NgModule({
   imports: [
-    AccountRoutingModule,
     ChartsModule,
     BsDropdownModule,
     CommonModule,
@@ -31,8 +27,8 @@ import { CustomComponentModule } from "../../components/customComponent.module";
     MatRadioModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
-    CustomComponentModule,
   ],
-  declarations: [AdminComponent], //[ WidgetsComponent ]
+  declarations: [TableViewComponent, PagingComponent], //[ WidgetsComponent ]
+  exports: [TableViewComponent, PagingComponent],
 })
-export class AccountModule {}
+export class CustomComponentModule {}
