@@ -1,4 +1,8 @@
 import { FormGroup } from "@angular/forms";
+import {
+  TableViewDataModel,
+  TableViewHeaderModel,
+} from "./tableView.interface";
 
 export interface FormPage {
   totalCnt: number;
@@ -19,4 +23,18 @@ export interface FormPage {
   reqInsertData(data: any);
   reqUpdateData(data: any);
   reqDeleteData(data: any);
+}
+
+export interface TemplateFormPage {
+  tableHeader: TableViewHeaderModel[];
+
+  tableViewData: TableViewDataModel;
+
+  uniqueKey: string;
+
+  focusedItem: any;
+
+  focusedItemModelInfo: any;
+
+  mainForm: FormGroup;
 }

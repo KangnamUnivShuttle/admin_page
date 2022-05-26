@@ -3,7 +3,10 @@ import { getStyle } from "@coreui/coreui/dist/js/coreui-utilities";
 import { CustomTooltips } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
 import { HttpService } from "../../services/http.services";
 import { BlockImageModel, ReqBlockImageModel } from "./block.model";
-import { FormPage } from "../../interfaces/formpage.interface";
+import {
+  FormPage,
+  TemplateFormPage,
+} from "../../interfaces/formpage.interface";
 import {
   FormBuilder,
   FormControl,
@@ -20,7 +23,7 @@ import {
 @Component({
   templateUrl: "plugin.component.html",
 })
-export class PluginComponent implements OnInit {
+export class PluginComponent implements OnInit, TemplateFormPage {
   tableHeader: TableViewHeaderModel[] = [
     {
       col: "ID",

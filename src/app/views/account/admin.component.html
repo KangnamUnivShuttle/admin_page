@@ -1,1 +1,12 @@
-<div class="animated fadeIn"></div>
+<div class="animated fadeIn container">
+  <table-view
+    [uniqueKey]="uniqueKey"
+    [tableHeader]="tableHeader"
+    [tableViewData]="tableViewData"
+    [mainForm]="mainForm"
+    [focusedItemModelInfo]="focusedItemModelInfo"
+    [(focusedItem)]="focusedItem"
+  >
+    <form [formGroup]="mainForm"></form>
+  </table-view>
+</div>

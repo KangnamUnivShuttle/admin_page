@@ -62,13 +62,19 @@
           </div>
         </div>
 
-        <div class="row" *ngIf="tableHeader.length <= 0">
+        <div class="row" *ngIf="!tableHeader">
+          <div class="col">
+            <span style="color: red">table header undefined</span>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="tableHeader && tableHeader.length <= 0">
           <div class="col">
             <span style="color: red">table header len = 0</span>
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" *ngIf="tableHeader && tableHeader.length > 0">
           <div class="col">
             <table class="table table-bordered table-striped table-sm">
               <thead>

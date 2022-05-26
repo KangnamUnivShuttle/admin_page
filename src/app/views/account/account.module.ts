@@ -13,6 +13,8 @@ import { ModalModule } from "ngx-bootstrap/modal";
 import { MatSelectModule } from "@angular/material/select";
 import { AdminComponent } from "./admin.component";
 import { AccountRoutingModule } from "./account-routing.module";
+import { TableViewComponent } from "../../components/tableView.component";
+import { PagingComponent } from "../../components/paging.component";
 
 @NgModule({
   imports: [
@@ -29,6 +31,6 @@ import { AccountRoutingModule } from "./account-routing.module";
     AlertModule.forRoot(),
     ModalModule.forRoot(),
   ],
-  declarations: [AdminComponent], //[ WidgetsComponent ]
+  declarations: [AdminComponent, TableViewComponent, PagingComponent], //[ WidgetsComponent ]
 })
 export class AccountModule {}

@@ -1,35 +1,26 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
-import { FormPage } from "../../interfaces/formpage.interface";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import {
+  FormPage,
+  TemplateFormPage,
+} from "../../interfaces/formpage.interface";
+import {
+  TableViewHeaderModel,
+  TableViewDataModel,
+} from "../../interfaces/tableView.interface";
 
 @Component({
   templateUrl: "admin.component.html",
 })
-export class AdminComponent implements OnInit, FormPage {
-  totalCnt: number;
-  page: number;
-  pageSize: number;
-  mainForm: FormGroup;
+export class AdminComponent implements OnInit, TemplateFormPage {
+  tableHeader: TableViewHeaderModel[];
+  tableViewData: TableViewDataModel;
+  uniqueKey: string;
   focusedItem: any;
-  tableData: any[];
+  focusedItemModelInfo: any;
+  mainForm = this.formBuilder.group({});
 
-  initData() {}
-
-  onRowClicked(row: any) {}
-
-  onBtnSubmitClicked() {}
-
-  onBtnDeleteClicked() {}
-
-  onBtnCancelClicked() {}
-
-  resetFocusedItem() {}
-
-  reqInsertData(data: any) {}
-
-  reqUpdateData(data: any) {}
-
-  reqDeleteData(data: any) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {}
 }
